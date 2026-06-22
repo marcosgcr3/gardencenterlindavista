@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --color-brand-light: #90e024;
   --color-brand: #7abf17;
@@ -30,13 +32,11 @@
   --border-color: rgba(0, 0, 0, 0.08);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0d0f0c;
-    --foreground: #ecf0e9;
-    --card-bg: rgba(20, 24, 18, 0.6);
-    --border-color: rgba(255, 255, 255, 0.08);
-  }
+.dark {
+  --background: #0d0f0c;
+  --foreground: #ecf0e9;
+  --card-bg: rgba(20, 24, 18, 0.6);
+  --border-color: rgba(255, 255, 255, 0.08);
 }
 
 body {

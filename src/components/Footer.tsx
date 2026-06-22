@@ -138,11 +138,8 @@ export default function Footer() {
 
       {/* Copyright Bar */}
       <div className="bg-zinc-950 border-t border-zinc-900/60 py-6 text-center text-zinc-600 text-xs">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-center items-center">
           <p>© {new Date().getFullYear()} Garden Center Linda Vista S.L. Todos los derechos reservados.</p>
-          <p>
-            Diseñado con ❤ | Optimizado para SEO
-          </p>
         </div>
       </div>
     </footer>
