@@ -97,9 +97,6 @@ export default function Footer() {
                 <a href="mailto:ventas@gardencenterlindavista.com" className="hover:text-brand transition-colors break-all">
                   ventas@gardencenterlindavista.com
                 </a>
-                <a href="mailto:administracion@gardencenterlindavista.com" className="hover:text-brand transition-colors break-all">
-                  administracion@gardencenterlindavista.com
-                </a>
               </div>
             </li>
           </ul>

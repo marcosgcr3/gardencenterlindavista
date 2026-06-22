@@ -1,32 +1,18 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState } from "react";
 import { Send, CheckCircle2, AlertCircle, RefreshCw } from "lucide-react";
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    phone: "",
     message: "",
-    captchaInput: "",
   });
 
-  const [captcha, setCaptcha] = useState({ num1: 0, num2: 0, sum: 0 });
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
-
-  const generateCaptcha = useCallback(() => {
-    const num1 = Math.floor(Math.random() * 9) + 1;
-    const num2 = Math.floor(Math.random() * 9) + 1;
-    setCaptcha({ num1, num2, sum: num1 + num2 });
-  }, []);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      generateCaptcha();
-    }, 0);
-    return () => clearTimeout(timer);
-  }, [generateCaptcha]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -59,18 +45,12 @@ export default function ContactForm() {
       setErrorMessage("Por favor, escribe tu mensaje.");
       return;
     }
-    if (parseInt(formData.captchaInput) !== captcha.sum) {
-      setStatus("error");
-      setErrorMessage("El resultado de la suma de seguridad es incorrecto.");
-      return;
-    }
 
     // Success State loading simulation
     setStatus("loading");
     setTimeout(() => {
       setStatus("success");
-      setFormData({ name: "", email: "", message: "", captchaInput: "" });
-      generateCaptcha();
+      setFormData({ name: "", email: "", phone: "", message: "" });
     }, 1500);
   };
 
@@ -138,6 +118,23 @@ export default function ContactForm() {
             />
           </div>
 
+          {/* Phone input */}
+          <div className="flex flex-col gap-2">
+            <label htmlFor="phone" className="text-zinc-700 dark:text-zinc-300 font-semibold text-sm">
+              Teléfono <span className="text-zinc-400 font-normal">(Opcional)</span>
+            </label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              placeholder="Ej: 952 78 52 06"
+              disabled={status === "loading"}
+              className="w-full bg-zinc-50 dark:bg-zinc-950/40 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-zinc-800 dark:text-zinc-200 text-sm focus:border-brand focus:ring-1 focus:ring-brand outline-none transition-all"
+            />
+          </div>
+
           {/* Message input */}
           <div className="flex flex-col gap-2">
             <label htmlFor="message" className="text-zinc-700 dark:text-zinc-300 font-semibold text-sm">
@@ -153,36 +150,6 @@ export default function ContactForm() {
               disabled={status === "loading"}
               className="w-full bg-zinc-50 dark:bg-zinc-950/40 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-zinc-800 dark:text-zinc-200 text-sm focus:border-brand focus:ring-1 focus:ring-brand outline-none transition-all resize-none"
             />
-          </div>
-
-          {/* Captcha Verification */}
-          <div className="flex flex-col gap-2 bg-zinc-50 dark:bg-zinc-950/30 border border-zinc-200/55 dark:border-zinc-800 p-4 rounded-xl">
-            <label htmlFor="captchaInput" className="text-zinc-700 dark:text-zinc-300 font-semibold text-sm flex items-center justify-between">
-              <span>Suma de Seguridad (Captcha)</span>
-              <button
-                type="button"
-                onClick={generateCaptcha}
-                className="text-zinc-400 hover:text-brand transition-colors p-1"
-                title="Generar nueva suma"
-              >
-                <RefreshCw className="w-3.5 h-3.5" />
-              </button>
-            </label>
-            <div className="flex items-center gap-4 mt-1.5">
-              <span className="bg-brand/10 text-brand font-bold px-4 py-2.5 rounded-lg border border-brand/20 select-none text-base tracking-wider shrink-0">
-                {captcha.num1} + {captcha.num2} =
-              </span>
-              <input
-                type="number"
-                id="captchaInput"
-                name="captchaInput"
-                value={formData.captchaInput}
-                onChange={handleChange}
-                placeholder="Resultado"
-                disabled={status === "loading"}
-                className="w-full bg-zinc-50 dark:bg-zinc-950/40 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-zinc-800 dark:text-zinc-200 text-sm focus:border-brand focus:ring-1 focus:ring-brand outline-none transition-all"
-              />
-            </div>
           </div>
 
           {/* Submit Button */}
