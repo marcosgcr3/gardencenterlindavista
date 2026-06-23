@@ -77,6 +77,25 @@ export default function ImprimirQrPage() {
           </button>
         </div>
 
+        {/* Domain Configuration Input */}
+        <div className="bg-white dark:bg-zinc-950 border border-zinc-100 dark:border-zinc-900 rounded-3xl p-6 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex flex-col gap-1">
+            <span className="text-sm font-bold text-zinc-900 dark:text-white">Configurar Dominio del QR</span>
+            <p className="text-zinc-500 text-xs font-light">
+              Cambia este valor si vas a migrar la web a otro dominio. Todos los códigos QR se actualizarán al instante.
+            </p>
+          </div>
+          <div className="w-full sm:w-auto flex items-center gap-2">
+            <input
+              type="text"
+              value={origin}
+              onChange={(e) => setOrigin(e.target.value)}
+              placeholder="https://gardencenterlindavista.solarrv.tech"
+              className="w-full sm:w-80 px-4 py-2.5 rounded-xl bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 text-xs sm:text-sm focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand text-zinc-800 dark:text-zinc-200"
+            />
+          </div>
+        </div>
+
         {/* Tip banner */}
         <div className="bg-blue-50/40 dark:bg-blue-950/10 border border-blue-150/40 dark:border-blue-900/30 rounded-2xl p-5 flex items-start gap-3 text-zinc-650 dark:text-zinc-400 text-xs leading-relaxed font-light">
           <Info className="w-4.5 h-4.5 text-blue-500 shrink-0 mt-0.5" />
