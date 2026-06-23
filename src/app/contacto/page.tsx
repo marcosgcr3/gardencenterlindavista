@@ -1,44 +1,49 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 import ContactForm from "@/components/ContactForm";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function Contacto() {
+  const { t, language } = useLanguage();
+
   const contactCards = [
     {
       icon: <MapPin className="w-6 h-6 text-brand" />,
-      title: "Dirección",
+      title: t("contact.card.address"),
       details: [
         "Calle Araucaria 10",
         "29670 San Pedro Alcántara",
         "Marbella, Málaga, España",
       ],
       link: "https://maps.google.com/?q=Calle+Araucaria+10,+San+Pedro+Alcántara",
-      linkText: "Ver en Google Maps",
+      linkText: t("contact.card.address.btn"),
     },
     {
       icon: <Phone className="w-6 h-6 text-brand" />,
-      title: "Teléfono",
+      title: t("contact.card.phone"),
       details: ["952 78 52 06"],
       link: "tel:952785206",
-      linkText: "Llamar ahora",
+      linkText: t("contact.card.phone.btn"),
     },
     {
       icon: <Mail className="w-6 h-6 text-brand" />,
-      title: "Email de Contacto",
+      title: t("contact.card.email"),
       details: [
         "ventas@gardencenterlindavista.com",
       ],
       link: "mailto:ventas@gardencenterlindavista.com",
-      linkText: "Enviar email",
+      linkText: t("contact.card.email.btn"),
     },
     {
       icon: <Clock className="w-6 h-6 text-brand" />,
-      title: "Horario comercial",
+      title: t("contact.card.hours"),
       details: [
-        "Lunes - Viernes: 08:30-14:00 / 16:00-20:00",
-        "Sábados: 10:00 - 14:00",
-        "Domingos: Cerrado",
+        t("contact.card.hours.mon-fri"),
+        t("contact.card.hours.sat"),
+        t("contact.card.hours.sun"),
       ],
     },
   ];
@@ -50,20 +55,20 @@ export default function Contacto() {
         <div className="absolute inset-0 bg-black/55 z-10" />
         <Image
           src="/hero1.jpg"
-          alt="CONTACTO"
+          alt={t("contact.title").toUpperCase()}
           fill
           className="object-cover"
           priority
         />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-20 flex flex-col gap-4 animate-slide-up">
           <span className="text-brand font-bold text-sm uppercase tracking-widest">
-            Estamos para ayudarte
+            {t("contact.badge")}
           </span>
           <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-white">
-            Contacto
+            {t("contact.title")}
           </h1>
           <p className="text-zinc-200 text-lg max-w-xl font-light">
-            ¿Tienes alguna consulta o necesitas presupuesto? Escríbenos o ven a visitarnos en San Pedro Alcántara.
+            {t("contact.header.desc")}
           </p>
         </div>
       </section>
@@ -77,13 +82,13 @@ export default function Contacto() {
             <div className="lg:col-span-6 flex flex-col gap-8 w-full">
               <div className="flex flex-col gap-2">
                 <span className="text-brand font-semibold text-sm uppercase tracking-wider">
-                  Información
+                  {t("contact.info.badge")}
                 </span>
                 <h2 className="text-3xl font-extrabold text-zinc-900 dark:text-white tracking-tight">
-                  Nuestros Datos de Contacto
+                  {t("contact.info.title")}
                 </h2>
                 <p className="text-zinc-500 mt-2 leading-relaxed">
-                  Estaremos encantados de atenderte por cualquiera de estas vías. Si deseas visitarnos, disponemos de zona de carga de plantas para tu comodidad.
+                  {t("contact.info.desc")}
                 </p>
               </div>
 
@@ -136,7 +141,7 @@ export default function Contacto() {
           className="absolute inset-0 w-full h-full border-0 dark:invert-[0.9] dark:hue-rotate-180"
           allowFullScreen
           loading="lazy"
-          title="Ubicación de Garden Center Linda Vista en Google Maps"
+          title={language === "es" ? "Ubicación de Garden Center Linda Vista en Google Maps" : "Location of Garden Center Linda Vista on Google Maps"}
         />
       </section>
     </div>

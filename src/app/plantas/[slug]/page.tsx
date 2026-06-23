@@ -1,8 +1,9 @@
-import React from "react";
+"use client";
+
+import React, { use } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { headers } from "next/headers";
 import {
   ChevronLeft,
   Sun,
@@ -17,30 +18,25 @@ import {
   CalendarDays
 } from "lucide-react";
 import { plants, Plant } from "@/data/plants";
+import { useLanguage } from "@/context/LanguageContext";
+import { getTranslatedPlant } from "@/data/plantsTranslations";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-export async function generateStaticParams() {
-  return plants.map((plant) => ({
-    slug: plant.slug,
-  }));
-}
+export default function PlantaDetailPage({ params }: PageProps) {
+  const { t, language } = useLanguage();
+  const { slug } = use(params);
+  
+  const rawPlant = plants.find((p) => p.slug === slug);
 
-export default async function PlantaDetailPage({ params }: PageProps) {
-  const { slug } = await params;
-  const plant = plants.find((p) => p.slug === slug);
-
-  if (!plant) {
+  if (!rawPlant) {
     notFound();
   }
 
-  // Get dynamic host to construct QR URL dynamically
-  const headersList = await headers();
-  const host = headersList.get("host") || "gardencenterlindavista.solarrv.tech";
-  const protocol = host.includes("localhost") || host.includes("127.0.0.1") ? "http" : "https";
-  const currentPlantUrl = `${protocol}://${host}/plantas/${plant.slug}`;
+  // Get translated plant data
+  const plant = getTranslatedPlant(rawPlant, language);
 
   const getDifficultyColor = (difficulty: Plant["difficulty"]) => {
     switch (difficulty) {
@@ -64,20 +60,20 @@ export default async function PlantaDetailPage({ params }: PageProps) {
             className="inline-flex items-center gap-2 text-sm font-semibold text-zinc-600 hover:text-brand dark:text-zinc-400 dark:hover:text-brand transition-colors bg-white dark:bg-zinc-950 px-4 py-2 rounded-xl border border-zinc-150 dark:border-zinc-900 shadow-sm"
           >
             <ChevronLeft className="w-4 h-4" />
-            Volver al Catálogo
+            {t("details.btn.back")}
           </Link>
 
           <nav className="text-zinc-500 text-xs sm:text-sm font-medium" aria-label="Breadcrumb">
             <ol className="flex items-center gap-2">
               <li>
                 <Link href="/" className="hover:text-brand transition-colors">
-                  Inicio
+                  {t("nav.home")}
                 </Link>
               </li>
               <li className="text-zinc-400 select-none">/</li>
               <li>
                 <Link href="/plantas" className="hover:text-brand transition-colors">
-                  Catálogo
+                  {language === "es" ? "Catálogo" : "Catalog"}
                 </Link>
               </li>
               <li className="text-zinc-400 select-none">/</li>
@@ -105,7 +101,7 @@ export default async function PlantaDetailPage({ params }: PageProps) {
               {/* Floating Badge category */}
               <div className="absolute top-4 left-4 z-10">
                 <span className="bg-white/95 dark:bg-zinc-950/95 text-zinc-800 dark:text-zinc-200 text-xs font-bold uppercase tracking-wider px-3.5 py-1.5 rounded-xl shadow-sm border border-zinc-200/10">
-                  {plant.category}
+                  {t(`category.${plant.category}`)}
                 </span>
               </div>
             </div>
@@ -116,9 +112,13 @@ export default async function PlantaDetailPage({ params }: PageProps) {
                 <Heart className="w-5 h-5" />
               </div>
               <div>
-                <h4 className="font-bold text-zinc-900 dark:text-white text-sm">Garantía Linda Vista</h4>
+                <h4 className="font-bold text-zinc-900 dark:text-white text-sm">
+                  {language === "es" ? "Garantía Linda Vista" : "Linda Vista Guarantee"}
+                </h4>
                 <p className="text-zinc-500 text-xs mt-1 leading-relaxed">
-                  Todas nuestras plantas son seleccionadas directamente por expertos y pasan controles periódicos de salud vegetal antes de la entrega.
+                  {language === "es"
+                    ? "Todas nuestras plantas son seleccionadas directamente por expertos y pasan controles periódicos de salud vegetal antes de la entrega."
+                    : "All our plants are directly selected by experts and undergo regular plant health checks before delivery."}
                 </p>
               </div>
             </div>
@@ -149,7 +149,7 @@ export default async function PlantaDetailPage({ params }: PageProps) {
                   <Sun className="w-6 h-6" />
                 </div>
                 <div>
-                  <span className="text-xxs uppercase font-bold text-zinc-400 tracking-wider">Iluminación</span>
+                  <span className="text-xxs uppercase font-bold text-zinc-400 tracking-wider">{t("details.light")}</span>
                   <span className="block text-sm font-bold text-zinc-800 dark:text-zinc-200 mt-0.5">{plant.light}</span>
                 </div>
               </div>
@@ -160,7 +160,9 @@ export default async function PlantaDetailPage({ params }: PageProps) {
                   <Droplet className="w-6 h-6" />
                 </div>
                 <div>
-                  <span className="text-xxs uppercase font-bold text-zinc-400 tracking-wider">Riego General</span>
+                  <span className="text-xxs uppercase font-bold text-zinc-400 tracking-wider">
+                    {language === "es" ? "Riego General" : "General Watering"}
+                  </span>
                   <span className="block text-sm font-bold text-zinc-800 dark:text-zinc-200 mt-0.5">{plant.watering.general}</span>
                 </div>
               </div>
@@ -171,7 +173,7 @@ export default async function PlantaDetailPage({ params }: PageProps) {
                   <Thermometer className="w-6 h-6" />
                 </div>
                 <div>
-                  <span className="text-xxs uppercase font-bold text-zinc-400 tracking-wider">Temperatura</span>
+                  <span className="text-xxs uppercase font-bold text-zinc-400 tracking-wider">{t("details.temperature")}</span>
                   <span className="block text-sm font-bold text-zinc-800 dark:text-zinc-200 mt-0.5">{plant.temperature}</span>
                 </div>
               </div>
@@ -182,7 +184,7 @@ export default async function PlantaDetailPage({ params }: PageProps) {
                   <Wind className="w-6 h-6" />
                 </div>
                 <div>
-                  <span className="text-xxs uppercase font-bold text-zinc-400 tracking-wider">Humedad</span>
+                  <span className="text-xxs uppercase font-bold text-zinc-400 tracking-wider">{t("details.humidity")}</span>
                   <span className="block text-sm font-bold text-zinc-800 dark:text-zinc-200 mt-0.5">{plant.humidity}</span>
                 </div>
               </div>
@@ -191,11 +193,15 @@ export default async function PlantaDetailPage({ params }: PageProps) {
             {/* Difficulty Bar */}
             <div className="bg-white dark:bg-zinc-950 border border-zinc-100 dark:border-zinc-900 rounded-2xl p-5 flex items-center justify-between gap-4 shadow-sm">
               <div className="flex flex-col gap-0.5">
-                <span className="text-xxs uppercase font-bold text-zinc-400 tracking-wider">Nivel de Cuidado</span>
-                <span className="text-sm font-light text-zinc-600 dark:text-zinc-400">Atención necesaria para la planta</span>
+                <span className="text-xxs uppercase font-bold text-zinc-400 tracking-wider">
+                  {language === "es" ? "Nivel de Cuidado" : "Care Level"}
+                </span>
+                <span className="text-sm font-light text-zinc-600 dark:text-zinc-400">
+                  {language === "es" ? "Atención necesaria para la planta" : "Attention needed for the plant"}
+                </span>
               </div>
               <span className={`text-xs font-extrabold uppercase tracking-widest px-4 py-2 rounded-xl border ${getDifficultyColor(plant.difficulty)}`}>
-                Dificultad: {plant.difficulty}
+                {t("details.difficulty")}: {t(`difficulty.${plant.difficulty}`)}
               </span>
             </div>
           </div>
@@ -212,9 +218,11 @@ export default async function PlantaDetailPage({ params }: PageProps) {
               <span className="w-12 h-12 rounded-2xl bg-brand/10 text-brand flex items-center justify-center">
                 <Sprout className="w-6 h-6" />
               </span>
-              <h2 className="text-2xl font-bold text-zinc-900 dark:text-white mt-2">Cuidados y Características</h2>
+              <h2 className="text-2xl font-bold text-zinc-900 dark:text-white mt-2">{t("details.title.care")}</h2>
               <p className="text-zinc-500 text-sm font-light leading-relaxed">
-                Recomendaciones generales para mantener tu planta vigorosa y una descripción de sus rasgos físicos principales.
+                {language === "es"
+                  ? "Recomendaciones generales para mantener tu planta vigorosa y una descripción de sus rasgos físicos principales."
+                  : "General recommendations to keep your plant vigorous and a description of its main physical traits."}
               </p>
             </div>
             
@@ -222,7 +230,7 @@ export default async function PlantaDetailPage({ params }: PageProps) {
               <div className="bg-zinc-50/50 dark:bg-zinc-900/35 border border-zinc-100 dark:border-zinc-900/60 rounded-2xl p-6">
                 <h3 className="font-bold text-zinc-900 dark:text-white text-base mb-2 flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-brand" />
-                  Guía de Mantenimiento
+                  {language === "es" ? "Guía de Mantenimiento" : "Maintenance Guide"}
                 </h3>
                 <p className="text-zinc-600 dark:text-zinc-400 text-sm sm:text-base leading-relaxed font-light">
                   {plant.care}
@@ -232,7 +240,7 @@ export default async function PlantaDetailPage({ params }: PageProps) {
               <div>
                 <h3 className="font-bold text-zinc-900 dark:text-white text-base mb-3 flex items-center gap-2">
                   <Sprout className="w-4 h-4 text-brand" />
-                  Rasgos Distintivos
+                  {language === "es" ? "Rasgos Distintivos" : "Distinctive Traits"}
                 </h3>
                 <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-zinc-600 dark:text-zinc-400 text-xs sm:text-sm font-light">
                   {plant.characteristics.map((char, index) => (
@@ -252,9 +260,11 @@ export default async function PlantaDetailPage({ params }: PageProps) {
               <span className="w-12 h-12 rounded-2xl bg-blue-50 dark:bg-blue-950/20 text-blue-500 flex items-center justify-center">
                 <CalendarDays className="w-6 h-6" />
               </span>
-              <h2 className="text-2xl font-bold text-zinc-900 dark:text-white mt-2">Plan de Riego Estacional</h2>
+              <h2 className="text-2xl font-bold text-zinc-900 dark:text-white mt-2">{t("details.title.wateringPlan")}</h2>
               <p className="text-zinc-500 text-sm font-light leading-relaxed">
-                El agua es vida, pero el exceso de agua es el error más común. Sigue esta pauta adaptada a las estaciones de la Costa del Sol.
+                {language === "es"
+                  ? "El agua es vida, pero el exceso de agua es el error más común. Sigue esta pauta adaptada a las estaciones de la Costa del Sol."
+                  : "Water is life, but overwatering is the most common mistake. Follow this pattern adapted to the seasons of the Costa del Sol."}
               </p>
             </div>
 
@@ -263,10 +273,12 @@ export default async function PlantaDetailPage({ params }: PageProps) {
               <div className="bg-amber-50/20 dark:bg-amber-950/10 border border-amber-200/20 dark:border-amber-900/20 rounded-2xl p-6 flex flex-col gap-3">
                 <div className="flex items-center gap-2 text-amber-600 dark:text-amber-400 font-bold text-sm uppercase tracking-wider">
                   <Clock className="w-4 h-4" />
-                  Primavera - Verano
+                  {t("details.watering.summer")}
                 </div>
                 <p className="text-zinc-600 dark:text-zinc-400 text-xs sm:text-sm leading-relaxed font-light">
-                  Durante los meses cálidos de mayor crecimiento y evaporación, la pauta aproximada es:
+                  {language === "es"
+                    ? "Durante los meses cálidos de mayor crecimiento y evaporación, la pauta aproximada es:"
+                    : "During the warm months of highest growth and evaporation, the approximate pattern is:"}
                 </p>
                 <div className="bg-white/80 dark:bg-zinc-900/60 border border-amber-200/10 dark:border-amber-900/10 rounded-xl p-4 font-bold text-sm text-zinc-800 dark:text-zinc-200">
                   {plant.watering.summer}
@@ -277,10 +289,12 @@ export default async function PlantaDetailPage({ params }: PageProps) {
               <div className="bg-blue-50/20 dark:bg-blue-950/10 border border-blue-200/20 dark:border-blue-900/20 rounded-2xl p-6 flex flex-col gap-3">
                 <div className="flex items-center gap-2 text-blue-600 dark:text-blue-400 font-bold text-sm uppercase tracking-wider">
                   <Clock className="w-4 h-4" />
-                  Otoño - Invierno
+                  {t("details.watering.winter")}
                 </div>
                 <p className="text-zinc-600 dark:text-zinc-400 text-xs sm:text-sm leading-relaxed font-light">
-                  En los meses fríos de descanso vegetativo y alta humedad ambiente, la pauta es:
+                  {language === "es"
+                    ? "En los meses fríos de descanso vegetativo y alta humedad ambiente, la pauta es:"
+                    : "In the cold months of vegetative rest and high ambient humidity, the pattern is:"}
                 </p>
                 <div className="bg-white/80 dark:bg-zinc-900/60 border border-blue-200/10 dark:border-blue-900/10 rounded-xl p-4 font-bold text-sm text-zinc-800 dark:text-zinc-200">
                   {plant.watering.winter}
@@ -295,27 +309,31 @@ export default async function PlantaDetailPage({ params }: PageProps) {
               <span className="w-12 h-12 rounded-2xl bg-rose-50 dark:bg-rose-950/20 text-rose-500 flex items-center justify-center">
                 <AlertTriangle className="w-6 h-6" />
               </span>
-              <h2 className="text-2xl font-bold text-zinc-900 dark:text-white mt-2">Plagas y Enfermedades</h2>
+              <h2 className="text-2xl font-bold text-zinc-900 dark:text-white mt-2">{t("details.title.diseases")}</h2>
               <p className="text-zinc-500 text-sm font-light leading-relaxed">
-                Identifica a tiempo los síntomas comunes y mantén a raya a los parásitos para salvar la vida de tu planta.
+                {language === "es"
+                  ? "Identifica a tiempo los síntomas comunes y mantén a raya a los parásitos para salvar la vida de tu planta."
+                  : "Identify common symptoms in time and keep pests at bay to save your plant's life."}
               </p>
             </div>
 
             <div className="md:w-2/3 bg-rose-50/10 dark:bg-rose-950/5 border border-rose-200/10 dark:border-rose-900/10 rounded-2xl p-6 sm:p-8 flex items-start gap-4">
               <AlertTriangle className="w-5 h-5 text-rose-500 shrink-0 mt-0.5" />
               <div className="flex flex-col gap-2">
-                <h3 className="font-bold text-zinc-900 dark:text-white text-base">Alerta de Plagas</h3>
-                <p className="text-zinc-650 text-zinc-600 dark:text-zinc-400 text-sm sm:text-base leading-relaxed font-light">
+                <h3 className="font-bold text-zinc-900 dark:text-white text-base">
+                  {language === "es" ? "Alerta de Plagas" : "Pest Alert"}
+                </h3>
+                <p className="text-zinc-600 dark:text-zinc-400 text-sm sm:text-base leading-relaxed font-light">
                   {plant.diseases}
                 </p>
                 <div className="bg-white/40 dark:bg-zinc-900/30 border border-rose-200/5 dark:border-rose-900/5 p-4 rounded-xl text-xs text-zinc-500 mt-2 leading-relaxed italic">
-                  *Tip de Garden Center Linda Vista: Un tratamiento preventivo con Aceite de Neem e Jabón Potásico diluidos en agua cada 15 días mantendrá alejados a la mayoría de insectos chupadores de forma 100% ecológica.
+                  {language === "es"
+                    ? "*Tip de Garden Center Linda Vista: Un tratamiento preventivo con Aceite de Neem e Jabón Potásico diluidos en agua cada 15 días mantendrá alejados a la mayoría de insectos chupadores de forma 100% ecológica."
+                    : "*Garden Center Linda Vista Tip: A preventive treatment with Neem Oil and Potassium Soap diluted in water every 15 days will keep most sucking insects away in a 100% ecological way."}
                 </div>
               </div>
             </div>
           </div>
-
-
 
         </div>
       </div>

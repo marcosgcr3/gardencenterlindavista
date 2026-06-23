@@ -1,35 +1,40 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Sprout, Users, Award, MapPin, Calendar, Heart } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function SobreNosotros() {
+  const { t, language } = useLanguage();
+
   const values = [
     {
       icon: <Calendar className="w-6 h-6 text-brand" />,
-      title: "Desde 1989",
-      desc: "Más de tres décadas ofreciendo asesoramiento experto y los mejores productos de jardinería en la Costa del Sol.",
+      title: t("about.val.title1"),
+      desc: t("about.val.desc1"),
     },
     {
       icon: <Users className="w-6 h-6 text-brand" />,
-      title: "Empresa Familiar",
-      desc: "Fundada y dirigida con pasión familiar, lo que se traduce en cercanía, confianza y compromiso con el cliente.",
+      title: t("about.val.title2"),
+      desc: t("about.val.desc2"),
     },
     {
       icon: <Heart className="w-6 h-6 text-brand" />,
-      title: "Trato Personalizado",
-      desc: "Nuestra prioridad es escuchar y entender tus necesidades. Para nosotros, cada cliente es un amigo de la casa.",
+      title: t("about.val.title3"),
+      desc: t("about.val.desc3"),
     },
     {
       icon: <Sprout className="w-6 h-6 text-brand" />,
-      title: "Calidad Semanal",
-      desc: "Renovamos nuestro stock de plantas semanalmente con los mejores productores nacionales e internacionales.",
+      title: t("about.val.title4"),
+      desc: t("about.val.desc4"),
     },
   ];
 
   const locations = [
     { name: "Puerto Banús", distance: "3 min" },
-    { name: "Marbella Center", distance: "10 min" },
+    { name: language === "es" ? "Marbella Centro" : "Marbella Center", distance: "10 min" },
     { name: "Estepona", distance: "10 min" },
     { name: "Benahavís", distance: "12 min" },
   ];
@@ -41,20 +46,20 @@ export default function SobreNosotros() {
         <div className="absolute inset-0 bg-black/55 z-10" />
         <Image
           src="/hero1.jpg"
-          alt="SOBRE NOSOTROS"
+          alt={t("about.title").toUpperCase()}
           fill
           className="object-cover"
           priority
         />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-20 flex flex-col gap-4 animate-slide-up">
           <span className="text-brand font-bold text-sm uppercase tracking-widest">
-            Conócenos mejor
+            {t("about.badge")}
           </span>
           <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-white">
-            Sobre Nosotros
+            {t("about.title")}
           </h1>
           <p className="text-zinc-200 text-lg max-w-xl font-light">
-            Garden Center Linda Vista: Pasión familiar por la jardinería, plantas y decoración desde 1989.
+            {t("about.header.desc")}
           </p>
         </div>
       </section>
@@ -68,23 +73,17 @@ export default function SobreNosotros() {
             <div className="lg:col-span-7 flex flex-col gap-8">
               <div className="flex flex-col gap-2">
                 <span className="text-brand font-semibold text-sm uppercase tracking-wider">
-                  Nuestra Historia y Filosofía
+                  {t("about.subtitle")}
                 </span>
                 <h2 className="text-3xl font-extrabold text-zinc-900 dark:text-white tracking-tight">
-                  Más de 30 años cultivando belleza y bienestar
+                  {t("about.main.title")}
                 </h2>
               </div>
               
               <div className="flex flex-col gap-6 text-zinc-600 dark:text-zinc-400 text-base leading-relaxed">
-                <p>
-                  <strong>Garden Center Linda Vista</strong> es una empresa familiar fundada en <strong>1989</strong> dedicada con entusiasmo a la venta y distribución de plantas, semillas, abonos, artículos de jardinería, alfarería exclusiva, decoración y mobiliario, así como a la ejecución de jardines y su mantenimiento profesional.
-                </p>
-                <p>
-                  Nos proveemos semanalmente de los más prestigiosos y variados productores nacionales e internacionales para ofrecer siempre plantas frescas y saludables. Asimismo, contamos con una gran variedad y cantidad de macetas y alfarería artesanal traída de diferentes rincones de España y del extranjero para que encuentres la pieza perfecta.
-                </p>
-                <p>
-                  Nuestro gran pilar y secreto durante todos estos años ha sido la apuesta firme por un <strong>trato personalizado y de absoluta confianza</strong>. Contamos con un equipo altamente cualificado y encantado de asesorarte en todo lo que necesites, logrando que muchos de nuestros visitantes habituales se conviertan en amigos que conforman el alma de nuestro negocio.
-                </p>
+                <p>{t("about.p1")}</p>
+                <p>{t("about.p2")}</p>
+                <p>{t("about.p3")}</p>
               </div>
 
               {/* Location Cards */}
@@ -96,10 +95,10 @@ export default function SobreNosotros() {
                   className="text-lg font-bold text-zinc-900 hover:text-brand dark:text-white dark:hover:text-brand flex items-center gap-2 group w-fit transition-colors"
                 >
                   <MapPin className="w-5 h-5 text-brand group-hover:scale-110 transition-transform" />
-                  Excelente ubicación (San Pedro Alcántara)
+                  {t("about.location.title")}
                 </a>
                 <p className="text-zinc-600 dark:text-zinc-400 text-sm">
-                  Disponemos del privilegio de estar situados en un enclave estratégico, a escasos minutos de los principales centros urbanos de la Costa del Sol (haz clic en las tarjetas o en el mapa para indicaciones):
+                  {t("about.location.desc")}
                 </p>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-2">
                   {locations.map((loc, idx) => (
@@ -122,14 +121,14 @@ export default function SobreNosotros() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="absolute inset-0 block z-20"
-                    title="Abrir en Google Maps"
+                    title={language === "es" ? "Abrir en Google Maps" : "Open in Google Maps"}
                   />
                   <iframe
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1907.5323942711286!2d-4.99649123988893!3d36.479921369558205!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd73298a5bf33e2b%3A0x7c93bac2ca9622c6!2sGarden%20Center%20Linda%20Vista%20S.L.!5e0!3m2!1ses!2ses!4v1621503010199!5m2!1ses!2ses"
                     className="absolute inset-0 w-full h-full border-0 dark:invert-[0.9] dark:hue-rotate-180 z-10 transition-transform duration-700 group-hover:scale-102"
                     allowFullScreen
                     loading="lazy"
-                    title="Ubicación de Garden Center Linda Vista en Google Maps"
+                    title={language === "es" ? "Ubicación de Garden Center Linda Vista en Google Maps" : "Location of Garden Center Linda Vista on Google Maps"}
                   />
                 </div>
               </div>
@@ -140,7 +139,7 @@ export default function SobreNosotros() {
               <div className="relative w-full aspect-square rounded-3xl overflow-hidden border-8 border-zinc-100 dark:border-zinc-900 shadow-xl group">
                 <Image
                   src="/about.jpg"
-                  alt="Personal en el vivero Linda Vista"
+                  alt={t("about.title")}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-103"
                 />
@@ -148,7 +147,7 @@ export default function SobreNosotros() {
                 {/* Years Experience Badge Overlay */}
                 <div className="absolute bottom-6 right-6 bg-brand text-white p-5 rounded-2xl flex flex-col items-center justify-center shadow-lg z-20">
                   <span className="text-3xl font-extrabold tracking-tight">35+</span>
-                  <span className="text-xs uppercase tracking-widest font-semibold mt-1">Años de Exp.</span>
+                  <span className="text-xs uppercase tracking-widest font-semibold mt-1">{t("about.experience.badge")}</span>
                 </div>
               </div>
 
@@ -157,9 +156,9 @@ export default function SobreNosotros() {
                   <Award className="w-5 h-5" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-zinc-900 dark:text-white text-base">Asesoramiento Técnico</h4>
+                  <h4 className="font-bold text-zinc-900 dark:text-white text-base">{t("about.advice.title")}</h4>
                   <p className="text-zinc-500 text-xs mt-1 leading-5">
-                    ¿No estás seguro de qué planta elegir o cómo solucionar una plaga? Nuestro equipo te asesorará para asegurar la salud de tu jardín.
+                    {t("about.advice.desc")}
                   </p>
                 </div>
               </div>
@@ -174,13 +173,13 @@ export default function SobreNosotros() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-16">
           <div className="text-center max-w-2xl mx-auto flex flex-col gap-4">
             <span className="text-brand font-bold text-sm uppercase tracking-wider">
-              Nuestros Valores
+              {t("about.values.badge")}
             </span>
             <h2 className="text-3xl font-extrabold text-zinc-900 dark:text-white tracking-tight">
-              ¿Por qué elegir Garden Center Linda Vista?
+              {t("about.values.title")}
             </h2>
             <p className="text-zinc-600 dark:text-zinc-400">
-              Guiamos nuestro trabajo diario bajo principios que garantizan la satisfacción de nuestros clientes y el cuidado sostenible del medio ambiente.
+              {t("about.values.desc")}
             </p>
           </div>
 
@@ -202,17 +201,17 @@ export default function SobreNosotros() {
       <section className="bg-zinc-950 text-white py-24 relative overflow-hidden text-center">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col gap-6 items-center">
           <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white leading-tight">
-            Ven a descubrir el vivero más acogedor de la Costa del Sol
+            {t("about.cta.title")}
           </h2>
           <p className="text-zinc-400 text-base max-w-xl font-light leading-relaxed">
-            Estamos situados en Calle Araucaria 10, San Pedro Alcántara. ¡Disponemos de aparcamiento cómodo y ofertas especiales de temporada esperándote!
+            {t("about.cta.desc")}
           </p>
           <div className="flex flex-wrap gap-4 mt-2">
             <Link
               href="/contacto"
               className="bg-brand hover:bg-brand-dark text-white font-semibold px-8 py-3.5 rounded-full transition-all duration-300 hover:shadow-xl active:scale-95"
             >
-              Cómo llegar e información de contacto
+              {t("about.cta.btn")}
             </Link>
           </div>
         </div>

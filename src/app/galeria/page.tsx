@@ -3,19 +3,21 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { X, ChevronLeft, ChevronRight, Maximize2 } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 
 const photos = [
-  { src: "/gallery/img1.jpg", alt: "Variedad de plantas y flores en el vivero Linda Vista" },
-  { src: "/gallery/img2.jpg", alt: "Arbustos y plantas de exterior ordenadas en las instalaciones" },
-  { src: "/gallery/img3.jpg", alt: "Macetería de cerámica artesanal y macetas de exterior" },
-  { src: "/gallery/img4.jpg", alt: "Plantas de interior y flores de temporada" },
-  { src: "/gallery/img5.jpg", alt: "Artículos de decoración de jardín y alfarería esmaltada" },
-  { src: "/gallery/img6.jpg", alt: "Gran selección de plantas verdes y arbustos ornamentales" },
-  { src: "/gallery/img7.jpg", alt: "Exposición de plantas floridas en nuestro vivero" },
-  { src: "/gallery/img8.jpg", alt: "Sección de plantas de exterior de alta calidad" },
+  { src: "/gallery/img1.jpg", key: "gallery.photo1" },
+  { src: "/gallery/img2.jpg", key: "gallery.photo2" },
+  { src: "/gallery/img3.jpg", key: "gallery.photo3" },
+  { src: "/gallery/img4.jpg", key: "gallery.photo4" },
+  { src: "/gallery/img5.jpg", key: "gallery.photo5" },
+  { src: "/gallery/img6.jpg", key: "gallery.photo6" },
+  { src: "/gallery/img7.jpg", key: "gallery.photo7" },
+  { src: "/gallery/img8.jpg", key: "gallery.photo8" },
 ];
 
 export default function Galeria() {
+  const { t, language } = useLanguage();
   const [activePhoto, setActivePhoto] = useState<number | null>(null);
 
   const handlePrev = React.useCallback(() => {
@@ -46,20 +48,20 @@ export default function Galeria() {
         <div className="absolute inset-0 bg-black/55 z-10" />
         <Image
           src="/hero1.jpg"
-          alt="GALERÍA"
+          alt={t("gallery.title").toUpperCase()}
           fill
           className="object-cover"
           priority
         />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-20 flex flex-col gap-4 animate-slide-up">
           <span className="text-brand font-bold text-sm uppercase tracking-widest">
-            Nuestras Instalaciones
+            {t("gallery.badge")}
           </span>
           <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-white">
-            Galería de Fotos
+            {t("gallery.title")}
           </h1>
           <p className="text-zinc-200 text-lg max-w-xl font-light">
-            Echa un vistazo a nuestra gran variedad de plantas, flores, alfarería y zona de exposición.
+            {t("gallery.header.desc")}
           </p>
         </div>
       </section>
@@ -69,13 +71,13 @@ export default function Galeria() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-12">
           <div className="max-w-2xl">
             <span className="text-brand font-semibold text-sm uppercase tracking-wider">
-              Catálogo Visual
+              {t("gallery.info.badge")}
             </span>
             <h2 className="text-3xl font-extrabold text-zinc-900 dark:text-white mt-2 tracking-tight">
-              Instalaciones y Exposición
+              {t("gallery.info.title")}
             </h2>
             <p className="text-zinc-500 mt-4 leading-relaxed">
-              Trabajamos para tener un vivero ordenado, limpio y repleto de opciones inspiradoras. Haz clic en cualquiera de las imágenes para verlas en pantalla completa.
+              {t("gallery.info.desc")}
             </p>
           </div>
 
@@ -90,7 +92,7 @@ export default function Galeria() {
               >
                 <Image
                   src={photo.src}
-                  alt={photo.alt}
+                  alt={t(photo.key)}
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-108"
                   sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
@@ -142,7 +144,7 @@ export default function Galeria() {
             <div className="relative w-full aspect-[3/2] rounded-3xl overflow-hidden shadow-2xl border-4 border-zinc-900 bg-zinc-900">
               <Image
                 src={photos[activePhoto].src}
-                alt={photos[activePhoto].alt}
+                alt={t(photos[activePhoto].key)}
                 fill
                 className="object-contain"
                 sizes="(max-width: 1024px) 100vw, 1024px"
@@ -151,9 +153,11 @@ export default function Galeria() {
             
             {/* Description Info overlay */}
             <div className="text-center mt-6 text-zinc-300 max-w-xl">
-              <p className="text-sm font-medium">{photos[activePhoto].alt}</p>
+              <p className="text-sm font-medium">{t(photos[activePhoto].key)}</p>
               <span className="text-zinc-500 text-xs mt-2 block">
-                Imagen {activePhoto + 1} de {photos.length}
+                {language === "es"
+                  ? `Imagen ${activePhoto + 1} de ${photos.length}`
+                  : `Image ${activePhoto + 1} of ${photos.length}`}
               </span>
             </div>
           </div>

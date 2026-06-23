@@ -2,8 +2,11 @@
 
 import React, { useState } from "react";
 import { Send, CheckCircle2, AlertCircle, RefreshCw } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function ContactForm() {
+  const { t, language } = useLanguage();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -26,23 +29,23 @@ export default function ContactForm() {
     // Simple validations
     if (!formData.name.trim()) {
       setStatus("error");
-      setErrorMessage("Por favor, introduce tu nombre.");
+      setErrorMessage(t("form.val.name"));
       return;
     }
     if (!formData.email.trim()) {
       setStatus("error");
-      setErrorMessage("Por favor, introduce tu email.");
+      setErrorMessage(t("form.val.email"));
       return;
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
       setStatus("error");
-      setErrorMessage("Por favor, introduce un email válido.");
+      setErrorMessage(t("form.val.email.invalid"));
       return;
     }
     if (!formData.message.trim()) {
       setStatus("error");
-      setErrorMessage("Por favor, escribe tu mensaje.");
+      setErrorMessage(t("form.val.message"));
       return;
     }
 
@@ -57,21 +60,21 @@ export default function ContactForm() {
   return (
     <div className="w-full glassmorphism dark:bg-zinc-900/60 rounded-3xl p-6 sm:p-10 shadow-xl border border-zinc-100 dark:border-zinc-800">
       <h3 className="text-2xl font-bold text-zinc-900 dark:text-white mb-6">
-        Envíanos un Mensaje
+        {t("form.title")}
       </h3>
 
       {status === "success" ? (
         <div className="flex flex-col items-center justify-center text-center py-8 gap-4 animate-fade-in">
           <CheckCircle2 className="w-16 h-16 text-brand" />
-          <h4 className="text-xl font-bold text-zinc-900 dark:text-white">¡Mensaje Enviado!</h4>
+          <h4 className="text-xl font-bold text-zinc-900 dark:text-white">{t("form.success.title")}</h4>
           <p className="text-zinc-500 text-sm max-w-sm leading-6">
-            Muchas gracias por contactar con Garden Center Linda Vista. Responderemos a tu solicitud lo antes posible.
+            {t("form.success.desc")}
           </p>
           <button
             onClick={() => setStatus("idle")}
             className="mt-4 bg-brand hover:bg-brand-dark text-white font-semibold px-6 py-2.5 rounded-full transition-colors active:scale-95 text-sm"
           >
-            Enviar otro mensaje
+            {t("form.success.btn")}
           </button>
         </div>
       ) : (
@@ -87,7 +90,7 @@ export default function ContactForm() {
           {/* Name input */}
           <div className="flex flex-col gap-2">
             <label htmlFor="name" className="text-zinc-700 dark:text-zinc-300 font-semibold text-sm">
-              Nombre Completo
+              {t("form.label.name")}
             </label>
             <input
               type="text"
@@ -95,7 +98,7 @@ export default function ContactForm() {
               name="name"
               value={formData.name}
               onChange={handleChange}
-              placeholder="Ej: Juan Pérez"
+              placeholder={language === "es" ? "Ej: Juan Pérez" : "e.g. John Doe"}
               disabled={status === "loading"}
               className="w-full bg-zinc-50 dark:bg-zinc-950/40 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-zinc-800 dark:text-zinc-200 text-sm focus:border-brand focus:ring-1 focus:ring-brand outline-none transition-all"
             />
@@ -104,7 +107,7 @@ export default function ContactForm() {
           {/* Email input */}
           <div className="flex flex-col gap-2">
             <label htmlFor="email" className="text-zinc-700 dark:text-zinc-300 font-semibold text-sm">
-              Correo Electrónico
+              {t("form.label.email")}
             </label>
             <input
               type="email"
@@ -112,7 +115,7 @@ export default function ContactForm() {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              placeholder="Ej: juan.perez@example.com"
+              placeholder={language === "es" ? "Ej: juan.perez@example.com" : "e.g. john.doe@example.com"}
               disabled={status === "loading"}
               className="w-full bg-zinc-50 dark:bg-zinc-950/40 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-zinc-800 dark:text-zinc-200 text-sm focus:border-brand focus:ring-1 focus:ring-brand outline-none transition-all"
             />
@@ -121,7 +124,7 @@ export default function ContactForm() {
           {/* Phone input */}
           <div className="flex flex-col gap-2">
             <label htmlFor="phone" className="text-zinc-700 dark:text-zinc-300 font-semibold text-sm">
-              Teléfono <span className="text-zinc-400 font-normal">(Opcional)</span>
+              {t("form.label.phone")}
             </label>
             <input
               type="tel"
@@ -129,7 +132,7 @@ export default function ContactForm() {
               name="phone"
               value={formData.phone}
               onChange={handleChange}
-              placeholder="Ej: 952 78 52 06"
+              placeholder={language === "es" ? "Ej: 952 78 52 06" : "e.g. +34 952 78 52 06"}
               disabled={status === "loading"}
               className="w-full bg-zinc-50 dark:bg-zinc-950/40 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-zinc-800 dark:text-zinc-200 text-sm focus:border-brand focus:ring-1 focus:ring-brand outline-none transition-all"
             />
@@ -138,7 +141,7 @@ export default function ContactForm() {
           {/* Message input */}
           <div className="flex flex-col gap-2">
             <label htmlFor="message" className="text-zinc-700 dark:text-zinc-300 font-semibold text-sm">
-              Mensaje o Consulta
+              {t("form.label.message")}
             </label>
             <textarea
               id="message"
@@ -146,7 +149,7 @@ export default function ContactForm() {
               rows={4}
               value={formData.message}
               onChange={handleChange}
-              placeholder="Escribe aquí tu consulta..."
+              placeholder={t("form.placeholder.message")}
               disabled={status === "loading"}
               className="w-full bg-zinc-50 dark:bg-zinc-950/40 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-zinc-800 dark:text-zinc-200 text-sm focus:border-brand focus:ring-1 focus:ring-brand outline-none transition-all resize-none"
             />
@@ -161,12 +164,12 @@ export default function ContactForm() {
             {status === "loading" ? (
               <>
                 <RefreshCw className="w-5 h-5 animate-spin" />
-                Enviando mensaje...
+                {t("form.btn.sending")}
               </>
             ) : (
               <>
                 <Send className="w-5 h-5" />
-                Enviar Mensaje
+                {t("form.btn.send")}
               </>
             )}
           </button>
