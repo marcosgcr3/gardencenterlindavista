@@ -15,11 +15,19 @@ import {
   Settings2,
   Copy,
   Check,
-  AlertCircle
+  AlertCircle,
+  LogOut
 } from "lucide-react";
+import AdminGuard from "@/components/AdminGuard";
 
 export default function PlantAdminPage() {
   const router = useRouter();
+
+  const handleLogout = () => {
+    localStorage.removeItem("gclv_admin_auth");
+    localStorage.removeItem("gclv_admin_pass");
+    window.location.reload();
+  };
 
   // Form State
   const [name, setName] = useState("");
@@ -126,10 +134,14 @@ export default function PlantAdminPage() {
       characteristics
     };
 
+    const adminPass = typeof window !== "undefined" ? localStorage.getItem("gclv_admin_pass") || "" : "";
     try {
       const response = await fetch("/api/plants", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${adminPass}`
+        },
         body: JSON.stringify(plantPayload)
       });
 
@@ -184,17 +196,25 @@ export default function PlantAdminPage() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-8">
-      {/* Navigation */}
-      <div className="mb-8">
-        <Link
-          href="/plantas"
-          className="inline-flex items-center gap-2 text-sm font-semibold text-zinc-600 hover:text-brand dark:text-zinc-400 dark:hover:text-brand transition-colors bg-white dark:bg-zinc-950 px-4 py-2 rounded-xl border border-zinc-150 dark:border-zinc-900 shadow-sm"
-        >
-          <ChevronLeft className="w-4 h-4" />
-          Volver al Catálogo
-        </Link>
-      </div>
+    <AdminGuard>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-8">
+        {/* Navigation */}
+        <div className="mb-8 flex justify-between items-center gap-4">
+          <Link
+            href="/plantas"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-zinc-600 hover:text-brand dark:text-zinc-400 dark:hover:text-brand transition-colors bg-white dark:bg-zinc-950 px-4 py-2 rounded-xl border border-zinc-150 dark:border-zinc-900 shadow-sm"
+          >
+            <ChevronLeft className="w-4 h-4" />
+            Volver al Catálogo
+          </Link>
+          <button
+            onClick={handleLogout}
+            className="inline-flex items-center gap-2 text-sm font-semibold text-rose-500 hover:text-rose-600 dark:text-rose-400 dark:hover:text-rose-300 transition-colors bg-white dark:bg-zinc-950 px-4 py-2 rounded-xl border border-zinc-150 dark:border-zinc-900 shadow-sm cursor-pointer"
+          >
+            <LogOut className="w-4 h-4" />
+            Cerrar Sesión
+          </button>
+        </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start mb-20">
         
@@ -590,6 +610,7 @@ export default function PlantAdminPage() {
           </div>
         </div>
       )}
-    </div>
+      </div>
+    </AdminGuard>
   );
 }

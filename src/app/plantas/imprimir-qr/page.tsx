@@ -2,11 +2,18 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { ChevronLeft, Printer, Info, Sparkles } from "lucide-react";
+import { ChevronLeft, Printer, Info, Sparkles, LogOut } from "lucide-react";
 import { plants } from "@/data/plants";
+import AdminGuard from "@/components/AdminGuard";
 
 export default function ImprimirQrPage() {
   const [origin, setOrigin] = useState("https://gardencenterlindavista.solarrv.tech");
+
+  const handleLogout = () => {
+    localStorage.removeItem("gclv_admin_auth");
+    localStorage.removeItem("gclv_admin_pass");
+    window.location.reload();
+  };
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -19,18 +26,28 @@ export default function ImprimirQrPage() {
   };
 
   return (
-    <div className="w-full min-h-screen bg-zinc-50 dark:bg-zinc-950/20 py-8 print:bg-white print:py-0">
-      {/* Container for controls (Hidden during print) */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mb-8 print:hidden flex flex-col gap-6">
-        {/* Navigation & Breadcrumbs */}
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <Link
-            href="/plantas"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-zinc-600 hover:text-brand dark:text-zinc-400 dark:hover:text-brand transition-colors bg-white dark:bg-zinc-950 px-4 py-2 rounded-xl border border-zinc-150 dark:border-zinc-900 shadow-sm"
-          >
-            <ChevronLeft className="w-4 h-4" />
-            Volver al Catálogo
-          </Link>
+    <AdminGuard>
+      <div className="w-full min-h-screen bg-zinc-50 dark:bg-zinc-950/20 py-8 print:bg-white print:py-0">
+        {/* Container for controls (Hidden during print) */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mb-8 print:hidden flex flex-col gap-6">
+          {/* Navigation & Breadcrumbs */}
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <Link
+                href="/plantas"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-zinc-600 hover:text-brand dark:text-zinc-400 dark:hover:text-brand transition-colors bg-white dark:bg-zinc-950 px-4 py-2 rounded-xl border border-zinc-150 dark:border-zinc-900 shadow-sm"
+              >
+                <ChevronLeft className="w-4 h-4" />
+                Volver al Catálogo
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="inline-flex items-center gap-2 text-sm font-semibold text-rose-500 hover:text-rose-600 dark:text-rose-400 dark:hover:text-rose-300 transition-colors bg-white dark:bg-zinc-950 px-4 py-2 rounded-xl border border-zinc-150 dark:border-zinc-900 shadow-sm cursor-pointer"
+              >
+                <LogOut className="w-4 h-4" />
+                Cerrar Sesión
+              </button>
+            </div>
 
           <nav className="text-zinc-500 text-xs sm:text-sm font-medium" aria-label="Breadcrumb">
             <ol className="flex items-center gap-2">
@@ -143,6 +160,7 @@ export default function ImprimirQrPage() {
           ))}
         </div>
       </div>
-    </div>
+      </div>
+    </AdminGuard>
   );
 }

@@ -4,6 +4,25 @@ import path from "path";
 
 export async function POST(request: Request) {
   try {
+    // Verificar autenticación
+    const authHeader = request.headers.get("Authorization");
+    const EXPECTED_PASSWORD = process.env.ADMIN_PASSWORD || process.env.NEXT_PUBLIC_ADMIN_PASSWORD || "lindavista2026";
+    
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return NextResponse.json(
+        { error: "No autorizado. Acceso denegado." },
+        { status: 401 }
+      );
+    }
+
+    const token = authHeader.substring(7);
+    if (token !== EXPECTED_PASSWORD) {
+      return NextResponse.json(
+        { error: "No autorizado. Contraseña incorrecta." },
+        { status: 401 }
+      );
+    }
+
     const body = await request.json();
 
     // Validar campos obligatorios
