@@ -16,7 +16,8 @@ import {
   Copy,
   Check,
   AlertCircle,
-  LogOut
+  LogOut,
+  Printer
 } from "lucide-react";
 import AdminGuard from "@/components/AdminGuard";
 
@@ -214,6 +215,24 @@ export default function PlantAdminPage() {
             <LogOut className="w-4 h-4" />
             Cerrar Sesión
           </button>
+        </div>
+
+        {/* Tab Navigation */}
+        <div className="flex bg-zinc-100 dark:bg-zinc-900/60 p-1 rounded-2xl w-fit mb-8 gap-1 border border-zinc-200/30 dark:border-zinc-800/40">
+          <Link
+            href="/plantas/admin"
+            className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all duration-300 bg-white dark:bg-zinc-800 text-brand shadow-sm"
+          >
+            <Plus className="w-4 h-4" />
+            Añadir Nueva Planta
+          </Link>
+          <Link
+            href="/plantas/imprimir-qr"
+            className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all duration-300 text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-200"
+          >
+            <Printer className="w-4 h-4" />
+            Imprimir Etiquetas QR
+          </Link>
         </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start mb-20">

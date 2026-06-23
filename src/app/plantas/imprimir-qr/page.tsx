@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { ChevronLeft, Printer, Info, Sparkles, LogOut } from "lucide-react";
+import { ChevronLeft, Printer, Info, Sparkles, LogOut, Plus } from "lucide-react";
 import { plants } from "@/data/plants";
 import AdminGuard from "@/components/AdminGuard";
 
@@ -49,26 +49,44 @@ export default function ImprimirQrPage() {
               </button>
             </div>
 
-          <nav className="text-zinc-500 text-xs sm:text-sm font-medium" aria-label="Breadcrumb">
-            <ol className="flex items-center gap-2">
-              <li>
-                <Link href="/" className="hover:text-brand transition-colors">
-                  Inicio
-                </Link>
-              </li>
-              <li className="text-zinc-400 select-none">/</li>
-              <li>
-                <Link href="/plantas" className="hover:text-brand transition-colors">
-                  Catálogo
-                </Link>
-              </li>
-              <li className="text-zinc-400 select-none">/</li>
-              <li className="text-zinc-800 dark:text-zinc-300 font-semibold" aria-current="page">
-                Imprimir QR
-              </li>
-            </ol>
-          </nav>
-        </div>
+            <nav className="text-zinc-500 text-xs sm:text-sm font-medium" aria-label="Breadcrumb">
+              <ol className="flex items-center gap-2">
+                <li>
+                  <Link href="/" className="hover:text-brand transition-colors">
+                    Inicio
+                  </Link>
+                </li>
+                <li className="text-zinc-400 select-none">/</li>
+                <li>
+                  <Link href="/plantas" className="hover:text-brand transition-colors">
+                    Catálogo
+                  </Link>
+                </li>
+                <li className="text-zinc-400 select-none">/</li>
+                <li className="text-zinc-800 dark:text-zinc-300 font-semibold" aria-current="page">
+                  Imprimir QR
+                </li>
+              </ol>
+            </nav>
+          </div>
+
+          {/* Tab Navigation */}
+          <div className="flex bg-zinc-100 dark:bg-zinc-900/60 p-1 rounded-2xl w-fit mb-2 gap-1 border border-zinc-200/30 dark:border-zinc-800/40">
+            <Link
+              href="/plantas/admin"
+              className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all duration-300 text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-200"
+            >
+              <Plus className="w-4 h-4" />
+              Añadir Nueva Planta
+            </Link>
+            <Link
+              href="/plantas/imprimir-qr"
+              className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all duration-300 bg-white dark:bg-zinc-800 text-brand shadow-sm"
+            >
+              <Printer className="w-4 h-4" />
+              Imprimir Etiquetas QR
+            </Link>
+          </div>
 
         {/* Action Header Card */}
         <div className="bg-white dark:bg-zinc-950 border border-zinc-100 dark:border-zinc-900 rounded-3xl p-8 sm:p-10 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
