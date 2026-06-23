@@ -157,11 +157,11 @@ export default function PlantaDetailPage({ params }: PageProps) {
   };
 
   return (
-    <div className="flex flex-col w-full min-h-screen bg-zinc-50/40 dark:bg-zinc-950/20 py-8">
+    <div className="flex flex-col w-full min-h-screen bg-zinc-50/40 dark:bg-zinc-950/20 pt-2 pb-8 md:py-8">
       {/* 1. Navigation & Header Container */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mt-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mt-1 md:mt-4">
         {/* Back Link & Breadcrumbs */}
-        <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-4 md:mb-8">
           <Link
             href="/plantas"
             className="inline-flex items-center gap-2 text-sm font-semibold text-zinc-600 hover:text-brand dark:text-zinc-400 dark:hover:text-brand transition-colors bg-white dark:bg-zinc-950 px-4 py-2 rounded-xl border border-zinc-150 dark:border-zinc-900 shadow-sm"
