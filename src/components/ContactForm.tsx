@@ -22,7 +22,7 @@ export default function ContactForm() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage("");
 
@@ -49,12 +49,30 @@ export default function ContactForm() {
       return;
     }
 
-    // Success State loading simulation
     setStatus("loading");
-    setTimeout(() => {
-      setStatus("success");
-      setFormData({ name: "", email: "", phone: "", message: "" });
-    }, 1500);
+    
+    try {
+      const response = await fetch("/api/contacto", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setStatus("success");
+        setFormData({ name: "", email: "", phone: "", message: "" });
+      } else {
+        setStatus("error");
+        setErrorMessage(data.error || (language === "es" ? "Error al enviar el mensaje." : "Failed to send message."));
+      }
+    } catch (err) {
+      setStatus("error");
+      setErrorMessage(language === "es" ? "Error de conexión con el servidor." : "Server connection error.");
+    }
   };
 
   return (
