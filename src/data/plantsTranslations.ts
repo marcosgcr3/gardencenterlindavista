@@ -14,6 +14,7 @@ export interface PlantTranslation {
   light: string;
   temperature: string;
   humidity: string;
+  funFact: string;
 }
 
 export const plantsEn: Record<string, PlantTranslation> = {
@@ -35,7 +36,8 @@ export const plantsEn: Record<string, PlantTranslation> = {
     },
     light: "Bright indirect light or partial shade. Avoid direct sun as it burns the leaves.",
     temperature: "18°C - 27°C (does not tolerate cold below 10°C)",
-    humidity: "Medium - High (50% - 70%)"
+    humidity: "Medium - High (50% - 70%)",
+    funFact: "In its natural habitat, it produces a delicious fruit tasting like pineapple and banana, but it takes over a year to ripen."
   },
   "palmera-canaria": {
     name: "Canary Island Date Palm",
@@ -55,7 +57,8 @@ export const plantsEn: Record<string, PlantTranslation> = {
     },
     light: "Full sun. Requires maximum luminosity.",
     temperature: "-5°C to 45°C",
-    humidity: "Tolerates low humidity and salty winds"
+    humidity: "Tolerates low humidity and salty winds",
+    funFact: "It is a living fossil that has survived since the dinosaur era with almost no evolutionary changes."
   },
   "ficus-lira": {
     name: "Ficus Lyrata (Fiddle-Leaf Fig)",
@@ -75,7 +78,8 @@ export const plantsEn: Record<string, PlantTranslation> = {
     },
     light: "Bright indirect light. Direct sun can burn its leaves.",
     temperature: "16°C - 24°C (sensitive to drops below 12°C)",
-    humidity: "Medium - High (needs occasional spraying)"
+    humidity: "Medium - High (needs occasional spraying)",
+    funFact: "Its leaves are so large and rigid that in some West African cultures they were traditionally used to make temporary roofs."
   },
   "olivo": {
     name: "Olive Tree",
@@ -95,7 +99,8 @@ export const plantsEn: Record<string, PlantTranslation> = {
     },
     light: "Full direct sun (minimum 6 hours daily).",
     temperature: "Resists frosts down to -10°C and high temperatures over 40°C",
-    humidity: "Low (prefers dry climates)"
+    humidity: "Low (prefers dry climates)",
+    funFact: "There are olive trees in the Mediterranean that are over 2,000 years old and still produce olives perfectly."
   },
   "buganvilla": {
     name: "Bougainvillea",
@@ -115,7 +120,8 @@ export const plantsEn: Record<string, PlantTranslation> = {
     },
     light: "Full direct sun indispensable for flowering.",
     temperature: "Sensitive to heavy frosts (withstands down to 0°C briefly)",
-    humidity: "Low - Medium"
+    humidity: "Low - Medium",
+    funFact: "The colorful parts that look like petals are not flowers, but 'bracts' (modified leaves) that protect the tiny internal white flowers."
   },
   "sansevieria": {
     name: "Sansevieria (Snake Plant / Mother-in-Law's Tongue)",
@@ -135,7 +141,8 @@ export const plantsEn: Record<string, PlantTranslation> = {
     },
     light: "Tolerates from partial shade or dark areas to filtered direct sun.",
     temperature: "15°C - 30°C (does not tolerate frost)",
-    humidity: "Low (adapts well to dry heating air)"
+    humidity: "Low (adapts well to dry heating air)",
+    funFact: "It is capable of performing photosynthesis at night (via CAM), releasing oxygen while you sleep, making it ideal for the bedroom."
   },
   "aloe-vera": {
     name: "Aloe Vera",
@@ -155,7 +162,8 @@ export const plantsEn: Record<string, PlantTranslation> = {
     },
     light: "Full sun or very bright light.",
     temperature: "10°C to 35°C (does not tolerate severe frost)",
-    humidity: "Low (very resistant to dryness)"
+    humidity: "Low (very resistant to dryness)",
+    funFact: "Ancient Egyptians called it 'the plant of immortality' and Queen Cleopatra used it in her daily beauty rituals."
   },
   "cinta": {
     name: "Spider Plant",
@@ -175,7 +183,8 @@ export const plantsEn: Record<string, PlantTranslation> = {
     },
     light: "Moderate to bright indirect light. Tolerates partial shade.",
     temperature: "12°C - 24°C",
-    humidity: "Medium (appreciates spraying in summer)"
+    humidity: "Medium (appreciates spraying in summer)",
+    funFact: "It is one of the best air purifiers: a single plant can clear carbon monoxide from a medium room in 24 hours."
   },
   "lavanda": {
     name: "Lavender",
@@ -195,7 +204,8 @@ export const plantsEn: Record<string, PlantTranslation> = {
     },
     light: "Full direct sun (minimum 6 hours a day).",
     temperature: "-10°C to 40°C",
-    humidity: "Low (dry and airy environments)"
+    humidity: "Low (dry and airy environments)",
+    funFact: "Its scent reduces heart rate and blood pressure, helping to combat insomnia and anxiety naturally."
   },
   "poto": {
     name: "Pothos",
@@ -215,7 +225,8 @@ export const plantsEn: Record<string, PlantTranslation> = {
     },
     light: "Bright indirect light (maintains yellow color better) to medium shade.",
     temperature: "15°C - 26°C",
-    humidity: "Medium (tolerates low humidity)"
+    humidity: "Medium (tolerates low humidity)",
+    funFact: "It is known as the 'money plant' in several Asian countries because it is associated with attracting good fortune and wealth."
   },
   "rosal": {
     name: "Rose Bush",
@@ -235,7 +246,8 @@ export const plantsEn: Record<string, PlantTranslation> = {
     },
     light: "Full direct sun (minimum 6 hours daily).",
     temperature: "-15°C to 38°C (tolerates winter frosts)",
-    humidity: "Medium (prefers good air circulation)"
+    humidity: "Medium (prefers good air circulation)",
+    funFact: "Wild rose fossils prove that this flower has existed on Earth for more than 35 million years."
   },
   "echeveria": {
     name: "Echeveria",
@@ -255,7 +267,8 @@ export const plantsEn: Record<string, PlantTranslation> = {
     },
     light: "Full direct sun or bright filtered light.",
     temperature: "5°C to 35°C (protect from heavy frosts)",
-    humidity: "Low (very sensitive to persistent ambient humidity)"
+    humidity: "Low (very sensitive to persistent ambient humidity)",
+    funFact: "Its thin layer of whitish powder on the leaves (epicuticular wax) acts as a natural sunscreen against burns and repels water."
   },
   "helecho-espada": {
     name: "Sword Fern",
@@ -275,7 +288,8 @@ export const plantsEn: Record<string, PlantTranslation> = {
     },
     light: "Filtered indirect light or partial shade. Never direct sun.",
     temperature: "15°C - 24°C (sensitive to extreme cold)",
-    humidity: "High (minimum 60%)"
+    humidity: "High (minimum 60%)",
+    funFact: "It is a prehistoric plant that has no flowers or seeds; it reproduces magically through spores on the underside of its leaves."
   },
   "hibisco": {
     name: "Hibiscus (China Rose)",
@@ -295,7 +309,8 @@ export const plantsEn: Record<string, PlantTranslation> = {
     },
     light: "Full direct sun (minimum 5-6 hours a day to bloom well).",
     temperature: "10°C to 35°C (does not tolerate prolonged frosts)",
-    humidity: "Medium - High"
+    humidity: "Medium - High",
+    funFact: "In Hawaii, if a woman wears a hibiscus flower behind her left ear, it means she is looking for a partner."
   },
   "kentia": {
     name: "Kentia Palm",
@@ -315,7 +330,8 @@ export const plantsEn: Record<string, PlantTranslation> = {
     },
     light: "Bright indirect light to moderate partial shade.",
     temperature: "14°C - 25°C (supports occasional drops down to 10°C)",
-    humidity: "Medium"
+    humidity: "Medium",
+    funFact: "It is native only to the remote Lord Howe Island in Australia and was the favorite plant of Queen Victoria's drawing rooms."
   },
   "arbol-de-jade": {
     name: "Jade Tree",
@@ -335,7 +351,8 @@ export const plantsEn: Record<string, PlantTranslation> = {
     },
     light: "Full sun or very bright direct light.",
     temperature: "10°C to 35°C (does not tolerate frosts below 5°C)",
-    humidity: "Low (dry environments)"
+    humidity: "Low (dry environments)",
+    funFact: "It can live for over 100 years if well cared for, passing from generation to generation as a prized family heirloom."
   },
   "espatifilo": {
     name: "Peace Lily",
@@ -355,7 +372,8 @@ export const plantsEn: Record<string, PlantTranslation> = {
     },
     light: "Medium to bright indirect light. Tolerates low light.",
     temperature: "16°C - 24°C (sensitive to cold under 12°C)",
-    humidity: "High (appreciates frequent spraying)"
+    humidity: "High (appreciates frequent spraying)",
+    funFact: "It is known as the drama plant because when it is thirsty it droops completely, only to resurrect hours after watering."
   },
   "calatea": {
     name: "Calathea (Peacock Plant)",
@@ -375,7 +393,8 @@ export const plantsEn: Record<string, PlantTranslation> = {
     },
     light: "Partial shade or very soft filtered indirect light.",
     temperature: "18°C - 24°C (never below 15°C)",
-    humidity: "High (minimum 60% - 70%)"
+    humidity: "High (minimum 60% - 70%)",
+    funFact: "At night, its leaves close vertically upwards like hands in prayer, and open again at dawn."
   },
   "geranio": {
     name: "Geranium",
@@ -395,7 +414,8 @@ export const plantsEn: Record<string, PlantTranslation> = {
     },
     light: "Full direct sun (minimum 5-6 hours daily).",
     temperature: "5°C to 40°C (protect from heavy frosts)",
-    humidity: "Low - Medium"
+    humidity: "Low - Medium",
+    funFact: "Its leaves contain essential oils that act as an effective natural repellent against mosquitoes and other annoying insects."
   },
   "romero": {
     name: "Rosemary",
@@ -415,7 +435,8 @@ export const plantsEn: Record<string, PlantTranslation> = {
     },
     light: "Full direct sun indispensable.",
     temperature: "-10°C to 45°C",
-    humidity: "Low (dry and sunny environments)"
+    humidity: "Low (dry and sunny environments)",
+    funFact: "In ancient Greece, students wore rosemary wreaths before exams to improve their memory and concentration."
   }
 };
 
@@ -435,7 +456,8 @@ export function getTranslatedPlant(plant: Plant, lang: string): Plant {
       },
       light: trans.light,
       temperature: trans.temperature,
-      humidity: trans.humidity
+      humidity: trans.humidity,
+      funFact: trans.funFact
     };
   }
   return plant;

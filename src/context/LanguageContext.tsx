@@ -213,7 +213,8 @@ const translations: Record<Language, Record<string, string>> = {
     "details.watering.summer": "Primavera - Verano",
     "details.watering.winter": "Otoño - Invierno",
     "details.btn.back": "Volver al Catálogo",
-    "details.btn.print": "Imprimir Ficha"
+    "details.btn.print": "Imprimir Ficha",
+    "details.funFact": "Dato Curioso"
   },
   en: {
     // Navbar
@@ -415,7 +416,8 @@ const translations: Record<Language, Record<string, string>> = {
     "details.watering.summer": "Spring - Summer",
     "details.watering.winter": "Autumn - Winter",
     "details.btn.back": "Back to Catalog",
-    "details.btn.print": "Print Page"
+    "details.btn.print": "Print Page",
+    "details.funFact": "Fun Fact"
   }
 };
 

@@ -25,6 +25,89 @@ interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
+// Custom SVG Water Droplet Icon
+function WaterDropletIcon({ level, className = "w-8 h-8" }: { level: number; className?: string }) {
+  const fillPercentage = level === 1 ? 33 : level === 2 ? 66 : 100;
+  const id = React.useId().replace(/:/g, "-");
+  return (
+    <svg viewBox="0 0 24 24" className={`${className} shrink-0 select-none`}>
+      <defs>
+        <linearGradient id={id} x1="0" y1="1" x2="0" y2="0">
+          <stop offset="0%" stopColor="#3b82f6" />
+          <stop offset={`${fillPercentage}%`} stopColor="#3b82f6" />
+          <stop offset={`${fillPercentage}%`} stopColor="rgba(156, 163, 175, 0.2)" />
+          <stop offset="100%" stopColor="rgba(156, 163, 175, 0.2)" />
+        </linearGradient>
+      </defs>
+      <path
+        d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"
+        fill={`url(#${id})`}
+        stroke="#2563eb"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+// Custom SVG Sun Icon
+function SunIcon({ level, className = "w-8 h-8" }: { level: number; className?: string }) {
+  const fillPercentage = level === 1 ? 33 : level === 2 ? 66 : 100;
+  const id = React.useId().replace(/:/g, "-");
+  return (
+    <svg viewBox="0 0 24 24" className={`${className} shrink-0 select-none`}>
+      <defs>
+        <linearGradient id={id} x1="0" y1="1" x2="0" y2="0">
+          <stop offset="0%" stopColor="#f59e0b" />
+          <stop offset={`${fillPercentage}%`} stopColor="#f59e0b" />
+          <stop offset={`${fillPercentage}%`} stopColor="rgba(156, 163, 175, 0.2)" />
+          <stop offset="100%" stopColor="rgba(156, 163, 175, 0.2)" />
+        </linearGradient>
+      </defs>
+      <circle
+        cx="12"
+        cy="12"
+        r="5"
+        fill={`url(#${id})`}
+        stroke="#d97706"
+        strokeWidth="1.5"
+      />
+      <path
+        d="M12 1v2M12 19v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"
+        stroke="#d97706"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+// Custom SVG Thermometer Icon
+function ThermometerIcon({ percentage, className = "w-8 h-8" }: { percentage: number; className?: string }) {
+  const id = React.useId().replace(/:/g, "-");
+  return (
+    <svg viewBox="0 0 24 24" className={`${className} shrink-0 select-none`}>
+      <defs>
+        <linearGradient id={id} x1="0" y1="1" x2="0" y2="0">
+          <stop offset="0%" stopColor="#ef4444" />
+          <stop offset={`${percentage}%`} stopColor="#ef4444" />
+          <stop offset={`${percentage}%`} stopColor="rgba(156, 163, 175, 0.2)" />
+          <stop offset="100%" stopColor="rgba(156, 163, 175, 0.2)" />
+        </linearGradient>
+      </defs>
+      <path
+        d="M14 4.5a2 2 0 0 0-4 0v9.75a4.5 4.5 0 1 0 4 0V4.5z"
+        fill={`url(#${id})`}
+        stroke="#dc2626"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 export default function PlantaDetailPage({ params }: PageProps) {
   const { t, language } = useLanguage();
   const { slug } = use(params);
@@ -83,9 +166,108 @@ export default function PlantaDetailPage({ params }: PageProps) {
             </ol>
           </nav>
         </div>
+        {/* MOBILE VIEW (lg:hidden): Compact & Above the fold */}
+        <div className="block lg:hidden w-full flex flex-col gap-5 mb-8">
+          {/* 1. Header Details (Title & Scientific Name) */}
+          <div>
+            <span className="italic text-brand font-semibold text-xs uppercase tracking-wider block">
+              {plant.scientificName}
+            </span>
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-zinc-900 dark:text-white tracking-tight mt-1 leading-tight">
+              {plant.name}
+            </h1>
+          </div>
 
-        {/* 2. Main Plant Card Split (Two Columns, No banner image) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start mb-12">
+          {/* 2. Compact Banner Image */}
+          <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden border-4 border-white dark:border-zinc-900 shadow-md bg-white dark:bg-zinc-950">
+            <Image
+              src={plant.imageUrl}
+              alt={plant.name}
+              fill
+              priority
+              className="object-cover"
+            />
+            {/* Category floating badge */}
+            <div className="absolute top-3 left-3 z-10">
+              <span className="bg-white/95 dark:bg-zinc-950/95 text-zinc-800 dark:text-zinc-200 text-[9px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-md shadow-xs">
+                {t(`category.${plant.category}`)}
+              </span>
+            </div>
+            {/* Difficulty floating badge */}
+            <div className="absolute top-3 right-3 z-10">
+              <span className={`text-[9px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-md shadow-xs ${getDifficultyColor(plant.difficulty)}`}>
+                {t(`difficulty.${plant.difficulty}`)}
+              </span>
+            </div>
+          </div>
+
+          {/* 3. Care Dashboard (Gota, Sol, Termómetro) */}
+          <div className="grid grid-cols-3 gap-3">
+            {/* Riego */}
+            <div className="bg-white dark:bg-zinc-950 border border-zinc-150/65 dark:border-zinc-900 p-3 rounded-2xl flex flex-col items-center text-center gap-1.5 shadow-xs">
+              <WaterDropletIcon level={plant.wateringLevel} className="w-8 h-8" />
+              <div className="flex flex-col">
+                <span className="text-[9px] uppercase font-bold text-zinc-400 tracking-wider">
+                  {language === "es" ? "Riego" : "Watering"}
+                </span>
+                <span className="text-[10px] font-semibold text-zinc-700 dark:text-zinc-300 truncate max-w-full mt-0.5" title={plant.watering.general}>
+                  {plant.watering.general}
+                </span>
+              </div>
+            </div>
+
+            {/* Sol */}
+            <div className="bg-white dark:bg-zinc-950 border border-zinc-150/65 dark:border-zinc-900 p-3 rounded-2xl flex flex-col items-center text-center gap-1.5 shadow-xs">
+              <SunIcon level={plant.sunLevel} className="w-8 h-8" />
+              <div className="flex flex-col">
+                <span className="text-[9px] uppercase font-bold text-zinc-400 tracking-wider">
+                  {language === "es" ? "Luz" : "Light"}
+                </span>
+                <span className="text-[10px] font-semibold text-zinc-700 dark:text-zinc-300 truncate max-w-full mt-0.5" title={plant.light}>
+                  {plant.light}
+                </span>
+              </div>
+            </div>
+
+            {/* Temperatura */}
+            <div className="bg-white dark:bg-zinc-950 border border-zinc-150/65 dark:border-zinc-900 p-3 rounded-2xl flex flex-col items-center text-center gap-1.5 shadow-xs">
+              <ThermometerIcon percentage={plant.tempLevel} className="w-8 h-8" />
+              <div className="flex flex-col">
+                <span className="text-[9px] uppercase font-bold text-zinc-400 tracking-wider">
+                  {language === "es" ? "Temperatura" : "Temp"}
+                </span>
+                <span className="text-[10px] font-semibold text-zinc-700 dark:text-zinc-300 truncate max-w-full mt-0.5" title={plant.temperature}>
+                  {plant.temperature}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* 4. Highlighted Fun Fact Card */}
+          <div className="bg-brand/5 dark:bg-brand/10 border border-brand/10 dark:border-brand/20 rounded-2xl p-4 flex gap-3 shadow-xs">
+            <div className="w-9 h-9 rounded-xl bg-brand/10 dark:bg-brand/20 text-brand flex items-center justify-center shrink-0">
+              <Sprout className="w-5 h-5" />
+            </div>
+            <div className="flex flex-col gap-0.5">
+              <span className="text-[10px] uppercase font-bold text-brand tracking-wider">
+                {t("details.funFact")}
+              </span>
+              <p className="text-xs leading-relaxed font-light text-zinc-700 dark:text-zinc-300">
+                {plant.funFact}
+              </p>
+            </div>
+          </div>
+
+          {/* 5. Description */}
+          <div className="bg-white dark:bg-zinc-950 border border-zinc-150/65 dark:border-zinc-900 p-4 rounded-2xl shadow-xs">
+            <p className="text-xs leading-relaxed font-light text-zinc-600 dark:text-zinc-400">
+              {plant.description}
+            </p>
+          </div>
+        </div>
+
+        {/* DESKTOP VIEW (lg:grid): Clean Two-Column Layout */}
+        <div className="hidden lg:grid grid-cols-12 gap-12 items-start mb-12">
           {/* Left Column: Visual Container */}
           <div className="lg:col-span-5 w-full flex flex-col gap-6">
             <div className="relative aspect-square rounded-3xl overflow-hidden border-8 border-white dark:border-zinc-900 shadow-xl bg-white dark:bg-zinc-950 group">
@@ -135,7 +317,7 @@ export default function PlantaDetailPage({ params }: PageProps) {
               </h1>
             </div>
 
-            <p className="text-zinc-600 dark:text-zinc-400 text-base sm:text-lg leading-relaxed font-light">
+            <p className="text-zinc-650 dark:text-zinc-400 text-base sm:text-lg leading-relaxed font-light">
               {plant.description}
             </p>
 
@@ -146,7 +328,7 @@ export default function PlantaDetailPage({ params }: PageProps) {
               {/* Light requirement */}
               <div className="bg-white dark:bg-zinc-950 border border-zinc-100 dark:border-zinc-900 rounded-2xl p-5 flex items-center gap-4 shadow-sm">
                 <div className="w-12 h-12 rounded-xl bg-amber-50 dark:bg-amber-950/20 text-amber-500 flex items-center justify-center shrink-0">
-                  <Sun className="w-6 h-6" />
+                  <SunIcon level={plant.sunLevel} className="w-8 h-8" />
                 </div>
                 <div>
                   <span className="text-xxs uppercase font-bold text-zinc-400 tracking-wider">{t("details.light")}</span>
@@ -157,7 +339,7 @@ export default function PlantaDetailPage({ params }: PageProps) {
               {/* Water requirement */}
               <div className="bg-white dark:bg-zinc-950 border border-zinc-100 dark:border-zinc-900 rounded-2xl p-5 flex items-center gap-4 shadow-sm">
                 <div className="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-950/20 text-blue-500 flex items-center justify-center shrink-0">
-                  <Droplet className="w-6 h-6" />
+                  <WaterDropletIcon level={plant.wateringLevel} className="w-8 h-8" />
                 </div>
                 <div>
                   <span className="text-xxs uppercase font-bold text-zinc-400 tracking-wider">
@@ -170,7 +352,7 @@ export default function PlantaDetailPage({ params }: PageProps) {
               {/* Temperature requirement */}
               <div className="bg-white dark:bg-zinc-950 border border-zinc-100 dark:border-zinc-900 rounded-2xl p-5 flex items-center gap-4 shadow-sm">
                 <div className="w-12 h-12 rounded-xl bg-red-50 dark:bg-red-950/20 text-red-500 flex items-center justify-center shrink-0">
-                  <Thermometer className="w-6 h-6" />
+                  <ThermometerIcon percentage={plant.tempLevel} className="w-8 h-8" />
                 </div>
                 <div>
                   <span className="text-xxs uppercase font-bold text-zinc-400 tracking-wider">{t("details.temperature")}</span>
@@ -187,6 +369,21 @@ export default function PlantaDetailPage({ params }: PageProps) {
                   <span className="text-xxs uppercase font-bold text-zinc-400 tracking-wider">{t("details.humidity")}</span>
                   <span className="block text-sm font-bold text-zinc-800 dark:text-zinc-200 mt-0.5">{plant.humidity}</span>
                 </div>
+              </div>
+            </div>
+
+            {/* Highlighted Fun Fact Card (Desktop) */}
+            <div className="bg-brand/5 dark:bg-brand/10 border border-brand/10 dark:border-brand/20 rounded-2xl p-6 flex gap-4 shadow-sm">
+              <div className="w-10 h-10 rounded-xl bg-brand/10 dark:bg-brand/20 text-brand flex items-center justify-center shrink-0">
+                <Sprout className="w-6 h-6" />
+              </div>
+              <div className="flex flex-col gap-1">
+                <span className="text-xxs uppercase font-bold text-brand tracking-wider">
+                  {t("details.funFact")}
+                </span>
+                <p className="text-sm leading-relaxed font-light text-zinc-700 dark:text-zinc-300">
+                  {plant.funFact}
+                </p>
               </div>
             </div>
 

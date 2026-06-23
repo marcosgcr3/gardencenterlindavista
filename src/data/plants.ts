@@ -17,6 +17,10 @@ export interface Plant {
   imageUrl: string;
   temperature: string;
   humidity: string;
+  wateringLevel: number;
+  sunLevel: number;
+  tempLevel: number;
+  funFact: string;
 }
 
 export const plants: Plant[] = [
@@ -43,7 +47,11 @@ export const plants: Plant[] = [
     difficulty: "Bajo",
     imageUrl: "/plants/monstera-deliciosa.png",
     temperature: "18°C - 27°C (no tolera el frío inferior a 10°C)",
-    humidity: "Media - Alta (50% - 70%)"
+    humidity: "Media - Alta (50% - 70%)",
+    wateringLevel: 2,
+    sunLevel: 2,
+    tempLevel: 70,
+    funFact: "En su hábitat natural, produce una fruta deliciosa con sabor a piña y plátano, pero tarda más de un año en madurar."
   },
   {
     slug: "palmera-canaria",
@@ -68,7 +76,11 @@ export const plants: Plant[] = [
     difficulty: "Medio",
     imageUrl: "/plants/palmera-canaria.png",
     temperature: "-5°C a 45°C",
-    humidity: "Tolera humedad baja y viento salino"
+    humidity: "Tolera humedad baja y viento salino",
+    wateringLevel: 2,
+    sunLevel: 3,
+    tempLevel: 80,
+    funFact: "Es un fósil viviente que ha sobrevivido desde la época de los dinosaurios casi sin cambios evolutivos."
   },
   {
     slug: "ficus-lira",
@@ -93,7 +105,11 @@ export const plants: Plant[] = [
     difficulty: "Medio",
     imageUrl: "/plants/ficus-lira.png",
     temperature: "16°C - 24°C (sensible a bajadas de menos de 12°C)",
-    humidity: "Media - Alta (necesita pulverización ocasional)"
+    humidity: "Media - Alta (necesita pulverización ocasional)",
+    wateringLevel: 2,
+    sunLevel: 2,
+    tempLevel: 65,
+    funFact: "Sus hojas son tan grandes y rígidas que en algunas culturas de África Occidental se usaban tradicionalmente para hacer techos temporales."
   },
   {
     slug: "olivo",
@@ -118,7 +134,11 @@ export const plants: Plant[] = [
     difficulty: "Bajo",
     imageUrl: "/plants/olivo.png",
     temperature: "Resiste heladas de hasta -10°C y temperaturas altas de más de 40°C",
-    humidity: "Baja (prefiere climas secos)"
+    humidity: "Baja (prefiere climas secos)",
+    wateringLevel: 1,
+    sunLevel: 3,
+    tempLevel: 85,
+    funFact: "Existen olivos en el Mediterráneo que tienen más de 2000 años y siguen produciendo aceitunas perfectamente."
   },
   {
     slug: "buganvilla",
@@ -143,7 +163,11 @@ export const plants: Plant[] = [
     difficulty: "Bajo",
     imageUrl: "/plants/buganvilla.png",
     temperature: "Sensible a heladas fuertes (soporta hasta 0°C de forma breve)",
-    humidity: "Baja - Media"
+    humidity: "Baja - Media",
+    wateringLevel: 1,
+    sunLevel: 3,
+    tempLevel: 90,
+    funFact: "Las partes coloridas que parecen pétalos no son flores, sino 'brácteas' (hojas modificadas) que protegen a las diminutas flores blancas internas."
   },
   {
     slug: "sansevieria",
@@ -168,7 +192,11 @@ export const plants: Plant[] = [
     difficulty: "Bajo",
     imageUrl: "/plants/sansevieria.png",
     temperature: "15°C - 30°C (no tolera heladas)",
-    humidity: "Baja (se adapta bien a la sequedad de la calefacción)"
+    humidity: "Baja (se adapta bien a la sequedad de la calefacción)",
+    wateringLevel: 1,
+    sunLevel: 1,
+    tempLevel: 75,
+    funFact: "Es capaz de realizar la fotosíntesis durante la noche (vía CAM), liberando oxígeno mientras duermes, ideal para el dormitorio."
   },
   {
     slug: "aloe-vera",
@@ -193,7 +221,11 @@ export const plants: Plant[] = [
     difficulty: "Bajo",
     imageUrl: "/plants/aloe-vera.png",
     temperature: "10°C a 35°C (no tolera heladas severas)",
-    humidity: "Baja (muy resistente a la sequedad)"
+    humidity: "Baja (muy resistente a la sequedad)",
+    wateringLevel: 1,
+    sunLevel: 3,
+    tempLevel: 80,
+    funFact: "Los antiguos egipcios la llamaban 'la planta de la inmortalidad' y la reina Cleopatra la usaba en sus rituales de belleza diarios."
   },
   {
     slug: "cinta",
@@ -218,7 +250,11 @@ export const plants: Plant[] = [
     difficulty: "Bajo",
     imageUrl: "/plants/cinta.png",
     temperature: "12°C - 24°C",
-    humidity: "Media (agradece pulverización en verano)"
+    humidity: "Media (agradece pulverización en verano)",
+    wateringLevel: 2,
+    sunLevel: 2,
+    tempLevel: 60,
+    funFact: "Es una de las mejores purificadoras del aire: una sola planta puede limpiar el monóxido de carbono de una habitación mediana en 24 horas."
   },
   {
     slug: "lavanda",
@@ -243,7 +279,11 @@ export const plants: Plant[] = [
     difficulty: "Bajo",
     imageUrl: "/plants/lavanda.png",
     temperature: "-10°C a 40°C",
-    humidity: "Baja (ambientes secos y aireados)"
+    humidity: "Baja (ambientes secos y aireados)",
+    wateringLevel: 1,
+    sunLevel: 3,
+    tempLevel: 70,
+    funFact: "Su aroma reduce el ritmo cardíaco y la presión arterial, ayudando a combatir el insomnio y la ansiedad de forma natural."
   },
   {
     slug: "poto",
@@ -268,7 +308,11 @@ export const plants: Plant[] = [
     difficulty: "Bajo",
     imageUrl: "/plants/poto.png",
     temperature: "15°C - 26°C",
-    humidity: "Media (soporta humedad baja)"
+    humidity: "Media (soporta humedad baja)",
+    wateringLevel: 1,
+    sunLevel: 2,
+    tempLevel: 65,
+    funFact: "Se le conoce como 'la planta del dinero' en varios países asiáticos porque se asocia con la atracción de la buena fortuna y la riqueza."
   },
   {
     slug: "rosal",
@@ -293,7 +337,11 @@ export const plants: Plant[] = [
     difficulty: "Medio",
     imageUrl: "/plants/rosal.png",
     temperature: "-15°C a 38°C (tolera heladas invernales)",
-    humidity: "Media (prefiere buena circulación de aire)"
+    humidity: "Media (prefiere buena circulación de aire)",
+    wateringLevel: 2,
+    sunLevel: 3,
+    tempLevel: 70,
+    funFact: "Fósiles de rosas silvestres demuestran que esta flor existe en la Tierra desde hace más de 35 millones de años."
   },
   {
     slug: "echeveria",
@@ -318,7 +366,11 @@ export const plants: Plant[] = [
     difficulty: "Bajo",
     imageUrl: "/plants/echeveria.png",
     temperature: "5°C a 35°C (proteger de heladas fuertes)",
-    humidity: "Baja (muy sensible a la humedad ambiental persistente)"
+    humidity: "Baja (muy sensible a la humedad ambiental persistente)",
+    wateringLevel: 1,
+    sunLevel: 3,
+    tempLevel: 75,
+    funFact: "Su fina capa de polvillo blanquecino en las hojas (pruina) actúa como un protector solar natural contra quemaduras y repele el agua."
   },
   {
     slug: "helecho-espada",
@@ -343,7 +395,11 @@ export const plants: Plant[] = [
     difficulty: "Medio",
     imageUrl: "/plants/helecho-espada.png",
     temperature: "15°C - 24°C (sensible al frío extremo)",
-    humidity: "Alta (mínimo 60%)"
+    humidity: "Alta (mínimo 60%)",
+    wateringLevel: 3,
+    sunLevel: 1,
+    tempLevel: 60,
+    funFact: "Es una planta prehistórica que no tiene flores ni semillas; se reproduce de forma mágica a través de esporas en el envés de sus hojas."
   },
   {
     slug: "hibisco",
@@ -368,7 +424,11 @@ export const plants: Plant[] = [
     difficulty: "Medio",
     imageUrl: "/plants/hibisco.png",
     temperature: "10°C a 35°C (no tolera heladas prolongadas)",
-    humidity: "Media - Alta"
+    humidity: "Media - Alta",
+    wateringLevel: 2,
+    sunLevel: 3,
+    tempLevel: 85,
+    funFact: "En Hawái, si una mujer lleva una flor de hibisco detrás de la oreja izquierda, significa que está buscando pareja."
   },
   {
     slug: "kentia",
@@ -393,7 +453,11 @@ export const plants: Plant[] = [
     difficulty: "Bajo",
     imageUrl: "/plants/kentia.png",
     temperature: "14°C - 25°C (soporta caídas puntuales de hasta 10°C)",
-    humidity: "Media"
+    humidity: "Media",
+    wateringLevel: 2,
+    sunLevel: 2,
+    tempLevel: 70,
+    funFact: "Es originaria únicamente de la remota isla Lord Howe en Australia y fue la planta favorita de los salones de la reina Victoria de Inglaterra."
   },
   {
     slug: "arbol-de-jade",
@@ -418,7 +482,11 @@ export const plants: Plant[] = [
     difficulty: "Bajo",
     imageUrl: "/plants/arbol-jade.png",
     temperature: "10°C a 35°C (no tolera heladas por debajo de 5°C)",
-    humidity: "Baja (ambientes secos)"
+    humidity: "Baja (ambientes secos)",
+    wateringLevel: 1,
+    sunLevel: 3,
+    tempLevel: 80,
+    funFact: "Puede vivir más de 100 años si se cuida bien, pasando de generación en generación como una preciada herencia familiar."
   },
   {
     slug: "espatifilo",
@@ -443,7 +511,11 @@ export const plants: Plant[] = [
     difficulty: "Bajo",
     imageUrl: "/plants/espatifilo.png",
     temperature: "16°C - 24°C (sensible al frío de menos de 12°C)",
-    humidity: "Alta (agradece pulverización frecuente)"
+    humidity: "Alta (agradece pulverización frecuente)",
+    wateringLevel: 2,
+    sunLevel: 1,
+    tempLevel: 65,
+    funFact: "Es conocida como la planta dramática porque cuando tiene sed se desmaya por completo cayendo sus hojas, y resucita al regarla."
   },
   {
     slug: "calatea",
@@ -468,7 +540,11 @@ export const plants: Plant[] = [
     difficulty: "Alto",
     imageUrl: "https://images.unsplash.com/photo-1618220179428-22790b461013?q=80&w=600&auto=format&fit=crop",
     temperature: "18°C - 24°C (nunca por debajo de 15°C)",
-    humidity: "Alta (mínimo 60% - 70%)"
+    humidity: "Alta (mínimo 60% - 70%)",
+    wateringLevel: 3,
+    sunLevel: 1,
+    tempLevel: 68,
+    funFact: "Al anochecer, sus hojas se cierran verticalmente hacia arriba simulando unas manos en oración, y se vuelven a abrir al amanecer."
   },
   {
     slug: "geranio",
@@ -493,7 +569,11 @@ export const plants: Plant[] = [
     difficulty: "Bajo",
     imageUrl: "https://images.unsplash.com/photo-1507269811115-4c9d9ffec8c2?q=80&w=600&auto=format&fit=crop",
     temperature: "5°C a 40°C (proteger de heladas fuertes)",
-    humidity: "Baja - Media"
+    humidity: "Baja - Media",
+    wateringLevel: 2,
+    sunLevel: 3,
+    tempLevel: 75,
+    funFact: "Sus hojas contienen aceites esenciales que actúan como un repelente natural eficaz contra los mosquitos y otros insectos molestos."
   },
   {
     slug: "romero",
@@ -518,6 +598,10 @@ export const plants: Plant[] = [
     difficulty: "Bajo",
     imageUrl: "https://images.unsplash.com/photo-1515543904379-3d757afe72e2?q=80&w=600&auto=format&fit=crop",
     temperature: "-10°C a 45°C",
-    humidity: "Baja (ambientes secos y soleados)"
+    humidity: "Baja (ambientes secos y soleados)",
+    wateringLevel: 1,
+    sunLevel: 3,
+    tempLevel: 85,
+    funFact: "En la antigua Grecia, los estudiantes se ponían coronas de romero antes de los exámenes para mejorar su memoria y concentración."
   }
 ];

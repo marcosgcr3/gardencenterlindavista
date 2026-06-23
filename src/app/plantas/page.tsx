@@ -22,6 +22,64 @@ import { plants, Plant } from "@/data/plants";
 import { useLanguage } from "@/context/LanguageContext";
 import { getTranslatedPlant } from "@/data/plantsTranslations";
 
+// Custom SVG Water Droplet Icon
+function WaterDropletIcon({ level, className = "w-5 h-5" }: { level: number; className?: string }) {
+  const fillPercentage = level === 1 ? 33 : level === 2 ? 66 : 100;
+  const id = React.useId().replace(/:/g, "-");
+  return (
+    <svg viewBox="0 0 24 24" className={`${className} shrink-0 select-none`}>
+      <defs>
+        <linearGradient id={id} x1="0" y1="1" x2="0" y2="0">
+          <stop offset="0%" stopColor="#3b82f6" />
+          <stop offset={`${fillPercentage}%`} stopColor="#3b82f6" />
+          <stop offset={`${fillPercentage}%`} stopColor="rgba(156, 163, 175, 0.2)" />
+          <stop offset="100%" stopColor="rgba(156, 163, 175, 0.2)" />
+        </linearGradient>
+      </defs>
+      <path
+        d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"
+        fill={`url(#${id})`}
+        stroke="#2563eb"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+// Custom SVG Sun Icon
+function SunIcon({ level, className = "w-5 h-5" }: { level: number; className?: string }) {
+  const fillPercentage = level === 1 ? 33 : level === 2 ? 66 : 100;
+  const id = React.useId().replace(/:/g, "-");
+  return (
+    <svg viewBox="0 0 24 24" className={`${className} shrink-0 select-none`}>
+      <defs>
+        <linearGradient id={id} x1="0" y1="1" x2="0" y2="0">
+          <stop offset="0%" stopColor="#f59e0b" />
+          <stop offset={`${fillPercentage}%`} stopColor="#f59e0b" />
+          <stop offset={`${fillPercentage}%`} stopColor="rgba(156, 163, 175, 0.2)" />
+          <stop offset="100%" stopColor="rgba(156, 163, 175, 0.2)" />
+        </linearGradient>
+      </defs>
+      <circle
+        cx="12"
+        cy="12"
+        r="5"
+        fill={`url(#${id})`}
+        stroke="#d97706"
+        strokeWidth="1.5"
+      />
+      <path
+        d="M12 1v2M12 19v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"
+        stroke="#d97706"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
 export default function PlantasPage() {
   const { t, language } = useLanguage();
   const [searchTerm, setSearchTerm] = useState("");
@@ -311,11 +369,11 @@ export default function PlantasPage() {
                   {/* Core indicators */}
                   <div className="grid grid-cols-2 gap-4 text-xs font-medium text-zinc-500 dark:text-zinc-400 py-1">
                     <div className="flex items-center gap-2">
-                      <Sun className="w-4 h-4 text-brand shrink-0" />
+                      <SunIcon level={plant.sunLevel} className="w-5 h-5 text-brand shrink-0" />
                       <span className="truncate" title={plant.light}>{plant.light}</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Droplet className="w-4 h-4 text-brand shrink-0" />
+                      <WaterDropletIcon level={plant.wateringLevel} className="w-5 h-5 text-brand shrink-0" />
                       <span className="truncate" title={plant.watering.general}>{plant.watering.general}</span>
                     </div>
                   </div>
