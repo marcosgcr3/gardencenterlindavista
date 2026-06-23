@@ -1,0 +1,316 @@
+"use client";
+
+import React, { useState, useMemo } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import {
+  Search,
+  Sprout,
+  Filter,
+  ArrowRight,
+  Droplet,
+  Sun,
+  X,
+  Compass,
+  Sparkles,
+  TreePine,
+  Home,
+  CheckCircle2
+} from "lucide-react";
+import { plants, Plant } from "@/data/plants";
+
+export default function PlantasPage() {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState<string>("Todas");
+  const [selectedDifficulty, setSelectedDifficulty] = useState<string>("Todas");
+
+  // Filter Categories list
+  const categories = ["Todas", "Interior", "Exterior", "Suculentas", "Árboles"];
+  const difficulties = ["Todas", "Bajo", "Medio", "Alto"];
+
+  // Filter and search logic
+  const filteredPlants = useMemo(() => {
+    return plants.filter((plant) => {
+      const matchesSearch =
+        plant.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        plant.scientificName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        plant.description.toLowerCase().includes(searchTerm.toLowerCase());
+      
+      const matchesCategory =
+        selectedCategory === "Todas" || plant.category === selectedCategory;
+
+      const matchesDifficulty =
+        selectedDifficulty === "Todas" || plant.difficulty === selectedDifficulty;
+
+      return matchesSearch && matchesCategory && matchesDifficulty;
+    });
+  }, [searchTerm, selectedCategory, selectedDifficulty]);
+
+  const resetFilters = () => {
+    setSearchTerm("");
+    setSelectedCategory("Todas");
+    setSelectedDifficulty("Todas");
+  };
+
+  // Helper to render difficulty badge styling
+  const getDifficultyColor = (difficulty: Plant["difficulty"]) => {
+    switch (difficulty) {
+      case "Bajo":
+        return "bg-emerald-50 text-emerald-700 dark:bg-emerald-950/30 dark:text-emerald-400 border border-emerald-200/50 dark:border-emerald-900/30";
+      case "Medio":
+        return "bg-amber-50 text-amber-700 dark:bg-amber-950/30 dark:text-amber-400 border border-amber-200/50 dark:border-amber-900/30";
+      case "Alto":
+        return "bg-rose-50 text-rose-700 dark:bg-rose-950/30 dark:text-rose-400 border border-rose-200/50 dark:border-rose-900/30";
+    }
+  };
+
+  // Helper to render category icon
+  const getCategoryIcon = (category: string) => {
+    switch (category) {
+      case "Interior":
+        return <Home className="w-4 h-4" />;
+      case "Exterior":
+        return <Sun className="w-4 h-4" />;
+      case "Suculentas":
+        return <Compass className="w-4 h-4" />;
+      case "Árboles":
+        return <TreePine className="w-4 h-4" />;
+      default:
+        return <Sprout className="w-4 h-4" />;
+    }
+  };
+
+  return (
+    <div className="flex flex-col w-full min-h-screen bg-zinc-50/40 dark:bg-zinc-950/20 py-8">
+      {/* 1. Breadcrumbs & Minimal Header */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mt-4">
+        <nav className="text-zinc-500 text-xs sm:text-sm font-medium mb-6" aria-label="Breadcrumb">
+          <ol className="flex items-center gap-2">
+            <li>
+              <Link href="/" className="hover:text-brand transition-colors">
+                Inicio
+              </Link>
+            </li>
+            <li className="text-zinc-400 select-none">/</li>
+            <li className="text-zinc-800 dark:text-zinc-300 font-semibold" aria-current="page">
+              Catálogo de Plantas
+            </li>
+          </ol>
+        </nav>
+
+        {/* Text Header - Clean, without large image banner */}
+        <div className="relative border border-zinc-100 dark:border-zinc-900 bg-white dark:bg-zinc-950 rounded-3xl p-8 sm:p-12 overflow-hidden shadow-sm flex flex-col gap-4">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-brand/5 rounded-full blur-3xl -translate-y-12 translate-x-12 pointer-events-none" />
+          <span className="text-brand font-bold text-xs sm:text-sm uppercase tracking-widest bg-brand/10 text-brand px-3.5 py-1.5 rounded-full w-fit flex items-center gap-1.5">
+            <Sparkles className="w-3.5 h-3.5" />
+            Guía de Variedades y Cuidados
+          </span>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-zinc-900 dark:text-white tracking-tight">
+            Nuestras Plantas y Árboles
+          </h1>
+          <p className="text-zinc-600 dark:text-zinc-400 max-w-3xl leading-relaxed text-sm sm:text-base font-light">
+            Explora nuestra base de datos con 20 variedades icónicas seleccionadas especialmente para el clima de la Costa del Sol. Conoce sus nombres científicos, características principales, niveles de dificultad, necesidades de luz, plagas comunes y frecuencias exactas de riego.
+          </p>
+        </div>
+      </div>
+
+      {/* 2. Interactive Search & Filters */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mt-8 flex flex-col gap-6">
+        <div className="bg-white dark:bg-zinc-950 border border-zinc-100 dark:border-zinc-900 rounded-3xl p-6 sm:p-8 shadow-sm flex flex-col gap-6">
+          {/* Top Search & Reset Row */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
+            {/* Search Input */}
+            <div className="lg:col-span-8 relative">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-400" />
+              <input
+                type="text"
+                placeholder="Busca por nombre común, científico, descripción..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-12 pr-10 py-3.5 rounded-2xl bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 text-sm focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-all text-zinc-800 dark:text-zinc-200"
+              />
+              {searchTerm && (
+                <button
+                  onClick={() => setSearchTerm("")}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200"
+                  aria-label="Borrar búsqueda"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              )}
+            </div>
+
+            {/* Clear Button / Count */}
+            <div className="lg:col-span-4 flex justify-between lg:justify-end items-center gap-4">
+              <span className="text-zinc-500 text-xs sm:text-sm font-medium">
+                {filteredPlants.length} {filteredPlants.length === 1 ? "planta encontrada" : "plantas encontradas"}
+              </span>
+              {(searchTerm || selectedCategory !== "Todas" || selectedDifficulty !== "Todas") && (
+                <button
+                  onClick={resetFilters}
+                  className="text-xs font-semibold text-rose-500 hover:text-rose-600 dark:text-rose-400 dark:hover:text-rose-300 flex items-center gap-1 transition-colors px-3 py-1.5 rounded-xl hover:bg-rose-50 dark:hover:bg-rose-950/20"
+                >
+                  <X className="w-3.5 h-3.5" />
+                  Limpiar filtros
+                </button>
+              )}
+            </div>
+          </div>
+
+          <div className="h-px bg-zinc-100 dark:bg-zinc-900" />
+
+          {/* Filtering tabs */}
+          <div className="flex flex-col md:flex-row gap-6 md:items-center justify-between">
+            {/* Category tabs */}
+            <div className="flex flex-col gap-2.5">
+              <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider flex items-center gap-1.5">
+                <Filter className="w-3.5 h-3.5" />
+                Categoría
+              </span>
+              <div className="flex flex-wrap gap-2">
+                {categories.map((cat) => {
+                  const isActive = selectedCategory === cat;
+                  return (
+                    <button
+                      key={cat}
+                      onClick={() => setSelectedCategory(cat)}
+                      className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all duration-300 ${
+                        isActive
+                          ? "bg-brand text-white shadow-md shadow-brand/10"
+                          : "bg-zinc-50 hover:bg-zinc-100 text-zinc-600 dark:bg-zinc-900/60 dark:hover:bg-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200"
+                      }`}
+                    >
+                      {getCategoryIcon(cat)}
+                      {cat === "Todas" ? "Todas" : cat}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Difficulty Filter */}
+            <div className="flex flex-col gap-2.5">
+              <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider flex items-center gap-1.5">
+                <CheckCircle2 className="w-3.5 h-3.5" />
+                Dificultad de Cuidado
+              </span>
+              <div className="flex flex-wrap gap-2">
+                {difficulties.map((diff) => {
+                  const isActive = selectedDifficulty === diff;
+                  return (
+                    <button
+                      key={diff}
+                      onClick={() => setSelectedDifficulty(diff)}
+                      className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all duration-300 ${
+                        isActive
+                          ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900"
+                          : "bg-zinc-50 hover:bg-zinc-100 text-zinc-600 dark:bg-zinc-900/60 dark:hover:bg-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200"
+                      }`}
+                    >
+                      {diff}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 3. Plant Grid Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mt-10 mb-20">
+        {filteredPlants.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredPlants.map((plant) => (
+              <article
+                key={plant.slug}
+                className="bg-white dark:bg-zinc-950 border border-zinc-100 dark:border-zinc-900 rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group hover:-translate-y-1.5 flex flex-col h-full"
+              >
+                {/* Image Section */}
+                <div className="relative aspect-video sm:aspect-[4/3] md:aspect-video lg:aspect-[4/3] overflow-hidden bg-zinc-100 dark:bg-zinc-900">
+                  <Image
+                    src={plant.imageUrl}
+                    alt={plant.name}
+                    fill
+                    sizes="(max-w-768px) 100vw, (max-w-1200px) 50vw, 33vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  {/* Overlay Badges */}
+                  <div className="absolute top-4 left-4 flex flex-col gap-2 z-10">
+                    <span className="bg-white/95 dark:bg-zinc-950/95 text-zinc-800 dark:text-zinc-200 text-xxs font-bold uppercase tracking-wider px-2.5 py-1 rounded-lg backdrop-blur-sm border border-zinc-200/20 w-fit">
+                      {plant.category}
+                    </span>
+                  </div>
+
+                  <div className="absolute top-4 right-4 z-10">
+                    <span className={`text-xxs font-extrabold uppercase tracking-widest px-2.5 py-1 rounded-lg backdrop-blur-sm ${getDifficultyColor(plant.difficulty)}`}>
+                      Dificultad: {plant.difficulty}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Content Section */}
+                <div className="p-6 sm:p-8 flex flex-col flex-grow gap-4">
+                  <div>
+                    <span className="italic text-brand text-xs font-semibold uppercase tracking-wider">
+                      {plant.scientificName}
+                    </span>
+                    <h2 className="text-xl font-bold text-zinc-900 dark:text-white mt-1 group-hover:text-brand transition-colors duration-300">
+                      {plant.name}
+                    </h2>
+                  </div>
+
+                  <p className="text-zinc-500 dark:text-zinc-400 text-xs sm:text-sm leading-relaxed line-clamp-3 font-light">
+                    {plant.description}
+                  </p>
+
+                  <div className="h-px bg-zinc-100 dark:bg-zinc-900/60 mt-auto" />
+
+                  {/* Core indicators */}
+                  <div className="grid grid-cols-2 gap-4 text-xs font-medium text-zinc-500 dark:text-zinc-400 py-1">
+                    <div className="flex items-center gap-2">
+                      <Sun className="w-4 h-4 text-brand shrink-0" />
+                      <span className="truncate" title={plant.light}>{plant.light}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Droplet className="w-4 h-4 text-brand shrink-0" />
+                      <span className="truncate" title={plant.watering.general}>{plant.watering.general}</span>
+                    </div>
+                  </div>
+
+                  {/* CTA Link Button */}
+                  <Link
+                    href={`/plantas/${plant.slug}`}
+                    className="mt-2 w-full inline-flex items-center justify-center gap-2 bg-zinc-50 hover:bg-brand dark:bg-zinc-900/50 dark:hover:bg-brand text-zinc-700 hover:text-white dark:text-zinc-300 dark:hover:text-white font-bold text-xs sm:text-sm py-3 rounded-2xl transition-all duration-300 group/btn"
+                  >
+                    Ver Ficha Completa
+                    <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover/btn:translate-x-1" />
+                  </Link>
+                </div>
+              </article>
+            ))}
+          </div>
+        ) : (
+          /* Empty State */
+          <div className="max-w-md mx-auto text-center py-16 bg-white dark:bg-zinc-950 border border-zinc-100 dark:border-zinc-900 rounded-3xl p-8 shadow-sm flex flex-col items-center gap-5 mt-10">
+            <div className="w-16 h-16 rounded-full bg-rose-50 dark:bg-rose-950/20 text-rose-500 dark:text-rose-400 flex items-center justify-center">
+              <X className="w-8 h-8" />
+            </div>
+            <div className="flex flex-col gap-2">
+              <h3 className="text-xl font-bold text-zinc-900 dark:text-white">Sin resultados</h3>
+              <p className="text-zinc-500 dark:text-zinc-400 text-sm font-light">
+                No hemos encontrado ninguna planta que coincida con tus términos de búsqueda o filtros seleccionados.
+              </p>
+            </div>
+            <button
+              onClick={resetFilters}
+              className="bg-brand hover:bg-brand-dark text-white font-bold text-sm px-6 py-2.5 rounded-full transition-colors active:scale-95 shadow-lg shadow-brand/10"
+            >
+              Restablecer filtros
+            </button>
+          </div>
+        )}
+      </section>
+    </div>
+  );
+}
