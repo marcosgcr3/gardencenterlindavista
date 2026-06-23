@@ -91,15 +91,15 @@ export default function Navbar() {
                   <Link
                     key={link.name}
                     href={link.href}
-                    className={`relative text-sm font-medium tracking-wide transition-colors py-1.5 ${
+                    className={`relative text-[11px] font-semibold uppercase tracking-[0.25em] transition-colors py-2 font-sans ${
                       isActive
-                        ? "text-brand"
-                        : "text-zinc-650 hover:text-brand dark:text-zinc-300 dark:hover:text-brand"
+                        ? "text-brand font-bold"
+                        : "text-zinc-600 hover:text-brand dark:text-zinc-400 dark:hover:text-brand"
                     }`}
                   >
                     {link.name}
                     {isActive && (
-                      <span className="absolute bottom-0 left-0 w-full h-0.5 bg-brand rounded-full animate-fade-in" />
+                      <span className="absolute bottom-0 left-0 w-full h-[1px] bg-brand animate-fade-in" />
                     )}
                   </Link>
                 );
@@ -108,29 +108,26 @@ export default function Navbar() {
             
             <Link
               href="/contacto"
-              className="bg-brand hover:bg-brand-dark text-white font-medium text-sm px-5 py-2.5 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-brand/20 active:scale-95 whitespace-nowrap"
+              className="border border-brand text-brand hover:bg-brand hover:text-white font-medium text-[10px] uppercase tracking-[0.2em] px-6 py-3 transition-all duration-350 active:scale-97 whitespace-nowrap rounded-none font-sans"
             >
               {t("nav.contactBtn")}
             </Link>
 
             {/* Language Selector Desktop */}
-            <div className="flex items-center bg-zinc-100 dark:bg-zinc-900 border border-zinc-200/50 dark:border-zinc-800/60 rounded-full p-0.5 text-xs font-bold shadow-xs shrink-0">
+            <div className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-widest text-zinc-400 shrink-0 font-sans pl-2 border-l border-zinc-200 dark:border-zinc-800">
               <button
                 onClick={() => setLanguage("es")}
-                className={`px-3 py-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-                  language === "es"
-                    ? "bg-white dark:bg-zinc-800 text-brand shadow-xs"
-                    : "text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-200"
+                className={`transition-colors cursor-pointer ${
+                  language === "es" ? "text-brand font-bold" : "hover:text-zinc-800 dark:hover:text-zinc-200"
                 }`}
               >
                 ES
               </button>
+              <span className="text-zinc-300 dark:text-zinc-800">|</span>
               <button
                 onClick={() => setLanguage("en")}
-                className={`px-3 py-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-                  language === "en"
-                    ? "bg-white dark:bg-zinc-800 text-brand shadow-xs"
-                    : "text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-200"
+                className={`transition-colors cursor-pointer ${
+                  language === "en" ? "text-brand font-bold" : "hover:text-zinc-800 dark:hover:text-zinc-200"
                 }`}
               >
                 EN
@@ -141,23 +138,20 @@ export default function Navbar() {
           {/* Mobile Actions (Language Selector & Hamburger Toggle) */}
           <div className="md:hidden flex items-center gap-3">
             {/* Mobile Language Selector */}
-            <div className="flex items-center bg-zinc-100 dark:bg-zinc-900 border border-zinc-200/50 dark:border-zinc-800/60 rounded-full p-0.5 text-xxs font-bold">
+            <div className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-widest text-zinc-400 font-sans">
               <button
                 onClick={() => setLanguage("es")}
-                className={`px-2.5 py-1 rounded-full transition-all duration-300 cursor-pointer ${
-                  language === "es"
-                    ? "bg-white dark:bg-zinc-800 text-brand shadow-xs"
-                    : "text-zinc-500"
+                className={`transition-colors cursor-pointer ${
+                  language === "es" ? "text-brand font-bold" : ""
                 }`}
               >
                 ES
               </button>
+              <span className="text-zinc-300 dark:text-zinc-800">|</span>
               <button
                 onClick={() => setLanguage("en")}
-                className={`px-2.5 py-1 rounded-full transition-all duration-300 cursor-pointer ${
-                  language === "en"
-                    ? "bg-white dark:bg-zinc-800 text-brand shadow-xs"
-                    : "text-zinc-500"
+                className={`transition-colors cursor-pointer ${
+                  language === "en" ? "text-brand font-bold" : ""
                 }`}
               >
                 EN
@@ -166,7 +160,7 @@ export default function Navbar() {
 
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-zinc-700 hover:text-brand dark:text-zinc-300 dark:hover:text-brand p-2"
+              className="text-zinc-750 hover:text-brand dark:text-zinc-300 dark:hover:text-brand p-2"
               aria-label="Toggle menu"
             >
               {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -184,10 +178,10 @@ export default function Navbar() {
                   key={link.name}
                   href={link.href}
                   onClick={() => setIsOpen(false)}
-                  className={`text-base font-semibold transition-colors py-2 px-3 rounded-lg ${
+                  className={`text-xs font-semibold uppercase tracking-widest transition-colors py-3 px-3 rounded-none ${
                     isActive
-                      ? "text-brand bg-brand/10"
-                      : "text-zinc-700 hover:text-brand dark:text-zinc-300 dark:hover:text-brand hover:bg-zinc-50 dark:hover:bg-zinc-900"
+                      ? "text-brand bg-zinc-50 dark:bg-zinc-900"
+                      : "text-zinc-700 hover:text-brand dark:text-zinc-300 dark:hover:text-brand"
                   }`}
                 >
                   {link.name}
@@ -197,7 +191,7 @@ export default function Navbar() {
             <Link
               href="/contacto"
               onClick={() => setIsOpen(false)}
-              className="bg-brand hover:bg-brand-dark text-white font-medium text-center py-3 rounded-xl transition-colors mt-2"
+              className="border border-brand bg-brand hover:bg-transparent text-white hover:text-brand font-medium text-center py-3.5 uppercase tracking-widest text-[10px] transition-colors mt-2 rounded-none font-sans"
             >
               {t("nav.contactBtn")}
             </Link>
@@ -205,7 +199,7 @@ export default function Navbar() {
         )}
       </nav>
       {/* Spacer to push content down when navbar is fixed */}
-      {scrolled && <div className="h-[72px] md:h-[110px]" />}
+      {scrolled && <div className="h-[68px] md:h-[100px]" />}
     </header>
   );
 }

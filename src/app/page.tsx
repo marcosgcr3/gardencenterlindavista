@@ -97,7 +97,7 @@ export default function Home() {
   return (
     <div className="flex flex-col w-full overflow-hidden">
       {/* 1. Hero Carousel Section */}
-      <section className="relative h-[80vh] min-h-[500px] w-full bg-zinc-900 text-white">
+      <section className="relative h-[80vh] min-h-[500px] w-full bg-zinc-950 text-white">
         {heroSlides.map((slide, idx) => (
           <div
             key={idx}
@@ -106,7 +106,7 @@ export default function Home() {
             }`}
           >
             {/* Background Image */}
-            <div className="absolute inset-0 bg-black/45 z-10" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/45 to-black/35 z-10" />
             <Image
               src={slide.image}
               alt={slide.title}
@@ -119,25 +119,26 @@ export default function Home() {
             <div className="absolute inset-0 flex items-center z-20">
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
                 <div className="max-w-2xl flex flex-col gap-6 animate-slide-up">
-                  <span className="text-brand font-bold text-xs sm:text-sm uppercase tracking-widest bg-brand/10 text-brand px-3 py-1.5 rounded-full w-fit">
+                  <span className="text-accent font-medium text-[10px] sm:text-xs uppercase tracking-[0.25em] w-fit">
                     {t("home.badge")}
                   </span>
-                  <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">
+                  <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7.5xl font-serif font-light italic text-white leading-[1.1] tracking-tight">
                     {slide.title}
                   </h1>
-                  <p className="text-base sm:text-lg md:text-xl text-zinc-250 font-light leading-relaxed">
+                  <div className="w-12 h-px bg-accent/40" />
+                  <p className="text-sm sm:text-base text-zinc-300 font-light leading-relaxed max-w-xl">
                     {slide.description}
                   </p>
                   <div className="flex flex-wrap gap-4 mt-2">
                     <Link
                       href="/contacto"
-                      className="bg-brand hover:bg-brand-dark text-white font-semibold px-6 py-3 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-brand/20 active:scale-95 text-center sm:w-auto w-full"
+                      className="bg-brand border border-brand hover:bg-transparent text-white hover:text-brand font-medium text-xxs uppercase tracking-[0.2em] px-8 py-4 transition-all duration-300 select-none text-center sm:w-auto w-full rounded-none font-sans"
                     >
                       {t("home.btn.info")}
                     </Link>
                     <Link
                       href="/sobre-nosotros"
-                      className="border-2 border-white hover:bg-white hover:text-zinc-950 text-white font-semibold px-6 py-3 rounded-full transition-all duration-300 active:scale-95 text-center sm:w-auto w-full"
+                      className="border border-white/40 hover:border-white text-white font-medium text-xxs uppercase tracking-[0.2em] px-8 py-4 transition-all duration-300 select-none text-center sm:w-auto w-full rounded-none font-sans"
                     >
                       {t("home.btn.more")}
                     </Link>
@@ -151,27 +152,27 @@ export default function Home() {
         {/* Carousel Prev/Next Buttons */}
         <button
           onClick={prevSlide}
-          className="absolute left-4 top-1/2 -translate-y-1/2 bg-zinc-950/40 hover:bg-brand/90 hover:scale-105 text-white p-2.5 sm:p-3 rounded-full transition-all duration-300 z-30 cursor-pointer"
+          className="absolute left-6 top-1/2 -translate-y-1/2 bg-zinc-950/20 hover:bg-zinc-950/60 border border-white/10 text-white p-2.5 rounded-full transition-all duration-300 z-30 cursor-pointer"
           aria-label="Previous slide"
         >
-          <ChevronLeft className="w-5 sm:w-6 h-5 sm:h-6" />
+          <ChevronLeft className="w-4 h-4" />
         </button>
         <button
           onClick={nextSlide}
-          className="absolute right-4 top-1/2 -translate-y-1/2 bg-zinc-950/40 hover:bg-brand/90 hover:scale-105 text-white p-2.5 sm:p-3 rounded-full transition-all duration-300 z-30 cursor-pointer"
+          className="absolute right-6 top-1/2 -translate-y-1/2 bg-zinc-950/20 hover:bg-zinc-950/60 border border-white/10 text-white p-2.5 rounded-full transition-all duration-300 z-30 cursor-pointer"
           aria-label="Next slide"
         >
-          <ChevronRight className="w-5 sm:w-6 h-5 sm:h-6" />
+          <ChevronRight className="w-4 h-4" />
         </button>
 
-        {/* Indicator dots */}
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-3 z-30">
+        {/* Indicator lines */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-3.5 z-30">
           {heroSlides.map((_, idx) => (
             <button
               key={idx}
               onClick={() => setCurrentSlide(idx)}
-              className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
-                idx === currentSlide ? "w-8 bg-brand" : "w-2 bg-white/50"
+              className={`h-0.5 transition-all duration-500 cursor-pointer ${
+                idx === currentSlide ? "w-10 bg-accent" : "w-2.5 bg-white/30"
               }`}
               aria-label={`Go to slide ${idx + 1}`}
             />

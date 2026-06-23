@@ -6,6 +6,9 @@
   --color-brand-light: #6b845a;
   --color-brand: #4a5d3e;
   --color-brand-dark: #2d3c26;
+
+  --font-serif: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  --font-sans: var(--font-jakarta), "Plus Jakarta Sans", sans-serif;
   
   --animate-fade-in: fade-in 0.6s ease-out;
   --animate-slide-up: slide-up 0.8s cubic-bezier(0.16, 1, 0.3, 1);
