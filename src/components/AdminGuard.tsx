@@ -15,32 +15,49 @@ export default function AdminGuard({ children }: AdminGuardProps) {
   const [loading, setLoading] = useState(false);
   const [shake, setShake] = useState(false);
 
-  // Contraseña administrativa esperada (configurable vía env)
-  const EXPECTED_PASSWORD = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || "lindavista2026";
-
   useEffect(() => {
     // Comprobar la sesión en el cliente
     const authStatus = localStorage.getItem("gclv_admin_auth");
     const savedPassword = localStorage.getItem("gclv_admin_pass");
     
-    if (authStatus === "true" && savedPassword === EXPECTED_PASSWORD) {
-      setIsAuthenticated(true);
+    if (authStatus === "true" && savedPassword) {
+      // Verificar la contraseña de forma asíncrona con el servidor para máxima seguridad
+      fetch("/api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password: savedPassword })
+      })
+        .then((res) => {
+          if (res.ok) {
+            setIsAuthenticated(true);
+          } else {
+            setIsAuthenticated(false);
+            localStorage.removeItem("gclv_admin_auth");
+            localStorage.removeItem("gclv_admin_pass");
+          }
+        })
+        .catch(() => {
+          // Si hay un error de red y ya estaba autenticado localmente, permitimos ver de forma temporal
+          setIsAuthenticated(true);
+        });
     } else {
       setIsAuthenticated(false);
-      // Limpiar datos inválidos si los hubiera
-      localStorage.removeItem("gclv_admin_auth");
-      localStorage.removeItem("gclv_admin_pass");
     }
-  }, [EXPECTED_PASSWORD]);
+  }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError(false);
 
-    // Simular un retardo corto para una transición más pulida
-    setTimeout(() => {
-      if (password === EXPECTED_PASSWORD) {
+    try {
+      const response = await fetch("/api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password })
+      });
+
+      if (response.ok) {
         localStorage.setItem("gclv_admin_auth", "true");
         localStorage.setItem("gclv_admin_pass", password);
         setIsAuthenticated(true);
@@ -49,8 +66,13 @@ export default function AdminGuard({ children }: AdminGuardProps) {
         setShake(true);
         setTimeout(() => setShake(false), 500); // Duración de la animación de sacudida
       }
+    } catch (err) {
+      setError(true);
+      setShake(true);
+      setTimeout(() => setShake(false), 500);
+    } finally {
       setLoading(false);
-    }, 600);
+    }
   };
 
   // Cargando estado inicial
