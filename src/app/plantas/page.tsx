@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -15,7 +15,8 @@ import {
   Sparkles,
   TreePine,
   Home,
-  CheckCircle2
+  CheckCircle2,
+  Settings2
 } from "lucide-react";
 import { plants, Plant } from "@/data/plants";
 
@@ -23,6 +24,30 @@ export default function PlantasPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("Todas");
   const [selectedDifficulty, setSelectedDifficulty] = useState<string>("Todas");
+  const [allPlants, setAllPlants] = useState<Plant[]>(plants);
+
+  // Cargar plantas adicionales guardadas en localStorage (si existen)
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const local = localStorage.getItem("local_plants");
+      if (local) {
+        try {
+          const parsed = JSON.parse(local);
+          if (Array.isArray(parsed)) {
+            const merged = [...plants];
+            parsed.forEach((localPlant: Plant) => {
+              if (!merged.some(p => p.slug === localPlant.slug)) {
+                merged.push(localPlant);
+              }
+            });
+            setAllPlants(merged);
+          }
+        } catch (e) {
+          console.error("Error al parsear plantas locales:", e);
+        }
+      }
+    }
+  }, []);
 
   // Filter Categories list
   const categories = ["Todas", "Interior", "Exterior", "Suculentas", "Árboles"];
@@ -30,7 +55,7 @@ export default function PlantasPage() {
 
   // Filter and search logic
   const filteredPlants = useMemo(() => {
-    return plants.filter((plant) => {
+    return allPlants.filter((plant) => {
       const matchesSearch =
         plant.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         plant.scientificName.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -101,10 +126,19 @@ export default function PlantasPage() {
         {/* Text Header - Clean, without large image banner */}
         <div className="relative border border-zinc-100 dark:border-zinc-900 bg-white dark:bg-zinc-950 rounded-3xl p-8 sm:p-12 overflow-hidden shadow-sm flex flex-col gap-4">
           <div className="absolute top-0 right-0 w-64 h-64 bg-brand/5 rounded-full blur-3xl -translate-y-12 translate-x-12 pointer-events-none" />
-          <span className="text-brand font-bold text-xs sm:text-sm uppercase tracking-widest bg-brand/10 text-brand px-3.5 py-1.5 rounded-full w-fit flex items-center gap-1.5">
-            <Sparkles className="w-3.5 h-3.5" />
-            Guía de Variedades y Cuidados
-          </span>
+          <div className="flex flex-wrap justify-between items-start gap-4 z-10">
+            <span className="text-brand font-bold text-xs sm:text-sm uppercase tracking-widest bg-brand/10 text-brand px-3.5 py-1.5 rounded-full w-fit flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5" />
+              Guía de Variedades y Cuidados
+            </span>
+            <Link
+              href="/plantas/admin"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-zinc-500 hover:text-brand dark:text-zinc-400 dark:hover:text-brand transition-colors bg-zinc-50 hover:bg-zinc-100 dark:bg-zinc-900/60 dark:hover:bg-zinc-900/80 px-3.5 py-1.5 rounded-full border border-zinc-200/40 dark:border-zinc-800/80 print:hidden shadow-xs shrink-0"
+            >
+              <Settings2 className="w-3.5 h-3.5 text-brand" />
+              Panel Admin
+            </Link>
+          </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-zinc-900 dark:text-white tracking-tight">
             Nuestras Plantas y Árboles
           </h1>
