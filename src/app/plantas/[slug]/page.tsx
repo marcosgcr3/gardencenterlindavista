@@ -13,7 +13,8 @@ import {
   Clock,
   Sprout,
   Heart,
-  CalendarDays
+  CalendarDays,
+  QrCode
 } from "lucide-react";
 import { plants, Plant } from "@/data/plants";
 
@@ -303,6 +304,40 @@ export default async function PlantaDetailPage({ params }: PageProps) {
                 </p>
                 <div className="bg-white/40 dark:bg-zinc-900/30 border border-rose-200/5 dark:border-rose-900/5 p-4 rounded-xl text-xs text-zinc-500 mt-2 leading-relaxed italic">
                   *Tip de Garden Center Linda Vista: Un tratamiento preventivo con Aceite de Neem e Jabón Potásico diluidos en agua cada 15 días mantendrá alejados a la mayoría de insectos chupadores de forma 100% ecológica.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Card 4: Código QR de la Ficha */}
+          <div className="bg-white dark:bg-zinc-950 border border-zinc-100 dark:border-zinc-900 rounded-3xl p-8 sm:p-10 shadow-sm flex flex-col md:flex-row gap-8">
+            <div className="md:w-1/3 flex flex-col gap-3">
+              <span className="w-12 h-12 rounded-2xl bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 flex items-center justify-center">
+                <QrCode className="w-6 h-6" />
+              </span>
+              <h2 className="text-2xl font-bold text-zinc-900 dark:text-white mt-2">Código QR e Impresión</h2>
+              <p className="text-zinc-500 text-sm font-light leading-relaxed">
+                Escanea este código QR para acceder directamente a la ficha técnica de esta planta desde cualquier teléfono móvil o tablet en el vivero.
+              </p>
+            </div>
+
+            <div className="md:w-2/3 bg-zinc-50/50 dark:bg-zinc-900/35 border border-zinc-100 dark:border-zinc-900/60 rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row items-center gap-8">
+              <div className="bg-white p-3 rounded-2xl shadow-md border border-zinc-150/40 shrink-0">
+                <img
+                  src={`https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(`https://gardencenterlindavista.com/plantas/${plant.slug}`)}`}
+                  alt={`Código QR de ${plant.name}`}
+                  width={160}
+                  height={160}
+                  className="w-40 h-40"
+                />
+              </div>
+              <div className="flex flex-col gap-3 text-center sm:text-left">
+                <h3 className="font-bold text-zinc-900 dark:text-white text-base">Identificador de Etiqueta</h3>
+                <p className="text-zinc-500 text-xs sm:text-sm font-light leading-relaxed">
+                  Ideal para imprimir y colocar junto a la planta en el vivero. El código apunta de forma segura al enlace permanente:
+                </p>
+                <div className="bg-white dark:bg-zinc-900/70 border border-zinc-200/50 dark:border-zinc-800 px-4 py-2.5 rounded-xl text-xs select-all text-brand font-medium break-all font-mono">
+                  https://gardencenterlindavista.com/plantas/{plant.slug}
                 </div>
               </div>
             </div>
