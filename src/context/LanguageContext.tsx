@@ -46,10 +46,10 @@ const translations: Record<Language, Record<string, string>> = {
     "home.btn.info": "Solicitar Información",
     "home.btn.more": "Saber Más",
     
-    "home.features.title1": "Biochar",
-    "home.features.desc1": "Utilizamos y aconsejamos abonos y enmiendas orgánicas enriquecidas con carbón vegetal activo para mejorar la estructura del suelo.",
-    "home.features.title2": "Microalgas",
-    "home.features.desc2": "Incorporamos bioestimulantes biológicos avanzados de microalgas que aumentan las defensas naturales de las plantas y la sostenibilidad.",
+    "home.features.title1": "Familiar",
+    "home.features.desc1": "Como empresa familiar desde 1989, ofrecemos un trato cercano, personalizado y de total confianza para asegurar el éxito de tu jardín.",
+    "home.features.title2": "Asesoramiento",
+    "home.features.desc2": "Nuestro equipo de profesionales te guiará y asesorará de manera experta en la elección y el cuidado óptimo de tus plantas.",
     "home.features.title3": "Transporte Propio",
     "home.features.desc3": "Disponemos de vehículos equipados y personal cualificado para realizar la entrega de tus plantas y cerámicas a domicilio.",
     
@@ -249,10 +249,10 @@ const translations: Record<Language, Record<string, string>> = {
     "home.btn.info": "Request Info",
     "home.btn.more": "Learn More",
     
-    "home.features.title1": "Biochar",
-    "home.features.desc1": "We use and advise organic fertilizers and amendments enriched with active charcoal to improve soil structure.",
-    "home.features.title2": "Microalgae",
-    "home.features.desc2": "We incorporate advanced organic microalgae biostimulants that boost natural plant defenses and sustainability.",
+    "home.features.title1": "Family Business",
+    "home.features.desc1": "As a family-run nursery since 1989, we offer a personal, friendly, and trustworthy service to ensure your garden's success.",
+    "home.features.title2": "Expert Advice",
+    "home.features.desc2": "Our team of professionals will guide you and provide expert advice on choosing and caring for your plants.",
     "home.features.title3": "Own Transport",
     "home.features.desc3": "We have equipped vehicles and qualified staff to deliver your plants and pottery directly to your home.",
     

@@ -9,13 +9,13 @@ import {
   Sprout,
   Compass,
   Truck,
-  Droplet,
   Flower2,
   TreePine,
   Armchair,
   Star,
   Quote,
-  Clock
+  Clock,
+  Heart
 } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 
@@ -186,7 +186,7 @@ export default function Home() {
             {/* Feature 1 */}
             <div className="glassmorphism rounded-2xl p-8 hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-4 group">
               <div className="w-12 h-12 rounded-xl bg-brand/10 text-brand flex items-center justify-center transition-all duration-300 group-hover:scale-110">
-                <Sprout className="w-6 h-6" />
+                <Heart className="w-6 h-6" />
               </div>
               <h3 className="text-xl font-bold text-zinc-900 dark:text-white">{t("home.features.title1")}</h3>
               <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed font-light">
@@ -197,7 +197,7 @@ export default function Home() {
             {/* Feature 2 */}
             <div className="glassmorphism rounded-2xl p-8 hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-4 group">
               <div className="w-12 h-12 rounded-xl bg-brand/10 text-brand flex items-center justify-center transition-all duration-300 group-hover:scale-110">
-                <Droplet className="w-6 h-6" />
+                <Sprout className="w-6 h-6" />
               </div>
               <h3 className="text-xl font-bold text-zinc-900 dark:text-white">{t("home.features.title2")}</h3>
               <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed font-light">
