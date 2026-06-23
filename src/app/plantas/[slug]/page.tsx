@@ -108,6 +108,30 @@ function ThermometerIcon({ percentage, className = "w-8 h-8" }: { percentage: nu
   );
 }
 
+const getShortTemp = (tempStr: string): string => {
+  const matches = tempStr.match(/-?\d+\s*°C/g);
+  if (matches && matches.length >= 2) {
+    return `${matches[0]} - ${matches[1]}`;
+  } else if (matches && matches.length === 1) {
+    return `> ${matches[0]}`;
+  }
+  return tempStr;
+};
+
+const getWaterLabel = (level: number, lang: string): string => {
+  if (lang === "es") {
+    return level === 1 ? "Poco" : level === 2 ? "Moderado" : "Abundante";
+  }
+  return level === 1 ? "Low" : level === 2 ? "Moderate" : "Abundant";
+};
+
+const getLightLabel = (level: number, lang: string): string => {
+  if (lang === "es") {
+    return level === 1 ? "Sombra" : level === 2 ? "Indirecta" : "Directa";
+  }
+  return level === 1 ? "Shade" : level === 2 ? "Indirect" : "Direct";
+};
+
 export default function PlantaDetailPage({ params }: PageProps) {
   const { t, language } = useLanguage();
   const { slug } = use(params);
@@ -210,8 +234,8 @@ export default function PlantaDetailPage({ params }: PageProps) {
                 <span className="text-[9px] uppercase font-bold text-zinc-400 tracking-wider">
                   {language === "es" ? "Riego" : "Watering"}
                 </span>
-                <span className="text-[10px] font-semibold text-zinc-700 dark:text-zinc-300 truncate max-w-full mt-0.5" title={plant.watering.general}>
-                  {plant.watering.general}
+                <span className="text-[10px] font-semibold text-zinc-700 dark:text-zinc-300 mt-0.5">
+                  {getWaterLabel(plant.wateringLevel, language)}
                 </span>
               </div>
             </div>
@@ -223,8 +247,8 @@ export default function PlantaDetailPage({ params }: PageProps) {
                 <span className="text-[9px] uppercase font-bold text-zinc-400 tracking-wider">
                   {language === "es" ? "Luz" : "Light"}
                 </span>
-                <span className="text-[10px] font-semibold text-zinc-700 dark:text-zinc-300 truncate max-w-full mt-0.5" title={plant.light}>
-                  {plant.light}
+                <span className="text-[10px] font-semibold text-zinc-700 dark:text-zinc-300 mt-0.5">
+                  {getLightLabel(plant.sunLevel, language)}
                 </span>
               </div>
             </div>
@@ -236,8 +260,8 @@ export default function PlantaDetailPage({ params }: PageProps) {
                 <span className="text-[9px] uppercase font-bold text-zinc-400 tracking-wider">
                   {language === "es" ? "Temperatura" : "Temp"}
                 </span>
-                <span className="text-[10px] font-semibold text-zinc-700 dark:text-zinc-300 truncate max-w-full mt-0.5" title={plant.temperature}>
-                  {plant.temperature}
+                <span className="text-[10px] font-semibold text-zinc-700 dark:text-zinc-300 mt-0.5">
+                  {getShortTemp(plant.temperature)}
                 </span>
               </div>
             </div>
@@ -260,9 +284,73 @@ export default function PlantaDetailPage({ params }: PageProps) {
 
           {/* 5. Description */}
           <div className="bg-white dark:bg-zinc-950 border border-zinc-150/65 dark:border-zinc-900 p-4 rounded-2xl shadow-xs">
-            <p className="text-xs leading-relaxed font-light text-zinc-600 dark:text-zinc-400">
+            <p className="text-xs leading-relaxed font-light text-zinc-650 dark:text-zinc-400">
               {plant.description}
             </p>
+          </div>
+
+          {/* 6. Detailed specs grid (Original cards relocated below) */}
+          <div className="grid grid-cols-1 gap-4 mt-2">
+            {/* Light requirement detailed */}
+            <div className="bg-white dark:bg-zinc-950 border border-zinc-150/65 dark:border-zinc-900 rounded-2xl p-5 flex items-center gap-4 shadow-xs">
+              <div className="w-12 h-12 rounded-xl bg-amber-50 dark:bg-amber-950/20 text-amber-500 flex items-center justify-center shrink-0">
+                <SunIcon level={plant.sunLevel} className="w-8 h-8" />
+              </div>
+              <div>
+                <span className="text-xxs uppercase font-bold text-zinc-400 tracking-wider">{t("details.light")}</span>
+                <span className="block text-sm font-semibold text-zinc-800 dark:text-zinc-200 mt-0.5 leading-relaxed">{plant.light}</span>
+              </div>
+            </div>
+
+            {/* Water requirement detailed */}
+            <div className="bg-white dark:bg-zinc-950 border border-zinc-150/65 dark:border-zinc-900 rounded-2xl p-5 flex items-center gap-4 shadow-xs">
+              <div className="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-950/20 text-blue-500 flex items-center justify-center shrink-0">
+                <WaterDropletIcon level={plant.wateringLevel} className="w-8 h-8" />
+              </div>
+              <div>
+                <span className="text-xxs uppercase font-bold text-zinc-400 tracking-wider">
+                  {language === "es" ? "Riego General" : "General Watering"}
+                </span>
+                <span className="block text-sm font-semibold text-zinc-800 dark:text-zinc-200 mt-0.5 leading-relaxed">{plant.watering.general}</span>
+              </div>
+            </div>
+
+            {/* Temperature requirement detailed */}
+            <div className="bg-white dark:bg-zinc-950 border border-zinc-150/65 dark:border-zinc-900 rounded-2xl p-5 flex items-center gap-4 shadow-xs">
+              <div className="w-12 h-12 rounded-xl bg-red-50 dark:bg-red-950/20 text-red-500 flex items-center justify-center shrink-0">
+                <ThermometerIcon percentage={plant.tempLevel} className="w-8 h-8" />
+              </div>
+              <div>
+                <span className="text-xxs uppercase font-bold text-zinc-400 tracking-wider">{t("details.temperature")}</span>
+                <span className="block text-sm font-semibold text-zinc-800 dark:text-zinc-200 mt-0.5 leading-relaxed">{plant.temperature}</span>
+              </div>
+            </div>
+
+            {/* Humidity requirement detailed */}
+            <div className="bg-white dark:bg-zinc-950 border border-zinc-150/65 dark:border-zinc-900 rounded-2xl p-5 flex items-center gap-4 shadow-xs">
+              <div className="w-12 h-12 rounded-xl bg-indigo-50 dark:bg-indigo-950/20 text-indigo-500 flex items-center justify-center shrink-0">
+                <Wind className="w-6 h-6" />
+              </div>
+              <div>
+                <span className="text-xxs uppercase font-bold text-zinc-400 tracking-wider">{t("details.humidity")}</span>
+                <span className="block text-sm font-semibold text-zinc-800 dark:text-zinc-200 mt-0.5 leading-relaxed">{plant.humidity}</span>
+              </div>
+            </div>
+            
+            {/* Difficulty Bar detailed */}
+            <div className="bg-white dark:bg-zinc-950 border border-zinc-150/65 dark:border-zinc-900 rounded-2xl p-5 flex items-center justify-between gap-4 shadow-xs">
+              <div className="flex flex-col gap-0.5">
+                <span className="text-xxs uppercase font-bold text-zinc-400 tracking-wider">
+                  {language === "es" ? "Nivel de Cuidado" : "Care Level"}
+                </span>
+                <span className="text-xs font-light text-zinc-500 dark:text-zinc-400">
+                  {language === "es" ? "Atención necesaria para la planta" : "Attention needed for the plant"}
+                </span>
+              </div>
+              <span className={`text-xs font-extrabold uppercase tracking-widest px-4 py-2 rounded-xl border ${getDifficultyColor(plant.difficulty)}`}>
+                {t("details.difficulty")}: {t(`difficulty.${plant.difficulty}`)}
+              </span>
+            </div>
           </div>
         </div>
 
