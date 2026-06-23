@@ -41,7 +41,7 @@ export const plants: Plant[] = [
     },
     light: "Luz indirecta brillante o semisombra. Evitar el sol directo porque quema las hojas.",
     difficulty: "Bajo",
-    imageUrl: "https://images.unsplash.com/photo-1614594975525-e45190c55d0b?q=80&w=600&auto=format&fit=crop",
+    imageUrl: "/plants/monstera-deliciosa.png",
     temperature: "18°C - 27°C (no tolera el frío inferior a 10°C)",
     humidity: "Media - Alta (50% - 70%)"
   },
@@ -66,7 +66,7 @@ export const plants: Plant[] = [
     },
     light: "Pleno sol. Requiere máxima luminosidad.",
     difficulty: "Medio",
-    imageUrl: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=600&auto=format&fit=crop",
+    imageUrl: "/plants/palmera-canaria.png",
     temperature: "-5°C a 45°C",
     humidity: "Tolera humedad baja y viento salino"
   },
@@ -91,7 +91,7 @@ export const plants: Plant[] = [
     },
     light: "Luz brillante indirecta. El sol directo puede quemar sus hojas.",
     difficulty: "Medio",
-    imageUrl: "https://images.unsplash.com/photo-1597055181300-e3633a207518?q=80&w=600&auto=format&fit=crop",
+    imageUrl: "/plants/ficus-lira.png",
     temperature: "16°C - 24°C (sensible a bajadas de menos de 12°C)",
     humidity: "Media - Alta (necesita pulverización ocasional)"
   },
@@ -116,7 +116,7 @@ export const plants: Plant[] = [
     },
     light: "Pleno sol directo (mínimo 6 horas diarias).",
     difficulty: "Bajo",
-    imageUrl: "https://images.unsplash.com/photo-1471193945509-9ad0617afabf?q=80&w=600&auto=format&fit=crop",
+    imageUrl: "/plants/olivo.png",
     temperature: "Resiste heladas de hasta -10°C y temperaturas altas de más de 40°C",
     humidity: "Baja (prefiere climas secos)"
   },
@@ -141,7 +141,7 @@ export const plants: Plant[] = [
     },
     light: "Pleno sol directo indispensable para la floración.",
     difficulty: "Bajo",
-    imageUrl: "https://images.unsplash.com/photo-1596722880467-33671239c018?q=80&w=600&auto=format&fit=crop",
+    imageUrl: "/plants/buganvilla.png",
     temperature: "Sensible a heladas fuertes (soporta hasta 0°C de forma breve)",
     humidity: "Baja - Media"
   },
@@ -166,7 +166,7 @@ export const plants: Plant[] = [
     },
     light: "Tolera desde semisombra o zonas oscuras hasta sol directo tamizado.",
     difficulty: "Bajo",
-    imageUrl: "https://images.unsplash.com/photo-1600411833196-7c1f6b1a8b90?q=80&w=600&auto=format&fit=crop",
+    imageUrl: "/plants/sansevieria.png",
     temperature: "15°C - 30°C (no tolera heladas)",
     humidity: "Baja (se adapta bien a la sequedad de la calefacción)"
   },
@@ -191,7 +191,7 @@ export const plants: Plant[] = [
     },
     light: "Pleno sol o luz muy brillante.",
     difficulty: "Bajo",
-    imageUrl: "https://images.unsplash.com/photo-1596547609652-9cf5d8d76921?q=80&w=600&auto=format&fit=crop",
+    imageUrl: "/plants/aloe-vera.png",
     temperature: "10°C a 35°C (no tolera heladas severas)",
     humidity: "Baja (muy resistente a la sequedad)"
   },
@@ -216,7 +216,7 @@ export const plants: Plant[] = [
     },
     light: "Luz indirecta de media a brillante. Tolera semisombra.",
     difficulty: "Bajo",
-    imageUrl: "https://images.unsplash.com/photo-1508515053963-70c7bc39ff4f?q=80&w=600&auto=format&fit=crop",
+    imageUrl: "/plants/cinta.png",
     temperature: "12°C - 24°C",
     humidity: "Media (agradece pulverización en verano)"
   },
@@ -241,7 +241,7 @@ export const plants: Plant[] = [
     },
     light: "Pleno sol directo (mínimo de 6 horas al día).",
     difficulty: "Bajo",
-    imageUrl: "https://images.unsplash.com/photo-1528183429752-a97d0bf99b5a?q=80&w=600&auto=format&fit=crop",
+    imageUrl: "/plants/lavanda.png",
     temperature: "-10°C a 40°C",
     humidity: "Baja (ambientes secos y aireados)"
   },
@@ -266,7 +266,7 @@ export const plants: Plant[] = [
     },
     light: "Luz indirecta brillante (mantiene mejor el color amarillo) a sombra media.",
     difficulty: "Bajo",
-    imageUrl: "https://images.unsplash.com/photo-1598880940080-ff9a29891b85?q=80&w=600&auto=format&fit=crop",
+    imageUrl: "/plants/poto.png",
     temperature: "15°C - 26°C",
     humidity: "Media (soporta humedad baja)"
   },
@@ -291,7 +291,7 @@ export const plants: Plant[] = [
     },
     light: "Pleno sol directo (mínimo 6 horas diarias).",
     difficulty: "Medio",
-    imageUrl: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=600&auto=format&fit=crop",
+    imageUrl: "/plants/rosal.png",
     temperature: "-15°C a 38°C (tolera heladas invernales)",
     humidity: "Media (prefiere buena circulación de aire)"
   },
@@ -316,7 +316,7 @@ export const plants: Plant[] = [
     },
     light: "Pleno sol directo o luz brillante filtrada.",
     difficulty: "Bajo",
-    imageUrl: "https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=600&auto=format&fit=crop",
+    imageUrl: "/plants/echeveria.png",
     temperature: "5°C a 35°C (proteger de heladas fuertes)",
     humidity: "Baja (muy sensible a la humedad ambiental persistente)"
   },
@@ -341,7 +341,7 @@ export const plants: Plant[] = [
     },
     light: "Luz indirecta tamizada o semisombra. Nunca sol directo.",
     difficulty: "Medio",
-    imageUrl: "https://images.unsplash.com/photo-1516253593875-bd7ba052fbc5?q=80&w=600&auto=format&fit=crop",
+    imageUrl: "/plants/helecho-espada.png",
     temperature: "15°C - 24°C (sensible al frío extremo)",
     humidity: "Alta (mínimo 60%)"
   },
@@ -366,7 +366,7 @@ export const plants: Plant[] = [
     },
     light: "Pleno sol directo (mínimo 5-6 horas al día para florecer bien).",
     difficulty: "Medio",
-    imageUrl: "https://images.unsplash.com/photo-1550950158-d0d960dff51b?q=80&w=600&auto=format&fit=crop",
+    imageUrl: "/plants/hibisco.png",
     temperature: "10°C a 35°C (no tolera heladas prolongadas)",
     humidity: "Media - Alta"
   },
@@ -391,7 +391,7 @@ export const plants: Plant[] = [
     },
     light: "Luz indirecta brillante a semisombra moderada.",
     difficulty: "Bajo",
-    imageUrl: "https://images.unsplash.com/photo-1545241047-6083a3684587?q=80&w=600&auto=format&fit=crop",
+    imageUrl: "/plants/kentia.png",
     temperature: "14°C - 25°C (soporta caídas puntuales de hasta 10°C)",
     humidity: "Media"
   },
@@ -416,7 +416,7 @@ export const plants: Plant[] = [
     },
     light: "Pleno sol o luz muy brillante directa.",
     difficulty: "Bajo",
-    imageUrl: "https://images.unsplash.com/photo-1525498128493-380d1990a112?q=80&w=600&auto=format&fit=crop",
+    imageUrl: "/plants/arbol-jade.png",
     temperature: "10°C a 35°C (no tolera heladas por debajo de 5°C)",
     humidity: "Baja (ambientes secos)"
   },
@@ -441,7 +441,7 @@ export const plants: Plant[] = [
     },
     light: "Luz indirecta media a brillante. Soporta luz baja.",
     difficulty: "Bajo",
-    imageUrl: "https://images.unsplash.com/photo-1592150621744-aca64f48394a?q=80&w=600&auto=format&fit=crop",
+    imageUrl: "/plants/espatifilo.png",
     temperature: "16°C - 24°C (sensible al frío de menos de 12°C)",
     humidity: "Alta (agradece pulverización frecuente)"
   },
