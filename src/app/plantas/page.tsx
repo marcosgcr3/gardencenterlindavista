@@ -336,14 +336,11 @@ export default function PlantasPage() {
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   {/* Overlay Badges */}
-                  <div className="absolute top-4 left-4 flex flex-col gap-2 z-10">
-                    <span className="bg-white/95 dark:bg-zinc-950/95 text-zinc-800 dark:text-zinc-200 text-xxs font-bold uppercase tracking-wider px-2.5 py-1 rounded-lg backdrop-blur-sm border border-zinc-200/20 w-fit">
+                  <div className="absolute top-3 left-3 flex flex-col gap-1.5 z-10 items-start">
+                    <span className="bg-white/95 dark:bg-zinc-950/95 text-zinc-800 dark:text-zinc-200 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md backdrop-blur-sm border border-zinc-200/20 w-fit">
                       {t(`category.${plant.category}`)}
                     </span>
-                  </div>
-
-                  <div className="absolute top-4 right-4 z-10">
-                    <span className={`text-xxs font-extrabold uppercase tracking-widest px-2.5 py-1 rounded-lg backdrop-blur-sm ${getDifficultyColor(plant.difficulty)}`}>
+                    <span className={`text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-md backdrop-blur-sm w-fit ${getDifficultyColor(plant.difficulty)}`}>
                       {t("details.difficulty")}: {t(`difficulty.${plant.difficulty}`)}
                     </span>
                   </div>

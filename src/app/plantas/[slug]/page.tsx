@@ -211,16 +211,13 @@ export default function PlantaDetailPage({ params }: PageProps) {
               priority
               className="object-cover"
             />
-            {/* Category floating badge */}
-            <div className="absolute top-3 left-3 z-10">
-              <span className="bg-white/95 dark:bg-zinc-950/95 text-zinc-800 dark:text-zinc-200 text-[9px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-md shadow-xs">
+            {/* Overlay Badges */}
+            <div className="absolute top-3 left-3 flex flex-col gap-1 z-10 items-start">
+              <span className="bg-white/95 dark:bg-zinc-950/95 text-zinc-800 dark:text-zinc-200 text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md shadow-xs w-fit">
                 {t(`category.${plant.category}`)}
               </span>
-            </div>
-            {/* Difficulty floating badge */}
-            <div className="absolute top-3 right-3 z-10">
-              <span className={`text-[9px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-md shadow-xs ${getDifficultyColor(plant.difficulty)}`}>
-                {t(`difficulty.${plant.difficulty}`)}
+              <span className={`text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md shadow-xs w-fit ${getDifficultyColor(plant.difficulty)}`}>
+                {t("details.difficulty")}: {t(`difficulty.${plant.difficulty}`)}
               </span>
             </div>
           </div>
