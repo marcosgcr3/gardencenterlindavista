@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { headers } from "next/headers";
 import {
   ChevronLeft,
   Sun,
@@ -35,6 +36,12 @@ export default async function PlantaDetailPage({ params }: PageProps) {
   if (!plant) {
     notFound();
   }
+
+  // Get dynamic host to construct QR URL dynamically
+  const headersList = await headers();
+  const host = headersList.get("host") || "gardencenterlindavista.solarrv.tech";
+  const protocol = host.includes("localhost") || host.includes("127.0.0.1") ? "http" : "https";
+  const currentPlantUrl = `${protocol}://${host}/plantas/${plant.slug}`;
 
   const getDifficultyColor = (difficulty: Plant["difficulty"]) => {
     switch (difficulty) {
@@ -324,7 +331,7 @@ export default async function PlantaDetailPage({ params }: PageProps) {
             <div className="md:w-2/3 bg-zinc-50/50 dark:bg-zinc-900/35 border border-zinc-100 dark:border-zinc-900/60 rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row items-center gap-8">
               <div className="bg-white p-3 rounded-2xl shadow-md border border-zinc-150/40 shrink-0">
                 <img
-                  src={`https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(`https://gardencenterlindavista.com/plantas/${plant.slug}`)}`}
+                  src={`https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(currentPlantUrl)}`}
                   alt={`Código QR de ${plant.name}`}
                   width={160}
                   height={160}
@@ -337,7 +344,7 @@ export default async function PlantaDetailPage({ params }: PageProps) {
                   Ideal para imprimir y colocar junto a la planta en el vivero. El código apunta de forma segura al enlace permanente:
                 </p>
                 <div className="bg-white dark:bg-zinc-900/70 border border-zinc-200/50 dark:border-zinc-800 px-4 py-2.5 rounded-xl text-xs select-all text-brand font-medium break-all font-mono">
-                  https://gardencenterlindavista.com/plantas/{plant.slug}
+                  {currentPlantUrl}
                 </div>
               </div>
             </div>

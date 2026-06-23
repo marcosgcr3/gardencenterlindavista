@@ -32,7 +32,7 @@ export default function Navbar() {
   ];
 
   return (
-    <header className="w-full flex flex-col z-50">
+    <header className="w-full flex flex-col z-50 print:hidden">
       {/* Top Banner Contact bar (Hidden on mobile) */}
       <div className="bg-zinc-900 text-zinc-300 text-xs py-2 px-4 sm:px-6 lg:px-8 border-b border-zinc-800 transition-all duration-300 md:block hidden">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
