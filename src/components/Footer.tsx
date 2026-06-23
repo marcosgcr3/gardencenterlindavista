@@ -1,9 +1,22 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function Footer() {
+  const { t } = useLanguage();
+
+  const footerLinks = [
+    { name: t("nav.home"), href: "/" },
+    { name: t("nav.about"), href: "/sobre-nosotros" },
+    { name: t("home.services.s2.title"), href: "/plantas" },
+    { name: t("nav.gallery"), href: "/galeria" },
+    { name: t("nav.contact"), href: "/contacto" },
+  ];
+
   return (
     <footer className="bg-zinc-950 text-zinc-400 text-sm mt-auto border-t border-zinc-900 print:hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
@@ -17,8 +30,8 @@ export default function Footer() {
               className="object-contain filter brightness-0 invert"
             />
           </Link>
-          <p className="text-zinc-500 leading-6">
-            Garden Center Lindavista es un vivero familiar fundado en 1989. Ofrecemos la mejor selección de plantas de interior, exterior, artículos de decoración, alfarería y servicios profesionales de jardinería en la Costa del Sol.
+          <p className="text-zinc-550 dark:text-zinc-500 leading-6 font-light">
+            {t("footer.desc")}
           </p>
           {/* Social Icons */}
           <div className="flex gap-4">
@@ -50,16 +63,10 @@ export default function Footer() {
         {/* Column 2: Quick Links */}
         <div className="flex flex-col gap-6">
           <h3 className="text-white font-bold text-base tracking-wide relative pb-2 after:absolute after:bottom-0 after:left-0 after:w-10 after:h-0.5 after:bg-brand">
-            Enlaces Rápidos
+            {t("footer.title.links")}
           </h3>
           <ul className="flex flex-col gap-3">
-            {[
-              { name: "Inicio", href: "/" },
-              { name: "Sobre Nosotros", href: "/sobre-nosotros" },
-              { name: "Plantas", href: "/plantas" },
-              { name: "Galería", href: "/galeria" },
-              { name: "Contacto", href: "/contacto" },
-            ].map((link) => (
+            {footerLinks.map((link) => (
               <li key={link.name}>
                 <Link
                   href={link.href}
@@ -75,7 +82,7 @@ export default function Footer() {
         {/* Column 3: Contact Info */}
         <div className="flex flex-col gap-6">
           <h3 className="text-white font-bold text-base tracking-wide relative pb-2 after:absolute after:bottom-0 after:left-0 after:w-10 after:h-0.5 after:bg-brand">
-            Contacto
+            {t("footer.title.contact")}
           </h3>
           <ul className="flex flex-col gap-4">
             <li className="flex items-start gap-3">
@@ -106,28 +113,28 @@ export default function Footer() {
         {/* Column 4: Opening Timetable */}
         <div className="flex flex-col gap-6">
           <h3 className="text-white font-bold text-base tracking-wide relative pb-2 after:absolute after:bottom-0 after:left-0 after:w-10 after:h-0.5 after:bg-brand">
-            Horario
+            {t("footer.title.hours")}
           </h3>
           <ul className="flex flex-col gap-4">
             <li className="flex gap-3 items-start">
               <Clock className="w-5 h-5 text-brand shrink-0 mt-0.5" />
               <div>
-                <span className="block font-semibold text-white">Lunes - Viernes</span>
-                <span className="text-zinc-500">08:30 - 14:00 / 16:00 - 20:00</span>
+                <span className="block font-semibold text-white">{t("days.mon-fri")}</span>
+                <span className="text-zinc-550">08:30 - 14:00 / 16:00 - 20:00</span>
               </div>
             </li>
             <li className="flex gap-3 items-start">
               <Clock className="w-5 h-5 text-brand shrink-0 mt-0.5" />
               <div>
-                <span className="block font-semibold text-white">Sábado</span>
-                <span className="text-zinc-500">10:00 - 14:00</span>
+                <span className="block font-semibold text-white">{t("days.sat")}</span>
+                <span className="text-zinc-550">10:00 - 14:00</span>
               </div>
             </li>
             <li className="flex gap-3 items-start">
               <Clock className="w-5 h-5 text-brand shrink-0 mt-0.5" />
               <div>
-                <span className="block font-semibold text-white">Domingo</span>
-                <span className="text-zinc-500">Cerrado</span>
+                <span className="block font-semibold text-white">{t("days.sun")}</span>
+                <span className="text-zinc-550">{t("status.closed")}</span>
               </div>
             </li>
           </ul>
@@ -135,9 +142,9 @@ export default function Footer() {
       </div>
 
       {/* Copyright Bar */}
-      <div className="bg-zinc-950 border-t border-zinc-900/60 py-6 text-center text-zinc-600 text-xs">
+      <div className="bg-zinc-950 border-t border-zinc-900/60 py-6 text-center text-zinc-650 text-xs font-light">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-center items-center">
-          <p>© {new Date().getFullYear()} Garden Center Linda Vista S.L. Todos los derechos reservados.</p>
+          <p>© {new Date().getFullYear()} Garden Center Linda Vista S.L. {t("footer.rights")}</p>
         </div>
       </div>
     </footer>

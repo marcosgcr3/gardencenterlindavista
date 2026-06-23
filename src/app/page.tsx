@@ -17,25 +17,28 @@ import {
   Quote,
   Clock
 } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function Home() {
+  const { t } = useLanguage();
+
   // Hero Carousel Logic
   const [currentSlide, setCurrentSlide] = useState(0);
   const heroSlides = [
     {
       image: "/hero1.jpg",
-      title: "Bienvenido a Garden Center Linda Vista",
-      description: "Tu vivero de confianza en la Costa del Sol desde 1989. Selección única de plantas, decoración y servicios de jardinería.",
+      title: t("home.slide1.title"),
+      description: t("home.slide1.desc"),
     },
     {
       image: "/hero2.jpg",
-      title: "El vivero de referencia en Marbella",
-      description: "Situados en San Pedro Alcántara, a escasos minutos de Puerto Banús. Descubre nuestra gran variedad de macetas y cerámicas.",
+      title: t("home.slide2.title"),
+      description: t("home.slide2.desc"),
     },
     {
       image: "/hero3.jpg",
-      title: "Servicios de Jardinería Profesional",
-      description: "Diseñamos, construimos y mantenemos el jardín de tus sueños con un equipo experto y maquinaria moderna.",
+      title: t("home.slide3.title"),
+      description: t("home.slide3.desc"),
     },
   ];
 
@@ -59,27 +62,27 @@ export default function Home() {
   const reviews = [
     {
       name: "Carlo Piran",
-      text: "Gran variedad de plantas de interior y exterior, flores, hierbas y todo tipo de macetas y decoración de jardines. Buen servicio y muy amables.",
+      text: t("review.1"),
       stars: 5,
     },
     {
       name: "Monika Aloka",
-      text: "Excelente selección y personal muy servicial y amable. Siempre salgo muy contenta de este vivero.",
+      text: t("review.2"),
       stars: 5,
     },
     {
       name: "Dholdings",
-      text: "Excelente personal, de lo más útil e informativo. Te asesoran a la perfección en la elección de plantas.",
+      text: t("review.3"),
       stars: 5,
     },
     {
       name: "Brian Hurley",
-      text: "Excelente calidad de productos en el centro de jardinería. Variedad inmejorable en toda la zona de Marbella.",
+      text: t("review.4"),
       stars: 5,
     },
     {
       name: "Paul Wilcox",
-      text: "Siempre es mi centro de jardinería 'ir'. El asesoramiento profesional es excelente y el trato impecable.",
+      text: t("review.5"),
       stars: 5,
     },
   ];
@@ -117,12 +120,12 @@ export default function Home() {
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
                 <div className="max-w-2xl flex flex-col gap-6 animate-slide-up">
                   <span className="text-brand font-bold text-xs sm:text-sm uppercase tracking-widest bg-brand/10 text-brand px-3 py-1.5 rounded-full w-fit">
-                    Vivero Familiar desde 1989
+                    {t("home.badge")}
                   </span>
                   <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">
                     {slide.title}
                   </h1>
-                  <p className="text-base sm:text-lg md:text-xl text-zinc-200 font-light leading-relaxed">
+                  <p className="text-base sm:text-lg md:text-xl text-zinc-250 font-light leading-relaxed">
                     {slide.description}
                   </p>
                   <div className="flex flex-wrap gap-4 mt-2">
@@ -130,13 +133,13 @@ export default function Home() {
                       href="/contacto"
                       className="bg-brand hover:bg-brand-dark text-white font-semibold px-6 py-3 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-brand/20 active:scale-95 text-center sm:w-auto w-full"
                     >
-                      Solicitar Información
+                      {t("home.btn.info")}
                     </Link>
                     <Link
                       href="/sobre-nosotros"
                       className="border-2 border-white hover:bg-white hover:text-zinc-950 text-white font-semibold px-6 py-3 rounded-full transition-all duration-300 active:scale-95 text-center sm:w-auto w-full"
                     >
-                      Saber Más
+                      {t("home.btn.more")}
                     </Link>
                   </div>
                 </div>
@@ -148,14 +151,14 @@ export default function Home() {
         {/* Carousel Prev/Next Buttons */}
         <button
           onClick={prevSlide}
-          className="absolute left-4 top-1/2 -translate-y-1/2 bg-zinc-950/40 hover:bg-brand/90 hover:scale-105 text-white p-2.5 sm:p-3 rounded-full transition-all duration-300 z-30"
+          className="absolute left-4 top-1/2 -translate-y-1/2 bg-zinc-950/40 hover:bg-brand/90 hover:scale-105 text-white p-2.5 sm:p-3 rounded-full transition-all duration-300 z-30 cursor-pointer"
           aria-label="Previous slide"
         >
           <ChevronLeft className="w-5 sm:w-6 h-5 sm:h-6" />
         </button>
         <button
           onClick={nextSlide}
-          className="absolute right-4 top-1/2 -translate-y-1/2 bg-zinc-950/40 hover:bg-brand/90 hover:scale-105 text-white p-2.5 sm:p-3 rounded-full transition-all duration-300 z-30"
+          className="absolute right-4 top-1/2 -translate-y-1/2 bg-zinc-950/40 hover:bg-brand/90 hover:scale-105 text-white p-2.5 sm:p-3 rounded-full transition-all duration-300 z-30 cursor-pointer"
           aria-label="Next slide"
         >
           <ChevronRight className="w-5 sm:w-6 h-5 sm:h-6" />
@@ -167,7 +170,7 @@ export default function Home() {
             <button
               key={idx}
               onClick={() => setCurrentSlide(idx)}
-              className={`h-2 rounded-full transition-all duration-300 ${
+              className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
                 idx === currentSlide ? "w-8 bg-brand" : "w-2 bg-white/50"
               }`}
               aria-label={`Go to slide ${idx + 1}`}
@@ -185,9 +188,9 @@ export default function Home() {
               <div className="w-12 h-12 rounded-xl bg-brand/10 text-brand flex items-center justify-center transition-all duration-300 group-hover:scale-110">
                 <Sprout className="w-6 h-6" />
               </div>
-              <h3 className="text-xl font-bold text-zinc-900 dark:text-white">Biochar</h3>
-              <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                Utilizamos y aconsejamos abonos y enmiendas orgánicas enriquecidas con carbón vegetal activo para mejorar la estructura del suelo y asegurar un óptimo desarrollo radicular.
+              <h3 className="text-xl font-bold text-zinc-900 dark:text-white">{t("home.features.title1")}</h3>
+              <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed font-light">
+                {t("home.features.desc1")}
               </p>
             </div>
 
@@ -196,9 +199,9 @@ export default function Home() {
               <div className="w-12 h-12 rounded-xl bg-brand/10 text-brand flex items-center justify-center transition-all duration-300 group-hover:scale-110">
                 <Droplet className="w-6 h-6" />
               </div>
-              <h3 className="text-xl font-bold text-zinc-900 dark:text-white">Microalgas</h3>
-              <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                Incorporamos bioestimulantes biológicos avanzados de microalgas que aumentan las defensas naturales de las plantas, potencian la floración y promueven la sostenibilidad.
+              <h3 className="text-xl font-bold text-zinc-900 dark:text-white">{t("home.features.title2")}</h3>
+              <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed font-light">
+                {t("home.features.desc2")}
               </p>
             </div>
 
@@ -207,9 +210,9 @@ export default function Home() {
               <div className="w-12 h-12 rounded-xl bg-brand/10 text-brand flex items-center justify-center transition-all duration-300 group-hover:scale-110">
                 <Truck className="w-6 h-6" />
               </div>
-              <h3 className="text-xl font-bold text-zinc-900 dark:text-white">Transporte Propio</h3>
-              <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                Disponemos de vehículos equipados y personal cualificado para realizar la entrega de tus plantas y cerámicas a domicilio de forma rápida y segura en toda la Costa del Sol.
+              <h3 className="text-xl font-bold text-zinc-900 dark:text-white">{t("home.features.title3")}</h3>
+              <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed font-light">
+                {t("home.features.desc3")}
               </p>
             </div>
           </div>
@@ -223,23 +226,23 @@ export default function Home() {
             {/* Text Side */}
             <div className="lg:col-span-7 flex flex-col gap-6">
               <span className="text-brand font-bold text-sm uppercase tracking-wider">
-                Sobre Nosotros
+                {t("home.about.badge")}
               </span>
               <h2 className="text-3xl sm:text-4xl font-bold text-zinc-900 dark:text-white tracking-tight leading-tight">
-                Garden Center Linda Vista es un vivero fundado en 1989 en San Pedro Alcántara
+                {t("home.about.title")}
               </h2>
-              <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed text-base">
-                Como empresa familiar ubicada en el corazón de la Costa del Sol, conocemos de primera mano las necesidades del cliente nacional y extranjero. Ofrecemos un servicio de atención agradable, comunicativo y experto para garantizar el éxito de tu jardín.
+              <p className="text-zinc-655 dark:text-zinc-400 leading-relaxed text-base font-light">
+                {t("home.about.desc1")}
               </p>
-              <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed text-base">
-                A solo 3 minutos de Puerto Banús y 10 minutos de Marbella, disponemos de la mayor selección de maceterías y cerámicas de la costa, así como ofertas especiales de temporada y plantas frescas cada semana.
+              <p className="text-zinc-655 dark:text-zinc-400 leading-relaxed text-base font-light">
+                {t("home.about.desc2")}
               </p>
               <div className="pt-2">
                 <Link
                   href="/sobre-nosotros"
                   className="inline-flex items-center gap-2 text-brand hover:text-brand-dark font-semibold text-base transition-colors group"
                 >
-                  Conoce más sobre nuestra historia
+                  {t("home.about.link")}
                   <ChevronRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
                 </Link>
               </div>
@@ -263,13 +266,13 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-16">
           <div className="text-center max-w-2xl mx-auto flex flex-col gap-4">
             <span className="text-brand font-bold text-sm uppercase tracking-wider">
-              Nuestros Servicios
+              {t("home.services.badge")}
             </span>
             <h2 className="text-3xl sm:text-4xl font-bold text-zinc-900 dark:text-white tracking-tight">
-              ¿Qué ofrecemos en Linda Vista?
+              {t("home.services.title")}
             </h2>
-            <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">
-              Descubre las cuatro áreas principales que nos definen y los productos que tenemos disponibles para transformar tus espacios.
+            <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed font-light">
+              {t("home.services.desc")}
             </p>
           </div>
 
@@ -280,9 +283,9 @@ export default function Home() {
                 <Compass className="w-6 h-6" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-zinc-900 dark:text-white mb-2">Jardinería</h3>
-                <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                  Realizamos diseño, construcción y mantenimiento integral de jardines públicos y privados, optimizando el riego y adaptándonos al clima.
+                <h3 className="text-xl font-bold text-zinc-900 dark:text-white mb-2">{t("home.services.s1.title")}</h3>
+                <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed font-light">
+                  {t("home.services.s1.desc")}
                 </p>
               </div>
             </div>
@@ -293,9 +296,9 @@ export default function Home() {
                 <Flower2 className="w-6 h-6" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-zinc-900 dark:text-white mb-2">Plantas</h3>
-                <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                  Gran variedad de plantas de interior, exterior, árboles ejemplares, arbustos y flores de temporada. Abastecimiento semanal.
+                <h3 className="text-xl font-bold text-zinc-900 dark:text-white mb-2">{t("home.services.s2.title")}</h3>
+                <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed font-light">
+                  {t("home.services.s2.desc")}
                 </p>
               </div>
             </div>
@@ -306,22 +309,22 @@ export default function Home() {
                 <TreePine className="w-6 h-6" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-zinc-900 dark:text-white mb-2">Decoración</h3>
-                <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                  La mayor selección de la costa de alfarería y macetas de todo tipo (cerámica, barro, resina) y complementos decorativos de jardín.
+                <h3 className="text-xl font-bold text-zinc-900 dark:text-white mb-2">{t("home.services.s3.title")}</h3>
+                <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed font-light">
+                  {t("home.services.s3.desc")}
                 </p>
               </div>
             </div>
 
             {/* Service 4 */}
-            <div className="bg-white dark:bg-zinc-950 border border-zinc-100 dark:border-zinc-900 rounded-2xl p-8 flex flex-col gap-6 hover:shadow-xl hover:shadow-zinc-200/50 dark:hover:shadow-none transition-all duration-300 group">
+            <div className="bg-white dark:bg-zinc-950 border border-zinc-150 dark:border-zinc-900 rounded-2xl p-8 flex flex-col gap-6 hover:shadow-xl hover:shadow-zinc-200/50 dark:hover:shadow-none transition-all duration-300 group">
               <div className="w-12 h-12 rounded-xl bg-brand/10 text-brand flex items-center justify-center transition-all duration-300 group-hover:scale-110">
                 <Armchair className="w-6 h-6" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-zinc-900 dark:text-white mb-2">Muebles</h3>
-                <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                  Mobiliario exclusivo de exterior y complementos confortables diseñados para resistir las condiciones climáticas del Mediterráneo.
+                <h3 className="text-xl font-bold text-zinc-900 dark:text-white mb-2">{t("home.services.s4.title")}</h3>
+                <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed font-light">
+                  {t("home.services.s4.desc")}
                 </p>
               </div>
             </div>
@@ -331,30 +334,29 @@ export default function Home() {
 
       {/* 5. Timetable & Callback CTA Section */}
       <section className="relative py-28 bg-brand text-white overflow-hidden">
-        {/* Background Patterns */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-brand-light/35 via-brand/10 to-brand-dark/20 z-0" />
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="flex flex-col gap-6">
               <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white leading-tight">
-                ¿Necesitas asesoramiento profesional para tu jardín?
+                {t("home.cta.title")}
               </h2>
-              <p className="text-brand-light text-zinc-100 font-light text-base leading-relaxed">
-                Llámanos directamente o ven a visitarnos en San Pedro Alcántara. Nuestro equipo de profesionales estará encantado de ayudarte a elegir las mejores plantas y diseños para tus espacios exteriores e interiores.
+              <p className="text-zinc-100 font-light text-base leading-relaxed">
+                {t("home.cta.desc")}
               </p>
               <div className="flex flex-wrap gap-4 mt-2">
                 <a
                   href="tel:952785206"
                   className="bg-zinc-950 hover:bg-zinc-900 text-white font-semibold px-8 py-3.5 rounded-full transition-all duration-300 hover:shadow-xl active:scale-95 text-center"
                 >
-                  Llamar: 952 78 52 06
+                  {t("home.cta.btn.call")}
                 </a>
                 <Link
                   href="/contacto"
                   className="border-2 border-white hover:bg-white hover:text-brand text-white font-semibold px-8 py-3.5 rounded-full transition-all duration-300 active:scale-95 text-center"
                 >
-                  Enviar Mensaje
+                  {t("home.cta.btn.msg")}
                 </Link>
               </div>
             </div>
@@ -362,20 +364,20 @@ export default function Home() {
             <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 flex flex-col gap-6 shadow-xl">
               <h3 className="text-xl font-bold text-white tracking-wide border-b border-white/20 pb-3 flex items-center gap-2">
                 <Clock className="w-5 h-5 text-brand-light" />
-                Horarios de Apertura
+                {t("home.cta.hours.title")}
               </h3>
-              <div className="flex flex-col gap-4 text-zinc-100">
+              <div className="flex flex-col gap-4 text-zinc-100 font-light">
                 <div className="flex justify-between items-center py-1">
-                  <span className="font-medium text-white">Lunes a Viernes</span>
+                  <span className="font-medium text-white">{t("days.mon-fri")}</span>
                   <span>08:30 - 14:00 / 16:00 - 20:00</span>
                 </div>
                 <div className="flex justify-between items-center py-1 border-t border-white/10 pt-4">
-                  <span className="font-medium text-white">Sábados</span>
+                  <span className="font-medium text-white">{t("days.sat")}</span>
                   <span>10:00 - 14:00</span>
                 </div>
                 <div className="flex justify-between items-center py-1 border-t border-white/10 pt-4">
-                  <span className="font-medium text-white">Domingos</span>
-                  <span className="text-brand-light font-medium bg-zinc-950/20 px-3 py-1 rounded-full text-xs">Cerrado</span>
+                  <span className="font-medium text-white">{t("days.sun")}</span>
+                  <span className="text-brand-light font-medium bg-zinc-950/20 px-3 py-1 rounded-full text-xs">{t("status.closed")}</span>
                 </div>
               </div>
             </div>
@@ -388,15 +390,14 @@ export default function Home() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col gap-12">
           <div className="flex flex-col gap-3">
             <span className="text-brand font-bold text-sm uppercase tracking-wider">
-              Opiniones de Clientes
+              {t("home.reviews.badge")}
             </span>
             <h2 className="text-3xl sm:text-4xl font-bold text-zinc-900 dark:text-white tracking-tight">
-              Lo que opinan de nosotros
+              {t("home.reviews.title")}
             </h2>
           </div>
 
           <div className="relative glassmorphism dark:bg-zinc-900/60 rounded-3xl p-10 md:p-14 shadow-xl flex flex-col gap-6 min-h-[300px] justify-center transition-all duration-300">
-            {/* Quote Icon */}
             <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 bg-brand rounded-full flex items-center justify-center shadow-lg shadow-brand/20">
               <Quote className="w-5 h-5 text-white" />
             </div>
@@ -423,7 +424,7 @@ export default function Home() {
                     {rev.name}
                   </h4>
                   <span className="text-xs text-zinc-400 uppercase tracking-widest mt-1 block">
-                    Cliente Satisfecho
+                    {t("home.reviews.subtitle")}
                   </span>
                 </div>
               </div>
@@ -436,7 +437,7 @@ export default function Home() {
               <button
                 key={idx}
                 onClick={() => setCurrentReview(idx)}
-                className={`h-2.5 rounded-full transition-all duration-300 ${
+                className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
                   idx === currentReview ? "w-8 bg-brand" : "w-2.5 bg-zinc-200 dark:bg-zinc-800"
                 }`}
                 aria-label={`Go to testimonial ${idx + 1}`}

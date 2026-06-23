@@ -3,6 +3,7 @@ import { Outfit, Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { LanguageProvider } from "@/context/LanguageContext";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -48,11 +49,13 @@ export default function RootLayout({
       className={`${outfit.variable} ${inter.variable} h-full antialiased font-sans`}
     >
       <body className="min-h-full flex flex-col bg-zinc-50/50 dark:bg-zinc-950 text-zinc-800 dark:text-zinc-200">
-        <Navbar />
-        <main className="flex-grow flex flex-col w-full">
-          {children}
-        </main>
-        <Footer />
+        <LanguageProvider>
+          <Navbar />
+          <main className="flex-grow flex flex-col w-full">
+            {children}
+          </main>
+          <Footer />
+        </LanguageProvider>
       </body>
     </html>
   );

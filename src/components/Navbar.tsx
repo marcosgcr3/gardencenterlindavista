@@ -5,11 +5,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, X, Phone, Mail, MapPin, Clock } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
+  const { language, setLanguage, t } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,10 +26,10 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { name: "Inicio", href: "/" },
-    { name: "Sobre Nosotros", href: "/sobre-nosotros" },
-    { name: "Galería", href: "/galeria" },
-    { name: "Contacto", href: "/contacto" },
+    { name: t("nav.home"), href: "/" },
+    { name: t("nav.about"), href: "/sobre-nosotros" },
+    { name: t("nav.gallery"), href: "/galeria" },
+    { name: t("nav.contact"), href: "/contacto" },
   ];
 
   return (
@@ -53,7 +55,7 @@ export default function Navbar() {
           </div>
           <div className="flex items-center gap-1.5">
             <Clock className="w-3.5 h-3.5 text-brand" />
-            <span>Lun - Vie: 8:30-14:00, 16:00-20:00 | Sáb: 10:00-14:00</span>
+            <span>{t("contact.banner")}</span>
           </div>
         </div>
       </div>
@@ -81,7 +83,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Nav Items */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-6 lg:gap-8">
             <div className="flex gap-6 items-center">
               {navLinks.map((link) => {
                 const isActive = pathname === link.href;
@@ -92,7 +94,7 @@ export default function Navbar() {
                     className={`relative text-sm font-medium tracking-wide transition-colors py-1.5 ${
                       isActive
                         ? "text-brand"
-                        : "text-zinc-600 hover:text-brand dark:text-zinc-300 dark:hover:text-brand"
+                        : "text-zinc-650 hover:text-brand dark:text-zinc-300 dark:hover:text-brand"
                     }`}
                   >
                     {link.name}
@@ -103,16 +105,65 @@ export default function Navbar() {
                 );
               })}
             </div>
+            
             <Link
               href="/contacto"
-              className="bg-brand hover:bg-brand-dark text-white font-medium text-sm px-5 py-2.5 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-brand/20 active:scale-95"
+              className="bg-brand hover:bg-brand-dark text-white font-medium text-sm px-5 py-2.5 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-brand/20 active:scale-95 whitespace-nowrap"
             >
-              Contactar
+              {t("nav.contactBtn")}
             </Link>
+
+            {/* Language Selector Desktop */}
+            <div className="flex items-center bg-zinc-100 dark:bg-zinc-900 border border-zinc-200/50 dark:border-zinc-800/60 rounded-full p-0.5 text-xs font-bold shadow-xs shrink-0">
+              <button
+                onClick={() => setLanguage("es")}
+                className={`px-3 py-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+                  language === "es"
+                    ? "bg-white dark:bg-zinc-800 text-brand shadow-xs"
+                    : "text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-200"
+                }`}
+              >
+                ES
+              </button>
+              <button
+                onClick={() => setLanguage("en")}
+                className={`px-3 py-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+                  language === "en"
+                    ? "bg-white dark:bg-zinc-800 text-brand shadow-xs"
+                    : "text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-200"
+                }`}
+              >
+                EN
+              </button>
+            </div>
           </div>
 
-          {/* Mobile hamburger menu toggle */}
-          <div className="md:hidden flex items-center">
+          {/* Mobile Actions (Language Selector & Hamburger Toggle) */}
+          <div className="md:hidden flex items-center gap-3">
+            {/* Mobile Language Selector */}
+            <div className="flex items-center bg-zinc-100 dark:bg-zinc-900 border border-zinc-200/50 dark:border-zinc-800/60 rounded-full p-0.5 text-xxs font-bold">
+              <button
+                onClick={() => setLanguage("es")}
+                className={`px-2.5 py-1 rounded-full transition-all duration-300 cursor-pointer ${
+                  language === "es"
+                    ? "bg-white dark:bg-zinc-800 text-brand shadow-xs"
+                    : "text-zinc-500"
+                }`}
+              >
+                ES
+              </button>
+              <button
+                onClick={() => setLanguage("en")}
+                className={`px-2.5 py-1 rounded-full transition-all duration-300 cursor-pointer ${
+                  language === "en"
+                    ? "bg-white dark:bg-zinc-800 text-brand shadow-xs"
+                    : "text-zinc-500"
+                }`}
+              >
+                EN
+              </button>
+            </div>
+
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="text-zinc-700 hover:text-brand dark:text-zinc-300 dark:hover:text-brand p-2"
@@ -148,7 +199,7 @@ export default function Navbar() {
               onClick={() => setIsOpen(false)}
               className="bg-brand hover:bg-brand-dark text-white font-medium text-center py-3 rounded-xl transition-colors mt-2"
             >
-              Contactar
+              {t("nav.contactBtn")}
             </Link>
           </div>
         )}
