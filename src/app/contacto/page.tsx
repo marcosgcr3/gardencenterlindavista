@@ -48,8 +48,22 @@ export default function Contacto() {
     },
   ];
 
+  const titleText = language === "es"
+    ? "Contacto y Horarios | Garden Center Linda Vista Marbella"
+    : "Contact & Hours | Garden Center Linda Vista Marbella";
+  const descText = language === "es"
+    ? "Contacta con nosotros, solicita presupuesto de jardinería o consulta nuestros horarios. Estamos en Calle Araucaria 10, San Pedro Alcántara."
+    : "Get in touch, request a gardening quote, or check our working hours. Located at Calle Araucaria 10, San Pedro Alcántara.";
+
   return (
     <div className="flex flex-col w-full">
+      <title>{titleText}</title>
+      <meta name="description" content={descText} />
+      <meta property="og:title" content={titleText} />
+      <meta property="og:description" content={descText} />
+      <meta property="og:url" content="http://gardencenterlindavista.com/contacto" />
+      <meta name="twitter:title" content={titleText} />
+      <meta name="twitter:description" content={descText} />
       {/* 1. Header Banner */}
       <section className="relative h-[40vh] min-h-[300px] w-full flex items-center bg-zinc-950 text-white">
         <div className="absolute inset-0 bg-black/55 z-10" />

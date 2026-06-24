@@ -156,8 +156,28 @@ export default function PlantaDetailPage({ params }: PageProps) {
     }
   };
 
+  const absoluteImageUrl = plant.imageUrl.startsWith("http")
+    ? plant.imageUrl
+    : `http://gardencenterlindavista.com${plant.imageUrl}`;
+
+  const titleText = language === "es"
+    ? `${plant.name} (${plant.scientificName}) | Cuidados y Riego | Garden Center Linda Vista`
+    : `${plant.name} (${plant.scientificName}) | Care & Watering | Garden Center Linda Vista`;
+  const descText = language === "es"
+    ? `Guía de cuidados para ${plant.name} (${plant.scientificName}). Ficha técnica, frecuencia de riego estacional, luz ideal y prevención de plagas.`
+    : `Care guide for ${plant.name} (${plant.scientificName}). Technical datasheet, seasonal watering frequency, ideal light, and pest prevention.`;
+
   return (
     <div className="flex flex-col w-full min-h-screen bg-zinc-50/40 dark:bg-zinc-950/20 pt-2 pb-8 md:py-8">
+      <title>{titleText}</title>
+      <meta name="description" content={descText} />
+      <meta property="og:title" content={titleText} />
+      <meta property="og:description" content={descText} />
+      <meta property="og:image" content={absoluteImageUrl} />
+      <meta property="og:url" content={`http://gardencenterlindavista.com/plantas/${slug}`} />
+      <meta name="twitter:title" content={titleText} />
+      <meta name="twitter:description" content={descText} />
+      <meta name="twitter:image" content={absoluteImageUrl} />
       {/* 1. Navigation & Header Container */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mt-1 md:mt-4">
         {/* Back Link & Breadcrumbs */}

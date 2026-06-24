@@ -171,8 +171,22 @@ export default function PlantasPage() {
     }
   };
 
+  const titleText = language === "es"
+    ? "Catálogo de Plantas y Guía de Cuidados | Garden Center Linda Vista"
+    : "Plants Catalog & Care Guide | Garden Center Linda Vista";
+  const descText = language === "es"
+    ? "Guía completa de plantas de interior y exterior en Marbella. Filtra por dificultad de cuidado y consulta pautas de riego, luz y mantenimiento."
+    : "Complete guide to indoor and outdoor plants in Marbella. Filter by care difficulty and check watering, light, and maintenance guidelines.";
+
   return (
     <div className="flex flex-col w-full min-h-screen bg-zinc-50/40 dark:bg-zinc-950/20 py-8">
+      <title>{titleText}</title>
+      <meta name="description" content={descText} />
+      <meta property="og:title" content={titleText} />
+      <meta property="og:description" content={descText} />
+      <meta property="og:url" content="http://gardencenterlindavista.com/plantas" />
+      <meta name="twitter:title" content={titleText} />
+      <meta name="twitter:description" content={descText} />
       {/* 1. Breadcrumbs & Minimal Header */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mt-4">
         <nav className="text-zinc-500 text-xs sm:text-sm font-medium mb-6" aria-label="Breadcrumb">

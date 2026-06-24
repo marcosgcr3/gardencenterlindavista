@@ -39,8 +39,22 @@ export default function SobreNosotros() {
     { name: "Benahavís", distance: "12 min" },
   ];
 
+  const titleText = language === "es"
+    ? "Sobre Nosotros | Garden Center Linda Vista Marbella"
+    : "About Us | Garden Center Linda Vista Marbella";
+  const descText = language === "es"
+    ? "Conoce la historia y valores de Garden Center Linda Vista, vivero y centro de jardinería familiar fundado en 1989 en San Pedro Alcántara, Marbella."
+    : "Learn about the history and values of Garden Center Linda Vista, a family-run nursery and garden center founded in 1989 in San Pedro Alcántara, Marbella.";
+
   return (
     <div className="flex flex-col w-full">
+      <title>{titleText}</title>
+      <meta name="description" content={descText} />
+      <meta property="og:title" content={titleText} />
+      <meta property="og:description" content={descText} />
+      <meta property="og:url" content="http://gardencenterlindavista.com/sobre-nosotros" />
+      <meta name="twitter:title" content={titleText} />
+      <meta name="twitter:description" content={descText} />
       {/* 1. Header Banner */}
       <section className="relative h-[40vh] min-h-[300px] w-full flex items-center bg-zinc-950 text-white">
         <div className="absolute inset-0 bg-black/55 z-10" />

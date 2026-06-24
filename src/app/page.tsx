@@ -20,7 +20,7 @@ import {
 import { useLanguage } from "@/context/LanguageContext";
 
 export default function Home() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   // Hero Carousel Logic
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -94,8 +94,22 @@ export default function Home() {
     return () => clearInterval(timer);
   }, [reviews.length]);
 
+  const titleText = language === "es"
+    ? "Garden Center Linda Vista | Vivero y Jardinería en Marbella"
+    : "Garden Center Linda Vista | Nursery & Gardening in Marbella";
+  const descText = language === "es"
+    ? "Vivero familiar en San Pedro Alcántara (Marbella) desde 1989. Amplia selección de plantas de interior, exterior, alfarería artesanal y servicios de jardinería profesional."
+    : "Family nursery in San Pedro Alcántara (Marbella) since 1989. Large selection of indoor and outdoor plants, artisan pottery, and professional gardening services.";
+
   return (
     <div className="flex flex-col w-full overflow-hidden">
+      <title>{titleText}</title>
+      <meta name="description" content={descText} />
+      <meta property="og:title" content={titleText} />
+      <meta property="og:description" content={descText} />
+      <meta property="og:url" content="http://gardencenterlindavista.com" />
+      <meta name="twitter:title" content={titleText} />
+      <meta name="twitter:description" content={descText} />
       {/* 1. Hero Carousel Section */}
       <section className="relative h-[80vh] min-h-[500px] w-full bg-zinc-900 text-white">
         {heroSlides.map((slide, idx) => (

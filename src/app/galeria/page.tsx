@@ -41,8 +41,22 @@ export default function Galeria() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [activePhoto, handlePrev, handleNext]);
 
+  const titleText = language === "es"
+    ? "Galería de Fotos | Garden Center Linda Vista Marbella"
+    : "Photo Gallery | Garden Center Linda Vista Marbella";
+  const descText = language === "es"
+    ? "Explora nuestras instalaciones en San Pedro Alcántara, Marbella. Descubre nuestra gran exposición de plantas, flores, alfarería y decoración de jardines."
+    : "Explore our facilities in San Pedro Alcántara, Marbella. Discover our large exhibition of plants, flowers, pottery, and garden decoration.";
+
   return (
     <div className="flex flex-col w-full">
+      <title>{titleText}</title>
+      <meta name="description" content={descText} />
+      <meta property="og:title" content={titleText} />
+      <meta property="og:description" content={descText} />
+      <meta property="og:url" content="http://gardencenterlindavista.com/galeria" />
+      <meta name="twitter:title" content={titleText} />
+      <meta name="twitter:description" content={descText} />
       {/* 1. Header Banner */}
       <section className="relative h-[40vh] min-h-[300px] w-full flex items-center bg-zinc-950 text-white">
         <div className="absolute inset-0 bg-black/55 z-10" />
