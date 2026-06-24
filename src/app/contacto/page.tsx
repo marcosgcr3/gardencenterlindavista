@@ -51,19 +51,39 @@ export default function Contacto() {
   const titleText = language === "es"
     ? "Contacto y Horarios | Garden Center Linda Vista Marbella"
     : "Contact & Hours | Garden Center Linda Vista Marbella";
+
+  React.useEffect(() => {
+    document.title = titleText;
+  }, [titleText]);
+
   const descText = language === "es"
     ? "Contacta con nosotros, solicita presupuesto de jardinería o consulta nuestros horarios. Estamos en Calle Araucaria 10, San Pedro Alcántara."
     : "Get in touch, request a gardening quote, or check our working hours. Located at Calle Araucaria 10, San Pedro Alcántara.";
+  const pageUrl = "http://gardencenterlindavista.com/contacto";
+  const shareImage = "http://gardencenterlindavista.com/hero1.jpg";
 
   return (
     <div className="flex flex-col w-full">
       <title>{titleText}</title>
       <meta name="description" content={descText} />
+      
+      {/* Canonical Link */}
+      <link rel="canonical" href={pageUrl} />
+
+      {/* OpenGraph */}
       <meta property="og:title" content={titleText} />
       <meta property="og:description" content={descText} />
-      <meta property="og:url" content="http://gardencenterlindavista.com/contacto" />
+      <meta property="og:url" content={pageUrl} />
+      <meta property="og:image" content={shareImage} />
+      <meta property="og:type" content="website" />
+      <meta property="og:site_name" content="Garden Center Linda Vista" />
+      <meta property="og:locale" content={language === "es" ? "es_ES" : "en_US"} />
+
+      {/* Twitter Card */}
+      <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={titleText} />
       <meta name="twitter:description" content={descText} />
+      <meta name="twitter:image" content={shareImage} />
       {/* 1. Header Banner */}
       <section className="relative h-[40vh] min-h-[300px] w-full flex items-center bg-zinc-950 text-white">
         <div className="absolute inset-0 bg-black/55 z-10" />

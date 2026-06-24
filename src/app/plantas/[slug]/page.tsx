@@ -1,6 +1,6 @@
 "use client";
 
-import React, { use } from "react";
+import React, { use, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -163,18 +163,35 @@ export default function PlantaDetailPage({ params }: PageProps) {
   const titleText = language === "es"
     ? `${plant.name} (${plant.scientificName}) | Cuidados y Riego | Garden Center Linda Vista`
     : `${plant.name} (${plant.scientificName}) | Care & Watering | Garden Center Linda Vista`;
+
+  useEffect(() => {
+    document.title = titleText;
+  }, [titleText]);
+
   const descText = language === "es"
     ? `Guía de cuidados para ${plant.name} (${plant.scientificName}). Ficha técnica, frecuencia de riego estacional, luz ideal y prevención de plagas.`
     : `Care guide for ${plant.name} (${plant.scientificName}). Technical datasheet, seasonal watering frequency, ideal light, and pest prevention.`;
+  const pageUrl = `http://gardencenterlindavista.com/plantas/${slug}`;
 
   return (
     <div className="flex flex-col w-full min-h-screen bg-zinc-50/40 dark:bg-zinc-950/20 pt-2 pb-8 md:py-8">
       <title>{titleText}</title>
       <meta name="description" content={descText} />
+      
+      {/* Canonical Link */}
+      <link rel="canonical" href={pageUrl} />
+
+      {/* OpenGraph */}
       <meta property="og:title" content={titleText} />
       <meta property="og:description" content={descText} />
+      <meta property="og:url" content={pageUrl} />
       <meta property="og:image" content={absoluteImageUrl} />
-      <meta property="og:url" content={`http://gardencenterlindavista.com/plantas/${slug}`} />
+      <meta property="og:type" content="article" />
+      <meta property="og:site_name" content="Garden Center Linda Vista" />
+      <meta property="og:locale" content={language === "es" ? "es_ES" : "en_US"} />
+
+      {/* Twitter Card */}
+      <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={titleText} />
       <meta name="twitter:description" content={descText} />
       <meta name="twitter:image" content={absoluteImageUrl} />

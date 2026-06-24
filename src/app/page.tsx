@@ -97,19 +97,39 @@ export default function Home() {
   const titleText = language === "es"
     ? "Garden Center Linda Vista | Vivero y Jardinería en Marbella"
     : "Garden Center Linda Vista | Nursery & Gardening in Marbella";
+
+  useEffect(() => {
+    document.title = titleText;
+  }, [titleText]);
+
   const descText = language === "es"
     ? "Vivero familiar en San Pedro Alcántara (Marbella) desde 1989. Amplia selección de plantas de interior, exterior, alfarería artesanal y servicios de jardinería profesional."
     : "Family nursery in San Pedro Alcántara (Marbella) since 1989. Large selection of indoor and outdoor plants, artisan pottery, and professional gardening services.";
+  const pageUrl = "http://gardencenterlindavista.com";
+  const shareImage = "http://gardencenterlindavista.com/hero1.jpg";
 
   return (
     <div className="flex flex-col w-full overflow-hidden">
       <title>{titleText}</title>
       <meta name="description" content={descText} />
+      
+      {/* Canonical Link */}
+      <link rel="canonical" href={pageUrl} />
+
+      {/* OpenGraph */}
       <meta property="og:title" content={titleText} />
       <meta property="og:description" content={descText} />
-      <meta property="og:url" content="http://gardencenterlindavista.com" />
+      <meta property="og:url" content={pageUrl} />
+      <meta property="og:image" content={shareImage} />
+      <meta property="og:type" content="website" />
+      <meta property="og:site_name" content="Garden Center Linda Vista" />
+      <meta property="og:locale" content={language === "es" ? "es_ES" : "en_US"} />
+
+      {/* Twitter Card */}
+      <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={titleText} />
       <meta name="twitter:description" content={descText} />
+      <meta name="twitter:image" content={shareImage} />
       {/* 1. Hero Carousel Section */}
       <section className="relative h-[80vh] min-h-[500px] w-full bg-zinc-900 text-white">
         {heroSlides.map((slide, idx) => (
