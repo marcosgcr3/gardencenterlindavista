@@ -119,7 +119,7 @@ export default function Home() {
             <div className="absolute inset-0 flex items-center z-20">
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
                 <div className="max-w-2xl flex flex-col gap-6 animate-slide-up">
-                  <span className="text-brand font-bold text-xs sm:text-sm uppercase tracking-widest bg-brand/10 text-brand px-3 py-1.5 rounded-full w-fit">
+                  <span className="text-emerald-400 font-bold text-xs sm:text-sm uppercase tracking-widest bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 rounded-full w-fit backdrop-blur-xs">
                     {t("home.badge")}
                   </span>
                   <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">

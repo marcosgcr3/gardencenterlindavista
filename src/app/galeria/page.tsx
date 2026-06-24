@@ -54,7 +54,7 @@ export default function Galeria() {
           priority
         />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-20 flex flex-col gap-4 animate-slide-up">
-          <span className="text-brand font-bold text-sm uppercase tracking-widest">
+          <span className="text-emerald-400 font-bold text-xs sm:text-sm uppercase tracking-widest bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 rounded-full w-fit backdrop-blur-xs">
             {t("gallery.badge")}
           </span>
           <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-white">
