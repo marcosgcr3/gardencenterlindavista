@@ -37,8 +37,8 @@ const translations: Record<Language, Record<string, string>> = {
 
     // Home Page
     "home.badge": "Vivero Familiar desde 1989",
-    "home.slide1.title": "Bienvenido a Garden Center Linda Vista",
-    "home.slide1.desc": "Tu vivero de confianza en la Costa del Sol desde 1989. Selección única de plantas, decoración y servicios de jardinería.",
+    "home.slide1.title": "Vivero en Marbella y San Pedro de Alcántara | Garden Center Linda Vista",
+    "home.slide1.desc": "Tu vivero de confianza en Marbella y San Pedro de Alcántara desde 1989. Selección única de plantas, alfarería, decoración y servicios de jardinería profesional.",
     "home.slide2.title": "El vivero de referencia en Marbella",
     "home.slide2.desc": "Situados en San Pedro Alcántara, a escasos minutos de Puerto Banús. Descubre nuestra gran variedad de macetas y cerámicas.",
     "home.slide3.title": "Servicios de Jardinería Profesional",
@@ -54,13 +54,13 @@ const translations: Record<Language, Record<string, string>> = {
     "home.features.desc3": "Disponemos de vehículos equipados y personal cualificado para realizar la entrega de tus plantas y cerámicas a domicilio.",
     
     "home.about.badge": "Sobre Nosotros",
-    "home.about.title": "Garden Center Linda Vista es un vivero fundado en 1989 en San Pedro Alcántara",
+    "home.about.title": "Tu vivero de confianza en Marbella y San Pedro de Alcántara desde 1989",
     "home.about.desc1": "Como empresa familiar ubicada en el corazón de la Costa del Sol, conocemos de primera mano las necesidades del cliente nacional y extranjero. Ofrecemos un servicio de atención agradable, comunicativo y experto para garantizar el éxito de tu jardín.",
     "home.about.desc2": "A solo 3 minutos de Puerto Banús y 10 minutos de Marbella, disponemos de la mayor selección de maceterías y cerámicas de la costa, así como ofertas especiales de temporada.",
     "home.about.link": "Conoce más sobre nuestra historia",
     
     "home.services.badge": "Nuestros Servicios",
-    "home.services.title": "¿Qué ofrecemos en Linda Vista?",
+    "home.services.title": "Servicios de Jardinería y Vivero en Marbella",
     "home.services.desc": "Descubre las cuatro áreas principales que nos definen y los productos que tenemos disponibles para transformar tus espacios.",
     
     "home.services.s1.title": "Jardinería",
@@ -240,8 +240,8 @@ const translations: Record<Language, Record<string, string>> = {
 
     // Home Page
     "home.badge": "Family Nursery since 1989",
-    "home.slide1.title": "Welcome to Garden Center Linda Vista",
-    "home.slide1.desc": "Your trusted nursery on the Costa del Sol since 1989. Unique selection of plants, decoration and gardening services.",
+    "home.slide1.title": "Welcome to Garden Center Linda Vista | Nursery in Marbella",
+    "home.slide1.desc": "Your trusted nursery in Marbella and San Pedro de Alcántara since 1989. Unique selection of plants, pottery, decoration and professional gardening services.",
     "home.slide2.title": "The reference nursery in Marbella",
     "home.slide2.desc": "Located in San Pedro Alcántara, just minutes from Puerto Banús. Discover our large variety of pots and ceramics.",
     "home.slide3.title": "Professional Gardening Services",
@@ -257,13 +257,13 @@ const translations: Record<Language, Record<string, string>> = {
     "home.features.desc3": "We have equipped vehicles and qualified staff to deliver your plants and pottery directly to your home.",
     
     "home.about.badge": "About Us",
-    "home.about.title": "Garden Center Linda Vista is a nursery founded in 1989 in San Pedro Alcántara",
+    "home.about.title": "Your trusted garden center and nursery in Marbella since 1989",
     "home.about.desc1": "As a family business in the heart of the Costa del Sol, we know the needs of local and international clients first-hand. We offer a friendly, communicative, and expert service to ensure your garden's success.",
     "home.about.desc2": "Just 3 minutes from Puerto Banús and 10 minutes from Marbella, we offer the largest selection of pottery and ceramics on the coast, along with special seasonal deals.",
     "home.about.link": "Learn more about our history",
     
     "home.services.badge": "Our Services",
-    "home.services.title": "What do we offer at Linda Vista?",
+    "home.services.title": "Gardening & Nursery Services in Marbella",
     "home.services.desc": "Discover the four main areas that define us and the products we have available to transform your spaces.",
     
     "home.services.s1.title": "Gardening",
