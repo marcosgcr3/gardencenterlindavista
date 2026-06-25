@@ -91,15 +91,30 @@ export default function Galeria() {
   const { t, language } = useLanguage();
   const [filter, setFilter] = useState<"all" | "images" | "videos">("all");
   const [activePhoto, setActivePhoto] = useState<number | null>(null);
+  const [items, setItems] = useState<typeof mediaItems>(mediaItems);
+
+  useEffect(() => {
+    fetch("/api/gallery")
+      .then((res) => {
+        if (res.ok) return res.json();
+        throw new Error("Failed to fetch gallery");
+      })
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setItems(data);
+        }
+      })
+      .catch((err) => console.error("Error loading dynamic gallery:", err));
+  }, []);
 
   const filteredItems = useMemo(() => {
-    return mediaItems.filter((item) => {
+    return items.filter((item) => {
       if (filter === "all") return true;
       if (filter === "images") return item.type === "image";
       if (filter === "videos") return item.type === "video";
       return true;
     });
-  }, [filter]);
+  }, [filter, items]);
 
   const handlePrev = React.useCallback(() => {
     setActivePhoto((prev) => (prev !== null ? (prev - 1 + filteredItems.length) % filteredItems.length : null));

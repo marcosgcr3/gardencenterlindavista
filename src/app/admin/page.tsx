@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { Plus, Printer, ShieldCheck, Sprout } from "lucide-react";
+import { Plus, Printer, ShieldCheck, Sprout, Images } from "lucide-react";
 
 export default function AdminDashboardPage() {
   return (
@@ -21,12 +21,12 @@ export default function AdminDashboardPage() {
         </h1>
         
         <p className="text-zinc-650 dark:text-zinc-400 max-w-2xl leading-relaxed text-sm font-light">
-          Bienvenido al centro de gestión interna. Desde aquí puedes dar de alta nuevas variedades de plantas y árboles en la base de datos o generar e imprimir las etiquetas QR correspondientes para el vivero físico.
+          Bienvenido al centro de gestión interna. Desde aquí puedes dar de alta nuevas variedades de plantas y árboles en la base de datos, gestionar los recursos de la galería multimedia o generar e imprimir las etiquetas QR correspondientes para el vivero físico.
         </p>
       </div>
 
       {/* Admin Operations Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* Card 1: Add plant */}
         <Link href="/admin/nueva-planta" className="group">
           <div className="bg-white dark:bg-zinc-950 border border-zinc-100 dark:border-zinc-900 rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col gap-6 h-full hover:-translate-y-1.5">
@@ -45,7 +45,25 @@ export default function AdminDashboardPage() {
           </div>
         </Link>
 
-        {/* Card 2: Print QR */}
+        {/* Card 2: Manage Gallery */}
+        <Link href="/admin/galeria" className="group">
+          <div className="bg-white dark:bg-zinc-950 border border-zinc-100 dark:border-zinc-900 rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col gap-6 h-full hover:-translate-y-1.5">
+            <div className="w-14 h-14 rounded-2xl bg-brand/10 text-brand flex items-center justify-center transition-all duration-300 group-hover:scale-110">
+              <Images className="w-7 h-7" />
+            </div>
+            
+            <div className="flex flex-col gap-2">
+              <h2 className="text-xl font-bold text-zinc-900 dark:text-white group-hover:text-brand transition-colors duration-300 flex items-center gap-2">
+                Gestionar Galería
+              </h2>
+              <p className="text-zinc-500 dark:text-zinc-400 text-sm font-light leading-relaxed">
+                Sube nuevas fotos o vídeos en alta definición directamente desde tu ordenador para mostrarlas en la galería pública o elimina recursos antiguos.
+              </p>
+            </div>
+          </div>
+        </Link>
+
+        {/* Card 3: Print QR */}
         <Link href="/admin/imprimir-qr" className="group">
           <div className="bg-white dark:bg-zinc-950 border border-zinc-100 dark:border-zinc-900 rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col gap-6 h-full hover:-translate-y-1.5">
             <div className="w-14 h-14 rounded-2xl bg-brand/10 text-brand flex items-center justify-center transition-all duration-300 group-hover:scale-110">

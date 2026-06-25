@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ChevronLeft, LogOut, Plus, Printer, LayoutDashboard } from "lucide-react";
+import { ChevronLeft, LogOut, Plus, Printer, LayoutDashboard, Images } from "lucide-react";
 import AdminGuard from "@/components/AdminGuard";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -19,6 +19,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     { name: "Inicio Panel", href: "/admin", icon: LayoutDashboard },
     { name: "Añadir Planta", href: "/admin/nueva-planta", icon: Plus },
     { name: "Imprimir QR", href: "/admin/imprimir-qr", icon: Printer },
+    { name: "Gestionar Galería", href: "/admin/galeria", icon: Images },
   ];
 
   return (
