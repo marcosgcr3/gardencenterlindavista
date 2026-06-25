@@ -88,7 +88,7 @@ export default function Contacto() {
       <section className="relative h-[40vh] min-h-[300px] w-full flex items-center bg-zinc-950 text-white">
         <div className="absolute inset-0 bg-black/55 z-10" />
         <Image
-          src="/hero1.jpg"
+          src="/hero1.png"
           alt={t("contact.title").toUpperCase()}
           fill
           className="object-cover"

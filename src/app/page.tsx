@@ -102,7 +102,7 @@ export default function Home() {
         {/* Background Image */}
         <div className="absolute inset-0 bg-black/45 z-10" />
         <Image
-          src="/hero-main.jpg"
+          src="/hero-main.png"
           alt={t("home.slide1.title")}
           fill
           className="object-cover"
