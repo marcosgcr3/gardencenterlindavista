@@ -28,8 +28,8 @@ export default function Navbar() {
   const navLinks = [
     { name: t("nav.home"), href: "/" },
     { name: t("nav.about"), href: "/sobre-nosotros" },
+    { name: t("nav.plants"), href: "/plantas" },
     { name: t("nav.gallery"), href: "/galeria" },
-    { name: t("nav.contact"), href: "/contacto" },
   ];
 
   return (

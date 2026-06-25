@@ -38,7 +38,10 @@ export default function RootLayout({
       lang="es"
       className={`${outfit.variable} ${inter.variable} h-full antialiased font-sans`}
     >
-      <body className="min-h-full flex flex-col bg-zinc-50/50 dark:bg-zinc-950 text-zinc-800 dark:text-zinc-200">
+      <body
+        className="min-h-full flex flex-col bg-zinc-50/50 dark:bg-zinc-950 text-zinc-800 dark:text-zinc-200"
+        spellCheck={false}
+      >
         <LanguageProvider>
           <Navbar />
           <main className="flex-grow flex flex-col w-full">

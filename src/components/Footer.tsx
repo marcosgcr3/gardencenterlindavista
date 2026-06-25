@@ -12,7 +12,7 @@ export default function Footer() {
   const footerLinks = [
     { name: t("nav.home"), href: "/" },
     { name: t("nav.about"), href: "/sobre-nosotros" },
-    { name: t("home.services.s2.title"), href: "/plantas" },
+    { name: t("nav.plants"), href: "/plantas" },
     { name: t("nav.gallery"), href: "/galeria" },
     { name: t("nav.contact"), href: "/contacto" },
   ];

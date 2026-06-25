@@ -98,7 +98,7 @@ export default function Home() {
       <meta name="twitter:description" content={descText} />
       <meta name="twitter:image" content={shareImage} />
       {/* 1. Hero Static Section */}
-      <section className="relative h-[80vh] min-h-[500px] w-full bg-zinc-900 text-white">
+      <section className="relative min-h-[80vh] md:min-h-[85vh] w-full bg-zinc-900 text-white flex items-center py-20 md:py-32">
         {/* Background Image */}
         <div className="absolute inset-0 bg-black/45 z-10" />
         <Image
@@ -110,32 +110,30 @@ export default function Home() {
         />
 
         {/* Content */}
-        <div className="absolute inset-0 flex items-center z-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-            <div className="max-w-2xl flex flex-col gap-6 animate-slide-up">
-              <span className="text-emerald-400 font-bold text-xs sm:text-sm uppercase tracking-widest bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 rounded-full w-fit backdrop-blur-xs">
-                {t("home.badge")}
-              </span>
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">
-                {t("home.slide1.title")}
-              </h1>
-              <p className="text-base sm:text-lg md:text-xl text-zinc-200 font-light leading-relaxed">
-                {t("home.slide1.desc")}
-              </p>
-              <div className="flex flex-wrap gap-4 mt-2">
-                <Link
-                  href="/contacto"
-                  className="bg-brand hover:bg-brand-dark text-white font-semibold px-6 py-3 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-brand/20 active:scale-95 text-center sm:w-auto w-full"
-                >
-                  {t("home.btn.info")}
-                </Link>
-                <Link
-                  href="/sobre-nosotros"
-                  className="border-2 border-white hover:bg-white hover:text-zinc-950 text-white font-semibold px-6 py-3 rounded-full transition-all duration-300 active:scale-95 text-center sm:w-auto w-full"
-                >
-                  {t("home.btn.more")}
-                </Link>
-              </div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-20">
+          <div className="max-w-2xl flex flex-col gap-6 animate-slide-up">
+            <span className="text-emerald-400 font-bold text-xs sm:text-sm uppercase tracking-widest bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 rounded-full w-fit backdrop-blur-xs">
+              {t("home.badge")}
+            </span>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">
+              {t("home.slide1.title")}
+            </h1>
+            <p className="text-base sm:text-lg md:text-xl text-zinc-200 font-light leading-relaxed">
+              {t("home.slide1.desc")}
+            </p>
+            <div className="flex flex-wrap gap-4 mt-2">
+              <Link
+                href="/contacto"
+                className="bg-brand hover:bg-brand-dark text-white font-semibold px-6 py-3 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-brand/20 active:scale-95 text-center sm:w-auto w-full"
+              >
+                {t("home.btn.info")}
+              </Link>
+              <Link
+                href="/sobre-nosotros"
+                className="border-2 border-white hover:bg-white hover:text-zinc-950 text-white font-semibold px-6 py-3 rounded-full transition-all duration-300 active:scale-95 text-center sm:w-auto w-full"
+              >
+                {t("home.btn.more")}
+              </Link>
             </div>
           </div>
         </div>
