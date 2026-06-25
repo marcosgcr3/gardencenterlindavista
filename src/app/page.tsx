@@ -22,40 +22,7 @@ import { useLanguage } from "@/context/LanguageContext";
 export default function Home() {
   const { t, language } = useLanguage();
 
-  // Hero Carousel Logic
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const heroSlides = [
-    {
-      image: "/hero1.jpg",
-      title: t("home.slide1.title"),
-      description: t("home.slide1.desc"),
-    },
-    {
-      image: "/hero2.jpg",
-      title: t("home.slide2.title"),
-      description: t("home.slide2.desc"),
-    },
-    {
-      image: "/hero3.jpg",
-      title: t("home.slide3.title"),
-      description: t("home.slide3.desc"),
-    },
-  ];
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
-    }, 6000);
-    return () => clearInterval(timer);
-  }, [heroSlides.length]);
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
-  };
-
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
-  };
+  // Static Hero Configuration (carousel removed as requested)
 
   // Testimonials Carousel Logic
   const [currentReview, setCurrentReview] = useState(0);
@@ -130,86 +97,47 @@ export default function Home() {
       <meta name="twitter:title" content={titleText} />
       <meta name="twitter:description" content={descText} />
       <meta name="twitter:image" content={shareImage} />
-      {/* 1. Hero Carousel Section */}
+      {/* 1. Hero Static Section */}
       <section className="relative h-[80vh] min-h-[500px] w-full bg-zinc-900 text-white">
-        {heroSlides.map((slide, idx) => (
-          <div
-            key={idx}
-            className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${
-              idx === currentSlide ? "opacity-100 z-10" : "opacity-0 z-0"
-            }`}
-          >
-            {/* Background Image */}
-            <div className="absolute inset-0 bg-black/45 z-10" />
-            <Image
-              src={slide.image}
-              alt={slide.title}
-              fill
-              className="object-cover"
-              priority={idx === 0}
-            />
+        {/* Background Image */}
+        <div className="absolute inset-0 bg-black/45 z-10" />
+        <Image
+          src="/hero-main.jpg"
+          alt={t("home.slide1.title")}
+          fill
+          className="object-cover"
+          priority
+        />
 
-            {/* Slide Content */}
-            <div className="absolute inset-0 flex items-center z-20">
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-                <div className="max-w-2xl flex flex-col gap-6 animate-slide-up">
-                  <span className="text-emerald-400 font-bold text-xs sm:text-sm uppercase tracking-widest bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 rounded-full w-fit backdrop-blur-xs">
-                    {t("home.badge")}
-                  </span>
-                  <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">
-                    {slide.title}
-                  </h1>
-                  <p className="text-base sm:text-lg md:text-xl text-zinc-250 font-light leading-relaxed">
-                    {slide.description}
-                  </p>
-                  <div className="flex flex-wrap gap-4 mt-2">
-                    <Link
-                      href="/contacto"
-                      className="bg-brand hover:bg-brand-dark text-white font-semibold px-6 py-3 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-brand/20 active:scale-95 text-center sm:w-auto w-full"
-                    >
-                      {t("home.btn.info")}
-                    </Link>
-                    <Link
-                      href="/sobre-nosotros"
-                      className="border-2 border-white hover:bg-white hover:text-zinc-950 text-white font-semibold px-6 py-3 rounded-full transition-all duration-300 active:scale-95 text-center sm:w-auto w-full"
-                    >
-                      {t("home.btn.more")}
-                    </Link>
-                  </div>
-                </div>
+        {/* Content */}
+        <div className="absolute inset-0 flex items-center z-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <div className="max-w-2xl flex flex-col gap-6 animate-slide-up">
+              <span className="text-emerald-400 font-bold text-xs sm:text-sm uppercase tracking-widest bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 rounded-full w-fit backdrop-blur-xs">
+                {t("home.badge")}
+              </span>
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">
+                {t("home.slide1.title")}
+              </h1>
+              <p className="text-base sm:text-lg md:text-xl text-zinc-200 font-light leading-relaxed">
+                {t("home.slide1.desc")}
+              </p>
+              <div className="flex flex-wrap gap-4 mt-2">
+                <Link
+                  href="/contacto"
+                  className="bg-brand hover:bg-brand-dark text-white font-semibold px-6 py-3 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-brand/20 active:scale-95 text-center sm:w-auto w-full"
+                >
+                  {t("home.btn.info")}
+                </Link>
+                <Link
+                  href="/sobre-nosotros"
+                  className="border-2 border-white hover:bg-white hover:text-zinc-950 text-white font-semibold px-6 py-3 rounded-full transition-all duration-300 active:scale-95 text-center sm:w-auto w-full"
+                >
+                  {t("home.btn.more")}
+                </Link>
               </div>
             </div>
           </div>
-        ))}
-
-        {/* Carousel Prev/Next Buttons */}
-        <button
-          onClick={prevSlide}
-          className="absolute left-4 top-1/2 -translate-y-1/2 bg-zinc-950/40 hover:bg-brand/90 hover:scale-105 text-white p-2.5 sm:p-3 rounded-full transition-all duration-300 z-30 cursor-pointer"
-          aria-label="Previous slide"
-        >
-          <ChevronLeft className="w-5 sm:w-6 h-5 sm:h-6" />
-        </button>
-        <button
-          onClick={nextSlide}
-          className="absolute right-4 top-1/2 -translate-y-1/2 bg-zinc-950/40 hover:bg-brand/90 hover:scale-105 text-white p-2.5 sm:p-3 rounded-full transition-all duration-300 z-30 cursor-pointer"
-          aria-label="Next slide"
-        >
-          <ChevronRight className="w-5 sm:w-6 h-5 sm:h-6" />
-        </button>
-
-        {/* Indicator dots */}
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-3 z-30">
-          {heroSlides.map((_, idx) => (
-            <button
-              key={idx}
-              onClick={() => setCurrentSlide(idx)}
-              className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
-                idx === currentSlide ? "w-8 bg-brand" : "w-2 bg-white/50"
-              }`}
-              aria-label={`Go to slide ${idx + 1}`}
-            />
-          ))}
         </div>
       </section>
 
