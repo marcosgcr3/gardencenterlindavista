@@ -15,8 +15,7 @@ import {
   Sparkles,
   TreePine,
   Home,
-  CheckCircle2,
-  Settings2
+  CheckCircle2
 } from "lucide-react";
 import { plants, Plant } from "@/data/plants";
 import { useLanguage } from "@/context/LanguageContext";
@@ -231,13 +230,6 @@ export default function PlantasPage() {
               <Sparkles className="w-3.5 h-3.5" />
               {t("catalog.badge")}
             </span>
-            <Link
-              href="/admin"
-              className="inline-flex items-center gap-1.5 text-xs font-semibold text-zinc-500 hover:text-brand dark:text-zinc-400 dark:hover:text-brand transition-colors bg-zinc-50 hover:bg-zinc-100 dark:bg-zinc-900/60 dark:hover:bg-zinc-900/80 px-3.5 py-1.5 rounded-full border border-zinc-200/40 dark:border-zinc-800/80 print:hidden shadow-xs shrink-0"
-            >
-              <Settings2 className="w-3.5 h-3.5 text-brand" />
-              {t("catalog.adminBtn")}
-            </Link>
           </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-zinc-900 dark:text-white tracking-tight">
             {t("catalog.title")}
