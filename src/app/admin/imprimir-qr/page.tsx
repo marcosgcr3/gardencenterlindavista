@@ -7,10 +7,41 @@ import { plants } from "@/data/plants";
 
 export default function ImprimirQrPage() {
   const [origin, setOrigin] = useState("https://gardencenterlindavista.solarrv.tech");
+  const [allPlants, setAllPlants] = useState<any[]>(plants);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       setOrigin(window.location.origin);
+
+      let merged = [...plants];
+      const local = localStorage.getItem("local_plants");
+      if (local) {
+        try {
+          const parsed = JSON.parse(local);
+          if (Array.isArray(parsed)) {
+            parsed.forEach((localPlant: any) => {
+              const idx = merged.findIndex(p => p.slug === localPlant.slug);
+              if (idx !== -1) {
+                merged[idx] = localPlant;
+              } else {
+                merged.push(localPlant);
+              }
+            });
+          }
+        } catch (e) {}
+      }
+
+      const deleted = localStorage.getItem("deleted_plants");
+      if (deleted) {
+        try {
+          const parsedSlugs = JSON.parse(deleted);
+          if (Array.isArray(parsedSlugs)) {
+            merged = merged.filter(p => !parsedSlugs.includes(p.slug));
+          }
+        } catch (e) {}
+      }
+
+      setAllPlants(merged);
     }
   }, []);
 
@@ -78,7 +109,7 @@ export default function ImprimirQrPage() {
       {/* Grid containing all 20 plant labels */}
       <div className="w-full print:px-0 print:mx-0 print:max-w-none">
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 print:grid-cols-4 print:gap-4 print:p-0">
-          {plants.map((plant) => (
+          {allPlants.map((plant) => (
             <div
               key={plant.slug}
               className="bg-white dark:bg-zinc-950 border-2 border-dashed border-zinc-200 dark:border-zinc-800 p-4 sm:p-5 rounded-3xl flex flex-col items-center justify-center text-center shadow-xs print:shadow-none print:border-zinc-300 print:rounded-2xl print:page-break-inside-avoid print:bg-white min-h-[260px]"

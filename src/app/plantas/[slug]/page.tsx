@@ -1,6 +1,6 @@
 "use client";
 
-import React, { use, useEffect } from "react";
+import React, { use, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -136,14 +136,48 @@ export default function PlantaDetailPage({ params }: PageProps) {
   const { t, language } = useLanguage();
   const { slug } = use(params);
   
-  const rawPlant = plants.find((p) => p.slug === slug);
+  const [plant, setPlant] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  if (!rawPlant) {
-    notFound();
-  }
+  useEffect(() => {
+    let activePlants = [...plants];
+    if (typeof window !== "undefined") {
+      const local = localStorage.getItem("local_plants");
+      if (local) {
+        try {
+          const parsed = JSON.parse(local);
+          if (Array.isArray(parsed)) {
+            parsed.forEach((localPlant: Plant) => {
+              const idx = activePlants.findIndex(p => p.slug === localPlant.slug);
+              if (idx !== -1) {
+                activePlants[idx] = localPlant;
+              } else {
+                activePlants.push(localPlant);
+              }
+            });
+          }
+        } catch (e) {}
+      }
+      
+      const deleted = localStorage.getItem("deleted_plants");
+      if (deleted) {
+        try {
+          const parsedSlugs = JSON.parse(deleted);
+          if (Array.isArray(parsedSlugs)) {
+            activePlants = activePlants.filter(p => !parsedSlugs.includes(p.slug));
+          }
+        } catch (e) {}
+      }
+    }
 
-  // Get translated plant data
-  const plant = getTranslatedPlant(rawPlant, language);
+    const found = activePlants.find(p => p.slug === slug);
+    if (found) {
+      setPlant(getTranslatedPlant(found, language));
+    } else {
+      setPlant(null);
+    }
+    setIsLoading(false);
+  }, [slug, language]);
 
   const getDifficultyColor = (difficulty: Plant["difficulty"]) => {
     switch (difficulty) {
@@ -156,22 +190,36 @@ export default function PlantaDetailPage({ params }: PageProps) {
     }
   };
 
-  const absoluteImageUrl = plant.imageUrl.startsWith("http")
+  const absoluteImageUrl = plant ? (plant.imageUrl.startsWith("http")
     ? plant.imageUrl
-    : `http://gardencenterlindavista.com${plant.imageUrl}`;
+    : `http://gardencenterlindavista.com${plant.imageUrl}`) : "";
 
-  const titleText = language === "es"
+  const titleText = plant ? (language === "es"
     ? `${plant.name} (${plant.scientificName}) | Cuidados y Riego | Garden Center Linda Vista`
-    : `${plant.name} (${plant.scientificName}) | Care & Watering | Garden Center Linda Vista`;
+    : `${plant.name} (${plant.scientificName}) | Care & Watering | Garden Center Linda Vista`) : "";
 
   useEffect(() => {
-    document.title = titleText;
+    if (titleText) {
+      document.title = titleText;
+    }
   }, [titleText]);
 
-  const descText = language === "es"
+  const descText = plant ? (language === "es"
     ? `Guía de cuidados para ${plant.name} (${plant.scientificName}). Ficha técnica, frecuencia de riego estacional, luz ideal y prevención de plagas.`
-    : `Care guide for ${plant.name} (${plant.scientificName}). Technical datasheet, seasonal watering frequency, ideal light, and pest prevention.`;
+    : `Care guide for ${plant.name} (${plant.scientificName}). Technical datasheet, seasonal watering frequency, ideal light, and pest prevention.`) : "";
   const pageUrl = `http://gardencenterlindavista.com/plantas/${slug}`;
+
+  if (isLoading) {
+    return (
+      <div className="flex flex-col items-center justify-center py-20 gap-4 min-h-screen">
+        <span className="text-sm text-zinc-500 font-light">Cargando detalles de la planta...</span>
+      </div>
+    );
+  }
+
+  if (!plant) {
+    notFound();
+  }
 
   return (
     <div className="flex flex-col w-full min-h-screen bg-zinc-50/40 dark:bg-zinc-950/20 pt-2 pb-8 md:py-8">
@@ -562,7 +610,7 @@ export default function PlantaDetailPage({ params }: PageProps) {
                   {language === "es" ? "Rasgos Distintivos" : "Distinctive Traits"}
                 </h3>
                 <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-zinc-600 dark:text-zinc-400 text-xs sm:text-sm font-light">
-                  {plant.characteristics.map((char, index) => (
+                  {(plant.characteristics || []).map((char: string, index: number) => (
                     <li key={index} className="flex items-start gap-2 bg-zinc-50/30 dark:bg-zinc-900/10 p-3 rounded-xl border border-zinc-100/50 dark:border-zinc-900/30">
                       <span className="text-brand font-bold text-sm shrink-0 select-none">•</span>
                       <span>{char}</span>

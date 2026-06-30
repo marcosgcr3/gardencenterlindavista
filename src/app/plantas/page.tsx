@@ -89,23 +89,40 @@ export default function PlantasPage() {
   // Cargar plantas adicionales guardadas en localStorage (si existen)
   useEffect(() => {
     if (typeof window !== "undefined") {
+      let merged = [...plants];
+      
       const local = localStorage.getItem("local_plants");
       if (local) {
         try {
           const parsed = JSON.parse(local);
           if (Array.isArray(parsed)) {
-            const merged = [...plants];
             parsed.forEach((localPlant: Plant) => {
-              if (!merged.some(p => p.slug === localPlant.slug)) {
+              const idx = merged.findIndex(p => p.slug === localPlant.slug);
+              if (idx !== -1) {
+                merged[idx] = localPlant;
+              } else {
                 merged.push(localPlant);
               }
             });
-            setAllPlants(merged);
           }
         } catch (e) {
           console.error("Error al parsear plantas locales:", e);
         }
       }
+
+      const deleted = localStorage.getItem("deleted_plants");
+      if (deleted) {
+        try {
+          const parsedSlugs = JSON.parse(deleted);
+          if (Array.isArray(parsedSlugs)) {
+            merged = merged.filter(p => !parsedSlugs.includes(p.slug));
+          }
+        } catch (e) {
+          console.error("Error al parsear plantas eliminadas:", e);
+        }
+      }
+
+      setAllPlants(merged);
     }
   }, []);
 

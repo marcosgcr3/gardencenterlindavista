@@ -27,23 +27,40 @@ export default function AdminPlantasPage() {
   // Load plants from localStorage as well
   useEffect(() => {
     if (typeof window !== "undefined") {
+      let merged = [...plants];
+      
       const local = localStorage.getItem("local_plants");
       if (local) {
         try {
           const parsed = JSON.parse(local);
           if (Array.isArray(parsed)) {
-            const merged = [...plants];
             parsed.forEach((localPlant: Plant) => {
-              if (!merged.some(p => p.slug === localPlant.slug)) {
+              const idx = merged.findIndex(p => p.slug === localPlant.slug);
+              if (idx !== -1) {
+                merged[idx] = localPlant;
+              } else {
                 merged.push(localPlant);
               }
             });
-            setAllPlants(merged);
           }
         } catch (e) {
           console.error("Error loading local plants:", e);
         }
       }
+
+      const deleted = localStorage.getItem("deleted_plants");
+      if (deleted) {
+        try {
+          const parsedSlugs = JSON.parse(deleted);
+          if (Array.isArray(parsedSlugs)) {
+            merged = merged.filter(p => !parsedSlugs.includes(p.slug));
+          }
+        } catch (e) {
+          console.error("Error loading deleted plants:", e);
+        }
+      }
+
+      setAllPlants(merged);
     }
   }, []);
 
@@ -100,11 +117,25 @@ export default function AdminPlantasPage() {
         if (typeof window !== "undefined") {
           const local = localStorage.getItem("local_plants");
           if (local) {
-            const parsed = JSON.parse(local);
-            if (Array.isArray(parsed)) {
-              const updated = parsed.filter((p: any) => p.slug !== slug);
-              localStorage.setItem("local_plants", JSON.stringify(updated));
-            }
+            try {
+              const parsed = JSON.parse(local);
+              if (Array.isArray(parsed)) {
+                const updated = parsed.filter((p: any) => p.slug !== slug);
+                localStorage.setItem("local_plants", JSON.stringify(updated));
+              }
+            } catch (e) {}
+          }
+          // Save to deleted_plants
+          const deleted = localStorage.getItem("deleted_plants") || "[]";
+          let deletedList = [];
+          try {
+            deletedList = JSON.parse(deleted);
+          } catch (e) {
+            deletedList = [];
+          }
+          if (Array.isArray(deletedList) && !deletedList.includes(slug)) {
+            deletedList.push(slug);
+            localStorage.setItem("deleted_plants", JSON.stringify(deletedList));
           }
         }
       } else {
@@ -116,11 +147,25 @@ export default function AdminPlantasPage() {
         if (typeof window !== "undefined") {
           const local = localStorage.getItem("local_plants");
           if (local) {
-            const parsed = JSON.parse(local);
-            if (Array.isArray(parsed)) {
-              const updated = parsed.filter((p: any) => p.slug !== slug);
-              localStorage.setItem("local_plants", JSON.stringify(updated));
-            }
+            try {
+              const parsed = JSON.parse(local);
+              if (Array.isArray(parsed)) {
+                const updated = parsed.filter((p: any) => p.slug !== slug);
+                localStorage.setItem("local_plants", JSON.stringify(updated));
+              }
+            } catch (e) {}
+          }
+          // Save to deleted_plants
+          const deleted = localStorage.getItem("deleted_plants") || "[]";
+          let deletedList = [];
+          try {
+            deletedList = JSON.parse(deleted);
+          } catch (e) {
+            deletedList = [];
+          }
+          if (Array.isArray(deletedList) && !deletedList.includes(slug)) {
+            deletedList.push(slug);
+            localStorage.setItem("deleted_plants", JSON.stringify(deletedList));
           }
         }
       }
@@ -131,11 +176,25 @@ export default function AdminPlantasPage() {
       if (typeof window !== "undefined") {
         const local = localStorage.getItem("local_plants");
         if (local) {
-          const parsed = JSON.parse(local);
-          if (Array.isArray(parsed)) {
-            const updated = parsed.filter((p: any) => p.slug !== slug);
-            localStorage.setItem("local_plants", JSON.stringify(updated));
-          }
+          try {
+            const parsed = JSON.parse(local);
+            if (Array.isArray(parsed)) {
+              const updated = parsed.filter((p: any) => p.slug !== slug);
+              localStorage.setItem("local_plants", JSON.stringify(updated));
+            }
+          } catch (e) {}
+        }
+        // Save to deleted_plants
+        const deleted = localStorage.getItem("deleted_plants") || "[]";
+        let deletedList = [];
+        try {
+          deletedList = JSON.parse(deleted);
+        } catch (e) {
+          deletedList = [];
+        }
+        if (Array.isArray(deletedList) && !deletedList.includes(slug)) {
+          deletedList.push(slug);
+          localStorage.setItem("deleted_plants", JSON.stringify(deletedList));
         }
       }
     } finally {

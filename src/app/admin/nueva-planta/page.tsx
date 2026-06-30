@@ -197,6 +197,26 @@ export default function NuevaPlantaPage() {
       const data = await response.json();
 
       if (response.ok) {
+        const tempSlug = name
+          .toLowerCase()
+          .trim()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .replace(/[^\w\s-]/g, "")
+          .replace(/[\s_]+/g, "-")
+          .replace(/^-+|-+$/g, "");
+        
+        const existingLocal = localStorage.getItem("local_plants") || "[]";
+        let localPlants = [];
+        try {
+          localPlants = JSON.parse(existingLocal);
+        } catch (e) {
+          localPlants = [];
+        }
+        const updatedLocal = localPlants.filter((p: any) => p.slug !== tempSlug);
+        updatedLocal.push({ ...plantPayload, slug: tempSlug });
+        localStorage.setItem("local_plants", JSON.stringify(updatedLocal));
+
         // Redirigir en caso de éxito a la página del catálogo
         router.push("/plantas");
       } else {
@@ -207,19 +227,45 @@ export default function NuevaPlantaPage() {
           .normalize("NFD")
           .replace(/[\u0300-\u036f]/g, "")
           .replace(/[^\w\s-]/g, "")
-          .replace(/[\s_]+/g, "-");
+          .replace(/[\s_]+/g, "-")
+          .replace(/^-+|-+$/g, "");
         
         const existingLocal = localStorage.getItem("local_plants") || "[]";
-        const localPlants = JSON.parse(existingLocal);
-        localPlants.push({ ...plantPayload, slug: tempSlug });
-        localStorage.setItem("local_plants", JSON.stringify(localPlants));
+        let localPlants = [];
+        try {
+          localPlants = JSON.parse(existingLocal);
+        } catch (e) {
+          localPlants = [];
+        }
+        const updatedLocal = localPlants.filter((p: any) => p.slug !== tempSlug);
+        updatedLocal.push({ ...plantPayload, slug: tempSlug });
+        localStorage.setItem("local_plants", JSON.stringify(updatedLocal));
 
         setGeneratedCode(generateTypeScriptCode(tempSlug));
         setShowFallbackModal(true);
       }
     } catch (err: any) {
       setErrorMsg("Error en la conexión. Guardando copia temporal...");
-      const tempSlug = "planta-nueva";
+      const tempSlug = name
+        .toLowerCase()
+        .trim()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^\w\s-]/g, "")
+        .replace(/[\s_]+/g, "-")
+        .replace(/^-+|-+$/g, "");
+      
+      const existingLocal = localStorage.getItem("local_plants") || "[]";
+      let localPlants = [];
+      try {
+        localPlants = JSON.parse(existingLocal);
+      } catch (e) {
+        localPlants = [];
+      }
+      const updatedLocal = localPlants.filter((p: any) => p.slug !== tempSlug);
+      updatedLocal.push({ ...plantPayload, slug: tempSlug });
+      localStorage.setItem("local_plants", JSON.stringify(updatedLocal));
+
       setGeneratedCode(generateTypeScriptCode(tempSlug));
       setShowFallbackModal(true);
     } finally {

@@ -88,7 +88,10 @@ export default function EditarPlantaPage({ params }: PageProps) {
           const parsed = JSON.parse(local);
           if (Array.isArray(parsed)) {
             parsed.forEach((localPlant: Plant) => {
-              if (!activePlants.some(p => p.slug === localPlant.slug)) {
+              const idx = activePlants.findIndex(p => p.slug === localPlant.slug);
+              if (idx !== -1) {
+                activePlants[idx] = localPlant;
+              } else {
                 activePlants.push(localPlant);
               }
             });
@@ -267,6 +270,18 @@ export default function EditarPlantaPage({ params }: PageProps) {
       const data = await response.json();
 
       if (response.ok) {
+        // Update in localStorage
+        const existingLocal = localStorage.getItem("local_plants") || "[]";
+        let localPlants = [];
+        try {
+          localPlants = JSON.parse(existingLocal);
+        } catch (e) {
+          localPlants = [];
+        }
+        localPlants = localPlants.filter((p: any) => p.slug !== slug);
+        localPlants.push({ ...plantPayload, slug });
+        localStorage.setItem("local_plants", JSON.stringify(localPlants));
+
         // Redirect to admin plants catalog list
         router.push("/admin/plantas");
       } else {
@@ -274,7 +289,12 @@ export default function EditarPlantaPage({ params }: PageProps) {
         
         // Update in localStorage
         const existingLocal = localStorage.getItem("local_plants") || "[]";
-        let localPlants = JSON.parse(existingLocal);
+        let localPlants = [];
+        try {
+          localPlants = JSON.parse(existingLocal);
+        } catch (e) {
+          localPlants = [];
+        }
         localPlants = localPlants.filter((p: any) => p.slug !== slug);
         localPlants.push({ ...plantPayload, slug });
         localStorage.setItem("local_plants", JSON.stringify(localPlants));
