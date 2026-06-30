@@ -120,6 +120,7 @@ export default function NuevaPlantaPage() {
     setSelectedFile(file);
     const url = URL.createObjectURL(file);
     setFilePreview(url);
+    setImageUrl(`Archivo local: ${file.name}`);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -534,7 +535,7 @@ export default function NuevaPlantaPage() {
             <div className="flex flex-col gap-2">
               <label className="text-xs font-bold text-zinc-700 dark:text-zinc-300 uppercase">O introducir URL de Imagen</label>
               <input
-                type="url"
+                type="text"
                 value={imageUrl}
                 placeholder="Introduce la URL de una foto..."
                 onChange={(e) => {

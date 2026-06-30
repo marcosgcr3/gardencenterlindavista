@@ -158,6 +158,7 @@ export default function EditarPlantaPage({ params }: PageProps) {
     setSelectedFile(file);
     const url = URL.createObjectURL(file);
     setFilePreview(url);
+    setImageUrl(`Archivo local: ${file.name}`);
   };
 
   // Generate copyable code for fallback modal
@@ -650,7 +651,7 @@ export default function EditarPlantaPage({ params }: PageProps) {
             <div className="flex flex-col gap-2">
               <label className="text-xs font-bold text-zinc-700 dark:text-zinc-300 uppercase">O introducir URL de Imagen</label>
               <input
-                type="url"
+                type="text"
                 value={imageUrl}
                 onChange={(e) => {
                   setImageUrl(e.target.value);
