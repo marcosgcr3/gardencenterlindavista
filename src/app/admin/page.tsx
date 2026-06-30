@@ -27,19 +27,19 @@ export default function AdminDashboardPage() {
 
       {/* Admin Operations Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {/* Card 1: Add plant */}
-        <Link href="/admin/nueva-planta" className="group">
+        {/* Card 1: Manage plants */}
+        <Link href="/admin/plantas" className="group">
           <div className="bg-white dark:bg-zinc-950 border border-zinc-100 dark:border-zinc-900 rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col gap-6 h-full hover:-translate-y-1.5">
             <div className="w-14 h-14 rounded-2xl bg-brand/10 text-brand flex items-center justify-center transition-all duration-300 group-hover:scale-110">
-              <Plus className="w-7 h-7" />
+              <Sprout className="w-7 h-7" />
             </div>
             
             <div className="flex flex-col gap-2">
               <h2 className="text-xl font-bold text-zinc-900 dark:text-white group-hover:text-brand transition-colors duration-300 flex items-center gap-2">
-                Añadir Planta
+                Gestionar Plantas
               </h2>
               <p className="text-zinc-500 dark:text-zinc-400 text-sm font-light leading-relaxed">
-                Introduce los nombres, parámetros de riego, necesidades de luz, cuidados recomendados e imágenes de una nueva planta para guardarla en el catálogo.
+                Ver el catálogo completo de plantas, editar sus características y cuidados, añadir nuevas plantas o eliminar las existentes del vivero.
               </p>
             </div>
           </div>
