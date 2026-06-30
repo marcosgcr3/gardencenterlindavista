@@ -88,42 +88,58 @@ export default function PlantasPage() {
 
   // Cargar plantas adicionales guardadas en localStorage (si existen)
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      let merged = [...plants];
+    async function loadPlants() {
+      let activeList = [...plants];
       
-      const local = localStorage.getItem("local_plants");
-      if (local) {
-        try {
-          const parsed = JSON.parse(local);
-          if (Array.isArray(parsed)) {
-            parsed.forEach((localPlant: Plant) => {
-              const idx = merged.findIndex(p => p.slug === localPlant.slug);
-              if (idx !== -1) {
-                merged[idx] = localPlant;
-              } else {
-                merged.push(localPlant);
-              }
-            });
+      try {
+        const res = await fetch("/api/plants");
+        if (res.ok) {
+          const dbPlants = await res.json();
+          if (Array.isArray(dbPlants) && dbPlants.length > 0) {
+            activeList = dbPlants;
           }
-        } catch (e) {
-          console.error("Error al parsear plantas locales:", e);
+        }
+      } catch (err) {
+        console.error("Error loading plants from API, using static fallback:", err);
+      }
+
+      if (typeof window !== "undefined") {
+        const local = localStorage.getItem("local_plants");
+        if (local) {
+          try {
+            const parsed = JSON.parse(local);
+            if (Array.isArray(parsed)) {
+              parsed.forEach((localPlant: Plant) => {
+                const idx = activeList.findIndex(p => p.slug === localPlant.slug);
+                if (idx !== -1) {
+                  activeList[idx] = localPlant;
+                } else {
+                  activeList.push(localPlant);
+                }
+              });
+            }
+          } catch (e) {
+            console.error("Error al parsear plantas locales:", e);
+          }
+        }
+
+        const deleted = localStorage.getItem("deleted_plants");
+        if (deleted) {
+          try {
+            const parsedSlugs = JSON.parse(deleted);
+            if (Array.isArray(parsedSlugs)) {
+              activeList = activeList.filter(p => !parsedSlugs.includes(p.slug));
+            }
+          } catch (e) {
+            console.error("Error al parsear plantas eliminadas:", e);
+          }
         }
       }
 
-      const deleted = localStorage.getItem("deleted_plants");
-      if (deleted) {
-        try {
-          const parsedSlugs = JSON.parse(deleted);
-          if (Array.isArray(parsedSlugs)) {
-            merged = merged.filter(p => !parsedSlugs.includes(p.slug));
-          }
-        } catch (e) {
-          console.error("Error al parsear plantas eliminadas:", e);
-        }
-      }
-
-      setAllPlants(merged);
+      setAllPlants(activeList);
     }
+
+    loadPlants();
   }, []);
 
   // Filter Categories list

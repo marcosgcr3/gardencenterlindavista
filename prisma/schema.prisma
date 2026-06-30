@@ -1,0 +1,31 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Plant {
+  id              Int      @id @default(autoincrement())
+  slug            String   @unique
+  name            String
+  scientificName  String
+  category        String
+  description     String
+  characteristics String[]
+  care            String
+  diseases        String
+  watering        Json
+  light           String
+  difficulty      String
+  imageUrl        String
+  temperature     String
+  humidity        String
+  wateringLevel   Int      @default(2)
+  sunLevel        Int      @default(2)
+  tempLevel       Int      @default(60)
+  funFact         String   @default("")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}

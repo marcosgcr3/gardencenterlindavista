@@ -10,39 +10,58 @@ export default function ImprimirQrPage() {
   const [allPlants, setAllPlants] = useState<any[]>(plants);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      setOrigin(window.location.origin);
-
-      let merged = [...plants];
-      const local = localStorage.getItem("local_plants");
-      if (local) {
-        try {
-          const parsed = JSON.parse(local);
-          if (Array.isArray(parsed)) {
-            parsed.forEach((localPlant: any) => {
-              const idx = merged.findIndex(p => p.slug === localPlant.slug);
-              if (idx !== -1) {
-                merged[idx] = localPlant;
-              } else {
-                merged.push(localPlant);
-              }
-            });
-          }
-        } catch (e) {}
+    async function loadPlants() {
+      if (typeof window !== "undefined") {
+        setOrigin(window.location.origin);
       }
 
-      const deleted = localStorage.getItem("deleted_plants");
-      if (deleted) {
-        try {
-          const parsedSlugs = JSON.parse(deleted);
-          if (Array.isArray(parsedSlugs)) {
-            merged = merged.filter(p => !parsedSlugs.includes(p.slug));
+      let activeList = [...plants];
+      
+      try {
+        const res = await fetch("/api/plants");
+        if (res.ok) {
+          const dbPlants = await res.json();
+          if (Array.isArray(dbPlants) && dbPlants.length > 0) {
+            activeList = dbPlants;
           }
-        } catch (e) {}
+        }
+      } catch (err) {
+        console.error("Error loading plants from API, using static fallback:", err);
       }
 
-      setAllPlants(merged);
+      if (typeof window !== "undefined") {
+        const local = localStorage.getItem("local_plants");
+        if (local) {
+          try {
+            const parsed = JSON.parse(local);
+            if (Array.isArray(parsed)) {
+              parsed.forEach((localPlant: any) => {
+                const idx = activeList.findIndex(p => p.slug === localPlant.slug);
+                if (idx !== -1) {
+                  activeList[idx] = localPlant;
+                } else {
+                  activeList.push(localPlant);
+                }
+              });
+            }
+          } catch (e) {}
+        }
+
+        const deleted = localStorage.getItem("deleted_plants");
+        if (deleted) {
+          try {
+            const parsedSlugs = JSON.parse(deleted);
+            if (Array.isArray(parsedSlugs)) {
+              activeList = activeList.filter(p => !parsedSlugs.includes(p.slug));
+            }
+          } catch (e) {}
+        }
+      }
+
+      setAllPlants(activeList);
     }
+
+    loadPlants();
   }, []);
 
   const handlePrint = () => {

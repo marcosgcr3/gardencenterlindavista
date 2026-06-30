@@ -140,43 +140,60 @@ export default function PlantaDetailPage({ params }: PageProps) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    let activePlants = [...plants];
-    if (typeof window !== "undefined") {
-      const local = localStorage.getItem("local_plants");
-      if (local) {
-        try {
-          const parsed = JSON.parse(local);
-          if (Array.isArray(parsed)) {
-            parsed.forEach((localPlant: Plant) => {
-              const idx = activePlants.findIndex(p => p.slug === localPlant.slug);
-              if (idx !== -1) {
-                activePlants[idx] = localPlant;
-              } else {
-                activePlants.push(localPlant);
-              }
-            });
-          }
-        } catch (e) {}
-      }
+    async function loadPlants() {
+      let activePlants = [...plants];
       
-      const deleted = localStorage.getItem("deleted_plants");
-      if (deleted) {
-        try {
-          const parsedSlugs = JSON.parse(deleted);
-          if (Array.isArray(parsedSlugs)) {
-            activePlants = activePlants.filter(p => !parsedSlugs.includes(p.slug));
+      try {
+        const res = await fetch("/api/plants");
+        if (res.ok) {
+          const dbPlants = await res.json();
+          if (Array.isArray(dbPlants) && dbPlants.length > 0) {
+            activePlants = dbPlants;
           }
-        } catch (e) {}
+        }
+      } catch (err) {
+        console.error("Error loading plants from API, using static fallback:", err);
       }
+
+      if (typeof window !== "undefined") {
+        const local = localStorage.getItem("local_plants");
+        if (local) {
+          try {
+            const parsed = JSON.parse(local);
+            if (Array.isArray(parsed)) {
+              parsed.forEach((localPlant: Plant) => {
+                const idx = activePlants.findIndex(p => p.slug === localPlant.slug);
+                if (idx !== -1) {
+                  activePlants[idx] = localPlant;
+                } else {
+                  activePlants.push(localPlant);
+                }
+              });
+            }
+          } catch (e) {}
+        }
+        
+        const deleted = localStorage.getItem("deleted_plants");
+        if (deleted) {
+          try {
+            const parsedSlugs = JSON.parse(deleted);
+            if (Array.isArray(parsedSlugs)) {
+              activePlants = activePlants.filter(p => !parsedSlugs.includes(p.slug));
+            }
+          } catch (e) {}
+        }
+      }
+
+      const found = activePlants.find(p => p.slug === slug);
+      if (found) {
+        setPlant(getTranslatedPlant(found, language));
+      } else {
+        setPlant(null);
+      }
+      setIsLoading(false);
     }
 
-    const found = activePlants.find(p => p.slug === slug);
-    if (found) {
-      setPlant(getTranslatedPlant(found, language));
-    } else {
-      setPlant(null);
-    }
-    setIsLoading(false);
+    loadPlants();
   }, [slug, language]);
 
   const getDifficultyColor = (difficulty: Plant["difficulty"]) => {

@@ -26,42 +26,58 @@ export default function AdminPlantasPage() {
 
   // Load plants from localStorage as well
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      let merged = [...plants];
+    async function loadPlants() {
+      let activeList = [...plants];
       
-      const local = localStorage.getItem("local_plants");
-      if (local) {
-        try {
-          const parsed = JSON.parse(local);
-          if (Array.isArray(parsed)) {
-            parsed.forEach((localPlant: Plant) => {
-              const idx = merged.findIndex(p => p.slug === localPlant.slug);
-              if (idx !== -1) {
-                merged[idx] = localPlant;
-              } else {
-                merged.push(localPlant);
-              }
-            });
+      try {
+        const res = await fetch("/api/plants");
+        if (res.ok) {
+          const dbPlants = await res.json();
+          if (Array.isArray(dbPlants) && dbPlants.length > 0) {
+            activeList = dbPlants;
           }
-        } catch (e) {
-          console.error("Error loading local plants:", e);
+        }
+      } catch (err) {
+        console.error("Error loading plants from API, using static fallback:", err);
+      }
+
+      if (typeof window !== "undefined") {
+        const local = localStorage.getItem("local_plants");
+        if (local) {
+          try {
+            const parsed = JSON.parse(local);
+            if (Array.isArray(parsed)) {
+              parsed.forEach((localPlant: Plant) => {
+                const idx = activeList.findIndex(p => p.slug === localPlant.slug);
+                if (idx !== -1) {
+                  activeList[idx] = localPlant;
+                } else {
+                  activeList.push(localPlant);
+                }
+              });
+            }
+          } catch (e) {
+            console.error("Error loading local plants:", e);
+          }
+        }
+
+        const deleted = localStorage.getItem("deleted_plants");
+        if (deleted) {
+          try {
+            const parsedSlugs = JSON.parse(deleted);
+            if (Array.isArray(parsedSlugs)) {
+              activeList = activeList.filter(p => !parsedSlugs.includes(p.slug));
+            }
+          } catch (e) {
+            console.error("Error loading deleted plants:", e);
+          }
         }
       }
 
-      const deleted = localStorage.getItem("deleted_plants");
-      if (deleted) {
-        try {
-          const parsedSlugs = JSON.parse(deleted);
-          if (Array.isArray(parsedSlugs)) {
-            merged = merged.filter(p => !parsedSlugs.includes(p.slug));
-          }
-        } catch (e) {
-          console.error("Error loading deleted plants:", e);
-        }
-      }
-
-      setAllPlants(merged);
+      setAllPlants(activeList);
     }
+
+    loadPlants();
   }, []);
 
   const categories = ["Todas", "Interior", "Exterior", "Suculentas", "Árboles"];
